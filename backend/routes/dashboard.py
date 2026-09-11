@@ -1,5 +1,6 @@
 from flask import Blueprint
 from models import Field, Observation, Prediction
+from database import db
 
 dashboard_bp = Blueprint("dashboard", __name__)
 
@@ -18,6 +19,19 @@ def get_dashboard():
     Prediction.created_at.desc()
 ).first()
 
+    field_summaries = []
+
+    for field in Field.query.all():
+     observation_count = Observation.query.filter_by(
+        field_id=field.id
+    ).count()
+
+    field_summaries.append({
+        "id": field.id,
+        "name": field.name,
+        "crop_name": field.crop_name,
+        "observation_count": observation_count
+    })
     return {
         "latest_prediction": {
     "id": latest_prediction.id,
@@ -25,9 +39,11 @@ def get_dashboard():
     "score": latest_prediction.score,
     "prediction_type": latest_prediction.prediction_type
 } if latest_prediction else None,
+    "fields": field_summaries,
     "total_fields": total_fields,
     "total_observations": total_observations,
     "total_predictions": total_predictions,
     "risk_counts": risk_counts
+    
     
 }
