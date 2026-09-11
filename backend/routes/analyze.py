@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from services.advisory import generate_advisory
+from models import Prediction
 
 analyze_bp = Blueprint("analyze", __name__)
 
@@ -19,3 +20,11 @@ def get_advisory():
         return {"error": str(e)}, 400
 
     return advisory
+@analyze_bp.route("/prediction/<int:prediction_id>/advisory", methods=["GET"])
+def get_prediction_advisory(prediction_id):
+    prediction = Prediction.query.get(prediction_id)
+
+    if not prediction:
+        return {"error": "Prediction not found"}, 404
+
+    return generate_advisory(prediction.label)
