@@ -13,6 +13,9 @@ def get_advisory():
     if not risk_level:
         return {"error": "risk_level is required"}, 400
 
-    advisory = generate_advisory(risk_level.upper())
+    try:
+        advisory = generate_advisory(risk_level.upper())
+    except ValueError as e:
+        return {"error": str(e)}, 400
 
     return advisory

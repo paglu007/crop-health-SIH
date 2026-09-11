@@ -1,4 +1,8 @@
 def generate_advisory(risk_level):
+    valid_levels = {"HIGH", "MEDIUM", "LOW"}
+
+    if risk_level not in valid_levels:
+      raise ValueError("Invalid risk level")
     if risk_level == "HIGH":
         return {
             "priority": "URGENT",
