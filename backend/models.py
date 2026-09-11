@@ -53,3 +53,33 @@ class Observation(db.Model):
         db.DateTime,
         default=datetime.utcnow
     )    
+class Prediction(db.Model):
+    __tablename__ = "predictions"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    observation_id = db.Column(
+        db.Integer,
+        db.ForeignKey("observations.id"),
+        nullable=False
+    )
+
+    prediction_type = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
+    label = db.Column(db.String(100), nullable=True)
+
+    confidence = db.Column(db.Float, nullable=True)
+
+    score = db.Column(db.Float, nullable=True)
+
+    model_name = db.Column(db.String(100), nullable=True)
+
+    model_version = db.Column(db.String(50), nullable=True)
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )    

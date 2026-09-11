@@ -12,7 +12,6 @@ risk_bp = Blueprint(
 )
 
 
-@risk_bp.route("/calculate", methods=["POST"])
 @risk_bp.route("/observation/<int:observation_id>", methods=["GET"])
 def get_observation_predictions(observation_id):
     predictions = Prediction.query.filter_by(
@@ -34,6 +33,7 @@ def get_observation_predictions(observation_id):
             for p in predictions
         ]
     }), 200
+@risk_bp.route("/calculate", methods=["POST"])
 def calculate_risk():
     
 

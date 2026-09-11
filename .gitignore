@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Local database
+backend/crop_health.db
+
+# Generated model
+backend/model/*.joblib
+
+# Test uploads
+backend/uploads/
+
+# Local test files
+backend/test_*.json
+backend/test_*.jpg
+
+# Archives
+backend.zip
