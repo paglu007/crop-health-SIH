@@ -13,8 +13,29 @@ risk_bp = Blueprint(
 
 
 @risk_bp.route("/calculate", methods=["POST"])
+@risk_bp.route("/observation/<int:observation_id>", methods=["GET"])
+def get_observation_predictions(observation_id):
+    predictions = Prediction.query.filter_by(
+        observation_id=observation_id
+    ).all()
 
+    return jsonify({
+        "success": True,
+        "predictions": [
+            {
+                "id": p.id,
+                "prediction_type": p.prediction_type,
+                "label": p.label,
+                "score": p.score,
+                "model_name": p.model_name,
+                "model_version": p.model_version,
+                "created_at": p.created_at.isoformat()
+            }
+            for p in predictions
+        ]
+    }), 200
 def calculate_risk():
+    
 
     data = request.get_json()
 
