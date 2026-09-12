@@ -1,6 +1,6 @@
 from flask import Blueprint
-from models import Field, Observation, Prediction
-from database import db
+from backend.models import Field, Observation, Prediction
+from backend.database import db
 
 dashboard_bp = Blueprint("dashboard", __name__)
 

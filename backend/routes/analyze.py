@@ -1,6 +1,6 @@
 from flask import Blueprint, request
-from services.advisory import generate_advisory
-from models import Prediction
+from backend.services.advisory import generate_advisory
+from backend.models import Prediction
 
 analyze_bp = Blueprint("analyze", __name__)
 

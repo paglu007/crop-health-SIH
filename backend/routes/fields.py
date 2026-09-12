@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 
-from database import db
-from models import Field
+from backend.database import db
+from backend.models import Field
 
 fields_bp = Blueprint("fields", __name__, url_prefix="/api/fields")
 

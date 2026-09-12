@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 import os
 import uuid
-from database import db
-from models import Field, Observation
+from backend.database import db
+from backend.models import Field, Observation
 
 observations_bp = Blueprint(
     "observations",

@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from typing import Dict, Any, List
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingClassifier
-from config import RISK_MODEL_PATH, SUPPORTED_DISEASES
+from backend.config import RISK_MODEL_PATH, SUPPORTED_DISEASES
 
 class CropRiskEngine:
     """
