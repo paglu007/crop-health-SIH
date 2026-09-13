@@ -227,12 +227,7 @@
           <button onclick="openScannerModal()" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider shadow-md transition flex items-center gap-2">
             <span>📷</span>
             <span>[ CHECK MY CROP NOW ]</span>
-            <!-- NEW UPLOAD BUTTON -->
-          <input type="file" id="crop-file-input" accept="image/*" class="hidden" onchange="handleCropPhotoUpload(event)" />
-          <button type="button" onclick="document.getElementById('crop-file-input').click()" class="px-6 py-3 rounded-xl bg-white border-2 border-emerald-600 hover:bg-emerald-50 text-emerald-800 font-black text-xs uppercase tracking-wider shadow-md transition flex items-center gap-2 cursor-pointer">
-            <span>📁</span>
-            <span>Upload Photo</span>
-          </button>
+            
           </button>
           <a href="#smam-tools" class="px-5 py-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-bold text-xs shadow-sm transition">
             Machinery Subsidy →
@@ -1243,8 +1238,7 @@
     function openScannerModal() { document.getElementById('scanner-modal').classList.remove('hidden'); document.getElementById('scanner-modal').classList.add('flex'); }
     function closeScannerModal() { document.getElementById('scanner-modal').classList.add('hidden'); document.getElementById('scanner-modal').classList.remove('flex'); }
 
-    /* 7. Advanced AI + Weather Advisory Integration */
-    async function switchScannerSample(type) {
+    function switchScannerSample(type) {
       const img = document.getElementById('scanner-view-img');
       const title = document.getElementById('diag-disease-title');
       const conf = document.getElementById('diag-confidence');
@@ -1252,51 +1246,27 @@
       const bio = document.getElementById('diag-bio');
       const chem = document.getElementById('diag-chem');
 
-      // Set loading state
-      title.textContent = "Analyzing with AI & Weather Engine...";
-      conf.textContent = "Calculating Risk...";
-      desc.textContent = "Please wait, fetching live microclimate and database advisories...";
-      bio.textContent = "...";
-      chem.textContent = "...";
-
-      let reqPayload = {};
-      
       if (type === 'yellow_rust') {
         img.src = 'https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?auto=format&fit=crop&w=800&q=80';
-        reqPayload = { crop: "Wheat", disease_name: "Stripe/Yellow Rust", cv_confidence: 0.96, latitude: 18.5204, longitude: 73.8567 };
+        title.textContent = 'Yellow Rust (Puccinia striiformis)';
+        conf.textContent = '96.4% Confidence';
+        desc.textContent = 'Distinct yellow pustules arranged in linear stripes along the leaf veins.';
+        bio.textContent = 'Spray Neem Seed Kernel Extract (5%) or Trichoderma viride @ 5g/liter.';
+        chem.textContent = 'Propiconazole 25% EC @ 1ml/L during morning hours.';
       } else if (type === 'rice_blast') {
         img.src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80';
-        reqPayload = { crop: "Rice", disease_name: "Blast", cv_confidence: 0.94, latitude: 18.5204, longitude: 73.8567 };
+        title.textContent = 'Rice Blast (Magnaporthe oryzae)';
+        conf.textContent = '94.8% Confidence';
+        desc.textContent = 'Spindle-shaped lesions with gray or white centers and brown margins.';
+        bio.textContent = 'Apply Pseudomonas fluorescens 0.2% seed treatment and foliar spray.';
+        chem.textContent = 'Tricyclazole 75% WP @ 0.6g/L of water at boot leaf stage.';
       } else if (type === 'healthy') {
         img.src = 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=800&q=80';
-        reqPayload = { crop: "Wheat", disease_name: "Healthy", cv_confidence: 0.99, latitude: 18.5204, longitude: 73.8567 };
-      }
-
-      try {
-        const response = await fetch('/api/advisory/advanced', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(reqPayload)
-        });
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.message || "API Error");
-
-        // Populate UI with Real Backend Data
-        title.textContent = `${data.disease_name} (${data.risk_level} RISK)`;
-        conf.textContent = `${(data.cv_confidence * 100).toFixed(1)}% CV Conf. | ${data.weather_summary.current_temp_c}°C`;
-        
-        // Inject the LLM Farmer-Friendly Explanation
-        desc.textContent = data.farmer_friendly_explanation;
-        
-        // Inject Verified Database Treatments
-        bio.textContent = data.raw_database_advisory.organic_treatment || 'Maintain standard care.';
-        chem.textContent = data.raw_database_advisory.chemical_treatment || 'No chemical intervention required.';
-        
-      } catch (error) {
-        console.error("API Error:", error);
-        title.textContent = "Analysis Failed";
-        desc.textContent = "Could not connect to the advanced advisory backend. Ensure Flask is running.";
+        title.textContent = 'Healthy Crop (No Pathogens Detected)';
+        conf.textContent = '99.1% Confidence';
+        desc.textContent = 'Leaf tissue exhibits optimal chlorophyll density and clean margins.';
+        bio.textContent = 'Maintain standard balanced NPK fertilization and irrigation.';
+        chem.textContent = 'No chemical intervention needed. Monitor again in 7 days.';
       }
     }
 

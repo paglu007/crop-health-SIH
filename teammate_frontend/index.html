@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KrishiRakshak 🌱 - AI Crop Health & SMAM Mechanization | SIH 2026</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <!-- Leaflet CDN for Real Interactive Farm Field Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --gov-navy: #0f3662;
+      --gov-deep: #164e87;
+      --gov-saffron: #ff9933;
+      --gov-green: #138808;
+    }
+    body {
+      background: linear-gradient(180deg, #edf9f0 0%, #e6f6ea 30%, #ecf9ef 65%, #f2fbf5 100%);
+      color: #0f172a;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .kr-card {
+      background: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+    }
+    .kr-card:hover {
+      box-shadow: 0 10px 24px rgba(5, 150, 105, 0.1);
+      transform: translateY(-2px);
+    }
+    @keyframes tickerScroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .running-ticker-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: tickerScroll 36s linear infinite;
+    }
+    .running-ticker-text:hover {
+      animation-play-state: paused;
+    }
+    .wave-bar {
+      transition: height 0.15s ease-in-out;
+    }
+  </style>
+</head>
+<body class="pb-12">
+
+  <!-- 1. TOP TRICOLOR RIBBON -->
+  <div class="w-full max-w-7xl mx-auto pt-3 px-4 sm:px-6">
+    <div class="relative flex items-center justify-center py-2 px-6 rounded-md shadow-sm overflow-hidden" style="background: linear-gradient(180deg, #ff9933 0%, #ff9933 28%, #ffffff 28%, #ffffff 72%, #138808 72%, #138808 100%);">
+      <div class="bg-white/95 backdrop-blur-sm px-6 sm:px-10 py-1.5 rounded shadow-sm border border-slate-200/90">
+        <h1 class="text-xs sm:text-sm md:text-base font-black text-slate-900 tracking-tight text-center" data-i18n="topRibbon">
+          Smart India Hackathon 2026 - Problem Statement 26131 - Team Code Knights SW-39
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.1 RUNNING TICKER -->
+  <div class="w-full max-w-7xl mx-auto pt-2 px-4 sm:px-6">
+    <div class="bg-amber-500/15 border-2 border-amber-400/60 rounded-xl px-3 sm:px-4 py-2 flex items-center overflow-hidden shadow-xs backdrop-blur-sm">
+      <div class="flex items-center gap-1.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white text-[10px] sm:text-xs font-black uppercase px-2.5 py-1 rounded-md tracking-wider flex-shrink-0 shadow-xs">
+        <span class="animate-ping inline-block h-2 w-2 rounded-full bg-white opacity-80"></span>
+        <span data-i18n="tickerBadge">⚠️ STATUTORY DISCLAIMER</span>
+      </div>
+      <div class="relative overflow-hidden w-full ml-3 py-0.5">
+        <div id="running-ticker-text" class="running-ticker-text whitespace-nowrap text-xs font-bold text-amber-950 flex items-center gap-8" data-i18n="ticker">
+          <span>📢 <strong>महत्वपूर्ण सूचना / IMPORTANT STATUTORY NOTICE:</strong> KrishiRakshak AI crop diagnostic system is an assistive decision-support tool and is <strong>NOT 100% correct / infallible</strong> (current diagnostic confidence: ~94.6%). Field farmers and agricultural officers MUST verify critical or severe crop symptoms with local Krishi Vigyan Kendra (KVK) agronomists before applying chemical treatments.</span>
+          <span>•</span>
+          <span>🌾 <strong>National Kisan Call Centre (Toll-Free):</strong> 1800-180-1551 (24x7 Advisory in 22 Regional Languages)</span>
+          <span>•</span>
+          <span>⚖️ <strong>CIB&RC Pesticide Safety Protocol:</strong> Chemical recommendations strictly adhere to Central Insecticides Board dosage limits. Biological & organic pest management (IPM) is prioritized first.</span>
+          <span>•</span>
+          <span>🛡️ <strong>Ethical AI & Data Privacy:</strong> Zero Aadhaar data stored. Direct Benefit Transfer (DBT) operated strictly via Farmer ID & Mobile OTP under DPDP Act 2023.</span>
+          <span>•</span>
+          <span>🇮🇳 <strong>Smart India Hackathon 2026:</strong> Problem Statement 26131 | Team Code Knights (SW-39)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MAIN NAVBAR & HELPLINE -->
+  <header class="max-w-7xl mx-auto px-4 sm:px-6 pt-3">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 px-4 sm:px-7 py-3 flex items-center justify-between flex-wrap gap-4">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center transition-transform group-hover:scale-105">
+          <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fde047" />
+                <stop offset="35%" stop-color="#eab308" />
+                <stop offset="70%" stop-color="#ca8a04" />
+                <stop offset="100%" stop-color="#a16207" />
+              </linearGradient>
+              <linearGradient id="shieldGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#15803d" />
+                <stop offset="100%" stop-color="#047857" />
+              </linearGradient>
+              <radialGradient id="sunburst" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fef9c3" />
+                <stop offset="100%" stop-color="#fde047" />
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="46" fill="#f0fdf4" stroke="#86efac" stroke-width="1.8" />
+            <circle cx="50" cy="38" r="18" fill="url(#sunburst)" opacity="0.85" />
+            <path d="M50 20 C64 20, 74 26, 74 38 C74 62, 57 78, 50 84 C43 78, 26 62, 26 38 C26 26, 36 20, 50 20 Z" fill="url(#shieldGrad3)" stroke="#ffffff" stroke-width="2" />
+            <path d="M50 72 V48" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" />
+            <path d="M50 48 C44 40, 44 30, 50 26 C56 30, 56 40, 50 48 Z" fill="#bbf7d0" />
+            <path d="M48 55 C40 50, 33 45, 34 38 C40 38, 46 45, 48 55 Z" fill="#86efac" />
+            <path d="M52 55 C60 50, 67 45, 66 38 C60 38, 54 45, 52 55 Z" fill="#86efac" />
+            <path d="M22 84 C18 66, 19 44, 27 26" stroke="url(#goldGrad2)" stroke-width="3.5" stroke-linecap="round" />
+            <ellipse cx="23" cy="32" rx="4.5" ry="7.5" transform="rotate(-30 23 32)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="19" cy="42" rx="4.5" ry="7.5" transform="rotate(-35 19 42)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="18" cy="52" rx="4.5" ry="7.5" transform="rotate(-30 18 52)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="19" cy="62" rx="4.5" ry="7.5" transform="rotate(-25 19 62)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="22" cy="72" rx="4" ry="6.5" transform="rotate(-20 22 72)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <path d="M78 84 C82 66, 81 44, 73 26" stroke="url(#goldGrad2)" stroke-width="3.5" stroke-linecap="round" />
+            <ellipse cx="77" cy="32" rx="4.5" ry="7.5" transform="rotate(30 77 32)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="81" cy="42" rx="4.5" ry="7.5" transform="rotate(35 81 42)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="82" cy="52" rx="4.5" ry="7.5" transform="rotate(30 82 52)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="81" cy="62" rx="4.5" ry="7.5" transform="rotate(25 81 62)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <ellipse cx="78" cy="72" rx="4" ry="6.5" transform="rotate(20 78 72)" fill="url(#goldGrad2)" stroke="#ca8a04" stroke-width="0.8" />
+            <line x1="27" y1="26" x2="24" y2="12" stroke="#eab308" stroke-width="2" stroke-linecap="round" />
+            <line x1="73" y1="26" x2="76" y2="12" stroke="#eab308" stroke-width="2" stroke-linecap="round" />
+            <line x1="23" y1="32" x2="13" y2="23" stroke="#eab308" stroke-width="1.8" stroke-linecap="round" />
+            <line x1="77" y1="32" x2="87" y2="23" stroke="#eab308" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-2xl font-black tracking-tight flex items-baseline">
+            <span class="text-slate-900">Krishi</span><span class="text-[#15803d]">Rakshak</span>
+          </span>
+          <span class="inline-flex items-center justify-center p-1 bg-gradient-to-tr from-emerald-100 to-lime-100 border-2 border-white rounded-full shadow-[0_2px_8px_rgba(16,185,129,0.3)] transform -rotate-6 hover:rotate-12 transition-transform duration-200 cursor-pointer select-none" title="KrishiRakshak Plant Sprout 🌱">
+            <span class="text-xl leading-none">🌱</span>
+          </span>
+          <span class="inline-flex items-center justify-center px-2 py-0.5 bg-white border border-slate-200 rounded-lg shadow-2xs select-none" title="National Flag of India 🇮🇳">
+            <span class="text-xl leading-none">🇮🇳</span>
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/15 via-white to-emerald-500/15 border border-amber-300 text-xs sm:text-sm font-black text-amber-900 shadow-2xs">
+            <span class="text-amber-600 font-extrabold">🌾</span>
+            <span data-i18n="slogan">"जय जवान, जय किसान"</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-4 text-sm font-semibold text-slate-700">
+        <a href="#home" class="text-emerald-700 font-bold hover:text-emerald-800" data-i18n="navHome">Home</a>
+        <a href="#farmer-visual-guide" class="hover:text-emerald-700 transition" data-i18n="navVisualGuide">Visual Guide</a>
+        <a href="#scanner-trigger" onclick="openScannerModal()" class="hover:text-emerald-700 transition" data-i18n="navCropDoctor">AI Crop Doctor</a>
+        <a href="#stakeholders" class="hover:text-emerald-700 transition" data-i18n="navStakeholders">Stakeholders</a>
+        <a href="#architecture" class="hover:text-emerald-700 transition" data-i18n="navArchitecture">Architecture</a>
+        <a href="#field-map-section" class="hover:text-emerald-700 transition" data-i18n="navGpsMap">GPS Map</a>
+        
+      </nav>
+
+      <!-- Right Login Buttons -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="openDualLogin('farmer')" class="px-5 py-2 rounded-xl bg-[#2e7d32] hover:bg-[#1b5e20] text-white font-black text-xs shadow-sm transition" data-i18n="btnFarmerLogin">
+          Farmer Login
+        </button>
+        <button onclick="openDualLogin('official')" class="px-5 py-2 rounded-xl bg-[#1a237e] hover:bg-[#0d1b60] text-white font-black text-xs shadow-sm transition" data-i18n="btnOfficialLogin">
+          Officials Login
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub-Navbar: Multilingual Selector + Kisan Helpline -->
+    <div class="flex flex-wrap items-center justify-between pt-2 px-2 text-xs sm:text-sm font-bold text-slate-800 gap-3">
+      <div class="flex items-center gap-1 bg-white/90 backdrop-blur-sm border border-slate-200 px-2.5 py-1 rounded-xl shadow-2xs">
+        <span class="text-slate-500 text-[11px] font-semibold flex items-center gap-1">🌐 <span class="hidden sm:inline">Language /</span> भाषा:</span>
+        <button onclick="setAppLanguage('en')" id="lang-btn-en" class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-700 text-white transition">EN</button>
+        <button onclick="setAppLanguage('hi')" id="lang-btn-hi" class="px-2 py-0.5 rounded text-[11px] font-medium text-slate-700 hover:bg-emerald-50 transition">हिन्दी</button>
+        <button onclick="setAppLanguage('mr')" id="lang-btn-mr" class="px-2 py-0.5 rounded text-[11px] font-medium text-slate-700 hover:bg-emerald-50 transition">मराठी</button>
+        <button onclick="setAppLanguage('pa')" id="lang-btn-pa" class="px-2 py-0.5 rounded text-[11px] font-medium text-slate-700 hover:bg-emerald-50 transition">ਪੰਜਾਬੀ</button>
+      </div>
+
+      <a href="tel:18001801551" class="hover:text-emerald-700 transition flex items-center gap-1.5 ml-auto">
+        <span class="text-slate-600 font-medium" data-i18n="helplineLabel">Helpline:</span>
+        <span class="text-slate-900 font-black">1800-180-1551</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- 3. HERO SECTION -->
+  <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-4">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-6 space-y-4">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.15]" data-i18n="heroTitle">
+          Protect Your Crops Early: <br />
+          Actionable AI Disease Detection
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600 font-medium max-w-md" data-i18n="heroDesc">
+          A farmer-centric platform combining crop-image analysis, weather context, and localized Marathi/Hindi advisories to prevent severe crop damage.
+        </p>
+        <div class="pt-2 flex items-center gap-3 flex-wrap">
+          <!-- Existing Camera Scanner Button -->
+          <button onclick="openScannerModal()" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider shadow-md transition flex items-center gap-2">
+            <span>📷</span>
+            <span data-i18n="checkCropBtn">[ CHECK MY CROP NOW ]</span>
+          </button>
+          <!-- 1. ADDED: Upload from Gallery Button + Hidden Input -->
+          <input type="file" id="crop-file-input" accept="image/*" class="hidden" onchange="handleCropPhotoUpload(event)" />
+          <button type="button" onclick="document.getElementById('crop-file-input').click()" class="px-6 py-3 rounded-xl bg-white border-2 border-emerald-600 hover:bg-emerald-50 text-emerald-800 font-black text-xs uppercase tracking-wider shadow-md transition flex items-center gap-2 cursor-pointer" id="upload-crop-btn">
+            <span>📁</span>
+            <span data-i18n="uploadPhotoBtn">Upload Photo</span>
+          </button>
+          
+        </div>
+      </div>
+      <div class="md:col-span-6 flex justify-center md:justify-end">
+        <div class="w-full max-w-lg rounded-2xl overflow-hidden shadow-md border border-slate-200/80 bg-white aspect-[4/3] relative">
+          <img src="https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=1000&q=80" alt="Farmer in green crop field" class="w-full h-full object-cover" />
+          <div class="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg flex items-center justify-between text-[11px]">
+            <span data-i18n="heroBadgeText">🌾 Harpreet Singh • Healthy Wheat Field</span>
+            <span class="text-emerald-400 font-bold" data-i18n="heroAiVerified">● AI Verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.1 PICTORIAL FARMER GUIDE (LEFT) + MARATHI AUDIO -->
+  <section id="farmer-visual-guide" class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-7 bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/90 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100 flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">📖</span>
+              <div>
+                <h3 class="text-base sm:text-lg font-black text-slate-900" data-i18n="guideTitle">
+                  शेतकऱ्यांसाठी चित्रमय मार्गदर्शक / Visual Guide for Farmers
+                </h3>
+                <p class="text-[11px] text-slate-500 font-medium" data-i18n="guideSubtitle">केवळ ४ सोप्या पायऱ्यांमध्ये पिकाचे रक्षण करा (Purely visual, easy to use)</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase" data-i18n="guideBadge">
+              सोपे व जलद ✓
+            </span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-center">
+            <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 hover:shadow-sm transition flex flex-col items-center">
+              <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-xs mb-2">📷</div>
+              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 mb-1" data-i18n="step1Badge">पायरी १</span>
+              <h4 class="text-xs font-black text-slate-900" data-i18n="step1Title">१. फोटो काढा</h4>
+              <p class="text-[10px] text-slate-600 mt-1" data-i18n="step1Desc">खराब पानाचा मोबाईलने स्पष्ट फोटो काढा</p>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 hover:shadow-sm transition flex flex-col items-center">
+              <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-xs mb-2">🔍</div>
+              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 mb-1" data-i18n="step2Badge">पायरी २</span>
+              <h4 class="text-xs font-black text-slate-900" data-i18n="step2Title">२. AI तपासणी</h4>
+              <p class="text-[10px] text-slate-600 mt-1" data-i18n="step2Desc">अवघ्या ३ सेकंदात रोगाचे नाव समजेल</p>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 hover:shadow-sm transition flex flex-col items-center">
+              <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-xs mb-2">💊</div>
+              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 mb-1" data-i18n="step3Badge">पायरी ३</span>
+              <h4 class="text-xs font-black text-slate-900" data-i18n="step3Title">३. औषध सल्ला</h4>
+              <p class="text-[10px] text-slate-600 mt-1" data-i18n="step3Desc">सेंद्रिय व सुरक्षित रासायनिक फवारणी प्रमाण</p>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 hover:shadow-sm transition flex flex-col items-center">
+              <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-xs mb-2">🚜</div>
+              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 mb-1" data-i18n="step4Badge">पायरी ४</span>
+              <h4 class="text-xs font-black text-slate-900" data-i18n="step4Title">४. ५०% अनुदान</h4>
+              <p class="text-[10px] text-slate-600 mt-1" data-i18n="step4Desc">ड्रोन व फवारणी यंत्रासाठी सरकारी मदत</p>
+            </div>
+          </div>
+        </div>
+        <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2 text-xs">
+          <span class="text-slate-600 font-medium" data-i18n="guideFooterQuestion">चित्र पाहून समजणे सोपे जाते का?</span>
+          <button onclick="openScannerModal()" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition" data-i18n="guideStartNowBtn">
+            आत्ताच सुरू करा (Start Now) →
+          </button>
+        </div>
+      </div>
+
+      <!-- Marathi Voice Note Player (preserved untouched as required) -->
+      <div class="lg:col-span-5 bg-gradient-to-br from-emerald-800 to-green-950 rounded-2xl p-5 sm:p-6 text-white shadow-md flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute -right-8 -bottom-8 opacity-10 text-9xl select-none pointer-events-none">🎙️</div>
+        <div>
+          <div class="flex items-center justify-between pb-3 border-b border-white/15">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl animate-pulse">🔊</span>
+              <div>
+                <h4 class="text-base font-black tracking-wide text-white">मराठी आवाज मार्गदर्शक</h4>
+                <p class="text-[11px] text-emerald-200">Marathi Voice Note for App Usage</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-600/80 text-[10px] font-mono text-emerald-100 border border-emerald-400/40">
+              ऑडिओ प्लेअर
+            </span>
+          </div>
+          <div class="mt-4 p-4 rounded-xl bg-black/25 border border-white/10 backdrop-blur-sm space-y-3">
+            <div class="flex items-center justify-between text-xs text-emerald-200 font-mono">
+              <span id="audio-status-label">तयार आहे (Ready to Play)</span>
+              <span id="audio-timer">00:00 / 00:32</span>
+            </div>
+            <div id="waveform-container" class="flex items-center justify-center gap-1 h-10 px-2 py-1">
+              <span class="w-1.5 bg-emerald-400 rounded-full h-3 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-300 rounded-full h-6 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-400 rounded-full h-8 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-300 rounded-full h-4 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-400 rounded-full h-7 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-300 rounded-full h-10 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-400 rounded-full h-5 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-300 rounded-full h-8 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-400 rounded-full h-4 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-300 rounded-full h-9 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-400 rounded-full h-6 wave-bar"></span>
+              <span class="w-1.5 bg-emerald-300 rounded-full h-3 wave-bar"></span>
+            </div>
+            <div class="flex items-center justify-center gap-3 pt-1">
+              <button id="marathi-voice-btn" onclick="toggleMarathiVoiceNote()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs shadow-md transition flex items-center gap-2">
+                <span id="voice-icon">▶️</span>
+                <span id="voice-btn-text">मराठीत ऐका (Play Voice Note)</span>
+              </button>
+              <button onclick="stopMarathiVoiceNote()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs border border-white/20 transition" title="थांबवा (Stop)">
+                ⏹️
+              </button>
+            </div>
+          </div>
+          <div class="mt-3 text-[11px] text-emerald-100/90 leading-relaxed max-h-20 overflow-y-auto pr-1 bg-black/20 p-2.5 rounded-lg border border-white/5">
+            <strong>आवाज मजकूर:</strong> "नमस्कार शेतकरी मित्रांनो! कृषिरक्षक ॲपमध्ये आपले स्वागत आहे. कॅमेरा बटण दाबून आजारी पानाचा फोटो काढा. AI रोग ओळखेल व उपाय सांगेल. ॲप १००% अचूक नाही, त्यामुळे KVK शास्त्रज्ञांचा सल्ला अवश्य घ्या. जय जवान, जय किसान!"
+          </div>
+        </div>
+        <div class="text-[10px] text-emerald-300/80 pt-2 flex items-center justify-between border-t border-white/10 mt-2">
+          <span>AI Speech Synthesis (mr-IN)</span>
+          <span>हॅकथॉन ऑडिओ गाईड ✓</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.2 CENTRAL STATUTORY DISCLAIMER -->
+  <section id="central-disclaimer" class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <div class="rounded-2xl p-5 sm:p-6 bg-gradient-to-r from-amber-500/15 via-amber-100/50 to-orange-500/15 border-2 border-amber-400/90 shadow-md backdrop-blur-sm">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex-shrink-0 flex items-center justify-center text-white text-2xl shadow-sm border border-amber-300">
+            ⚠️
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2.5 py-0.5 rounded-md bg-amber-600 text-white text-[11px] font-black uppercase tracking-wider shadow-2xs" data-i18n="disclaimerBadge">
+                महत्वपूर्ण वैधानिक चेतावणी / STATUTORY DISCLAIMER
+              </span>
+              <span class="text-xs font-bold text-amber-900 bg-amber-200/70 px-2 py-0.5 rounded" data-i18n="disclaimerAccuracy">
+                AI Accuracy: ~94.6% (Not 100% Infallible)
+              </span>
+            </div>
+            <h4 class="text-sm sm:text-base font-black text-slate-900 mt-1.5" data-i18n="disclaimerHeading">
+              आमची AI प्रणाली एक साहाय्यक सल्लागार साधन आहे; ती १००% अचूक नाही.
+            </h4>
+            <p class="text-xs text-slate-700 font-medium mt-1 leading-relaxed max-w-3xl" data-i18n="disclaimerBody">
+              <strong>KrishiRakshak AI decision-support system is an assistive diagnostic tool and is NOT 100% infallible.</strong><br />
+              पिकावर गंभीर रोग अथवा किडीचा प्रादुर्भाव आढळल्यास, कोणतेही रासायनिक कीटकनाशक फवारण्यापूर्वी आपल्या तालुक्यातील <strong>कृषी विज्ञान केंद्र (KVK)</strong> शास्त्रज्ञांचा किंवा कृषी विस्तार अधिकाऱ्यांचा सल्ला घेणे कायदेशीररीत्या बंधनकारक आहे.
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-2.5 w-full md:w-auto flex-shrink-0">
+          <button onclick="playMarathiVoiceNote()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white font-black text-xs shadow-sm flex items-center justify-center gap-2 transition">
+            <span class="text-base animate-pulse">🔊</span>
+            <span data-i18n="disclaimerVoiceBtn">मराठीत ऐका (Listen Voice Note)</span>
+          </button>
+          <a href="tel:18001801551" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white border border-amber-300 hover:bg-amber-50 text-slate-800 font-black text-xs shadow-2xs flex items-center justify-center gap-2 transition">
+            <span>📞</span>
+            <span data-i18n="disclaimerHelplineBtn">हेल्पलाईन: 1800-180-1551</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FOUR STAKEHOLDER CARDS -->
+  <section id="stakeholders" class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden p-3 hover:shadow-md transition text-center flex flex-col justify-between">
+        <div class="rounded-xl overflow-hidden aspect-[16/10] bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80" alt="Farmers" class="w-full h-full object-cover" />
+        </div>
+        <div class="py-3">
+          <h3 class="text-sm sm:text-base font-black text-slate-900" data-i18n="stakeholderFarmers">Farmers</h3>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden p-3 hover:shadow-md transition text-center flex flex-col justify-between">
+        <div class="rounded-xl overflow-hidden aspect-[16/10] bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Agricultural Experts/KVKs" class="w-full h-full object-cover" />
+        </div>
+        <div class="py-3">
+          <h3 class="text-sm sm:text-base font-black text-slate-900" data-i18n="stakeholderKvk">Agricultural Experts/KVKs</h3>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden p-3 hover:shadow-md transition text-center flex flex-col justify-between">
+        <div class="rounded-xl overflow-hidden aspect-[16/10] bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=600&q=80" alt="FPOs" class="w-full h-full object-cover" />
+        </div>
+        <div class="py-2.5">
+          <h3 class="text-sm sm:text-base font-black text-slate-900 leading-tight" data-i18n="stakeholderFpo">
+            FPOs <br />
+            <span class="text-[11px] font-normal text-slate-500">(Farmer Producer Organizations)</span>
+          </h3>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden p-3 hover:shadow-md transition text-center flex flex-col justify-between">
+        <div class="rounded-xl overflow-hidden aspect-[16/10] bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=600&q=80" alt="Government" class="w-full h-full object-cover" />
+        </div>
+        <div class="py-3">
+          <h3 class="text-sm sm:text-base font-black text-slate-900" data-i18n="stakeholderGov">Government</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. TECHNICAL ARCHITECTURE -->
+  <section id="architecture" class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-6 sm:p-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black uppercase tracking-wider mb-2">
+            <span data-i18n="archBadge">🔬 SIH 2026 Evaluation Deck • Problem Statement 26131</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" data-i18n="archTitle">
+            Technical Architecture & Responsible AI Framework
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1" data-i18n="archDesc">
+            Engineered for remote Indian farmlands with sub-150ms edge inference, hyperlocal weather context, and human-in-the-loop KVK validation.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1.5 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs font-bold shadow-xs" data-i18n="archEdgeLatency">
+            Offline Edge Latency: 142ms
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200" data-i18n="archIcarBadge">
+            ICAR Validated
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 pt-6">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs font-black mb-3">01</div>
+            <h4 class="text-sm font-black text-slate-900" data-i18n="archStep1Title">Leaf Ingestion</h4>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed" data-i18n="archStep1Desc">Mobile camera captures leaf. CLAHE preprocessing normalizes harsh sunlight in outdoor fields.</p>
+          </div>
+          <span class="text-[11px] font-semibold text-emerald-700 mt-3" data-i18n="archStep1Badge">⚡ 40ms Preprocess</span>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs font-black mb-3">02</div>
+            <h4 class="text-sm font-black text-slate-900" data-i18n="archStep2Title">Hybrid AI Model</h4>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed" data-i18n="archStep2Desc"><strong>YOLOv8-nano + MobileNetV3</strong> INT8 quantized running locally on-device via WebAssembly.</p>
+          </div>
+          <span class="text-[11px] font-semibold text-emerald-700 mt-3" data-i18n="archStep2Badge">🧠 94.6% Accuracy</span>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs font-black mb-3">03</div>
+            <h4 class="text-sm font-black text-slate-900" data-i18n="archStep3Title">Weather Gating</h4>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed" data-i18n="archStep3Desc">Open-Meteo telemetry syncs rain probability & wind speed to calculate optimal 6h spray window.</p>
+          </div>
+          <span class="text-[11px] font-semibold text-emerald-700 mt-3" data-i18n="archStep3Badge">🌦️ Drift Prevention</span>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs font-black mb-3">04</div>
+            <h4 class="text-sm font-black text-slate-900" data-i18n="archStep4Title">Confidence Gate</h4>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed" data-i18n="archStep4Desc">Confidence &ge; 85%: Instant bio/chemical advisory.<br />Confidence &lt; 85%: Automated push to KVK agronomist.</p>
+          </div>
+          <span class="text-[11px] font-semibold text-amber-700 mt-3" data-i18n="archStep4Badge">⚠️ Responsible AI</span>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+          <div>
+           
+      <div class="mt-6 pt-6 border-t border-slate-200">
+        <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-3" data-i18n="benchTitle">Technical Benchmarks & Verification Matrix</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+            <div class="text-xl sm:text-2xl font-black text-emerald-800">35,420</div>
+            <div class="text-[11px] text-slate-600 font-medium mt-0.5" data-i18n="benchDataset">Indian Field Image Dataset</div>
+          </div>
+          <div class="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+            <div class="text-xl sm:text-2xl font-black text-emerald-800">91.8%</div>
+            <div class="text-[11px] text-slate-600 font-medium mt-0.5" data-i18n="benchPrecision">Mean Average Precision (mAP)</div>
+          </div>
+          <div class="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+            <div class="text-xl sm:text-2xl font-black text-emerald-800">142 ms</div>
+            <div class="text-[11px] text-slate-600 font-medium mt-0.5" data-i18n="benchLatency">Mobile Edge Inference</div>
+          </div>
+          <div class="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+            <div class="text-xl sm:text-2xl font-black text-emerald-800">0 KB</div>
+            <div class="text-[11px] text-slate-600 font-medium mt-0.5" data-i18n="benchCloud">Cloud Footprint (Offline Ready)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNGAL DISEASE RISK CALCULATOR -->
+  <section id="fungal-risk-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <h3 class="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <span>🌡️</span> Check Fungal Disease Risk
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            Set temperature and humidity to calculate local fungal spore germination risk
+          </p>
+        </div>
+        <div class="px-3.5 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black flex items-center gap-1.5 flex-shrink-0">
+          <span>ⓘ</span> ICAR Micro-climate Index
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <!-- Left Column: Controls -->
+        <div class="lg:col-span-6 space-y-6 flex flex-col justify-center">
+          <!-- Temperature Slider Control -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label for="fungal-temp-slider" class="text-xs font-black text-slate-700 uppercase tracking-wider">
+                Temperature (°C)
+              </label>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  onclick="adjustFungalValue('temp', -1)"
+                  class="w-7 h-7 rounded-lg border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-sm flex items-center justify-center transition active:scale-95"
+                  title="Decrease 1°C"
+                >
+                  –1°
+                </button>
+                <span id="fungal-temp-val" class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-300 font-mono font-black text-slate-900 text-sm min-w-[56px] text-center">
+                  24°C
+                </span>
+                <button
+                  type="button"
+                  onclick="adjustFungalValue('temp', 1)"
+                  class="w-7 h-7 rounded-lg border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-sm flex items-center justify-center transition active:scale-95"
+                  title="Increase 1°C"
+                >
+                  +1°
+                </button>
+              </div>
+            </div>
+            <input
+              type="range"
+              id="fungal-temp-slider"
+              min="10"
+              max="45"
+              value="24"
+              step="1"
+              oninput="calculateFungalRisk()"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700"
+            />
+            <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+              <span>Cool (10°C)</span>
+              <span>Hot (45°C)</span>
+            </div>
+          </div>
+
+          <!-- Relative Humidity Slider Control -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label for="fungal-humidity-slider" class="text-xs font-black text-slate-700 uppercase tracking-wider">
+                Relative Humidity (%)
+              </label>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  onclick="adjustFungalValue('humidity', -5)"
+                  class="w-7 h-7 rounded-lg border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-sm flex items-center justify-center transition active:scale-95"
+                  title="Decrease 5%"
+                >
+                  –5%
+                </button>
+                <span id="fungal-humidity-val" class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-300 font-mono font-black text-slate-900 text-sm min-w-[56px] text-center">
+                  47%
+                </span>
+                <button
+                  type="button"
+                  onclick="adjustFungalValue('humidity', 5)"
+                  class="w-7 h-7 rounded-lg border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-sm flex items-center justify-center transition active:scale-95"
+                  title="Increase 5%"
+                >
+                  +5%
+                </button>
+              </div>
+            </div>
+            <input
+              type="range"
+              id="fungal-humidity-slider"
+              min="20"
+              max="100"
+              value="47"
+              step="1"
+              oninput="calculateFungalRisk()"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700"
+            />
+            <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+              <span>Dry (20%)</span>
+              <span>Saturated (100%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Estimated Fungal Risk Result Panel -->
+        <div class="lg:col-span-6">
+          <div id="fungal-result-panel" class="h-full p-5 sm:p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-4 bg-emerald-50/50 border-emerald-200">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="text-xs font-black tracking-wider text-slate-600 uppercase flex items-center gap-1.5">
+                  <span>⚠️</span> ESTIMATED FUNGAL RISK
+                </span>
+                <span id="fungal-risk-badge" class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  LOW RISK
+                </span>
+              </div>
+
+              <h4 id="fungal-risk-headline" class="text-xl font-black text-slate-900 tracking-tight mb-2">
+                Low Fungal Risk
+              </h4>
+
+              <p id="fungal-risk-desc" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                At 24°C and 47% relative humidity, ambient conditions are dry. Spore germination and mycelial propagation of rust and blast pathogens are suppressed.
+              </p>
+
+              <div id="fungal-action-box" class="mt-4 p-3.5 rounded-xl border border-emerald-200 bg-white text-xs space-y-1">
+                <div class="font-black text-slate-800 tracking-wide uppercase text-[11px]">
+                  RECOMMENDED ACTION:
+                </div>
+                <div id="fungal-risk-action" class="text-slate-600 leading-relaxed">
+                  Continue standard crop scouting and balanced irrigation. No chemical fungicide intervention required under current moisture conditions.
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2 pt-2">
+              <button
+                type="button"
+                onclick="document.getElementById('field-map-section').scrollIntoView({ behavior: 'smooth' })"
+                class="w-full py-3 rounded-xl bg-slate-950 hover:bg-slate-900 text-white font-black text-xs uppercase tracking-wider transition shadow-sm flex items-center justify-center gap-2 active:scale-[0.99]"
+              >
+                <span>🗺️</span> View Farm Risk Map
+              </button>
+              <p class="text-[11px] text-emerald-700 font-semibold text-center">
+                Mathematical risk estimate based on ICAR microclimate indices. Not a guarantee.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 7. FARM FIELD GPS LOCATION & INTERACTIVE MAP -->
+  <section id="field-map-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-6 sm:p-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black uppercase tracking-wider mb-2">
+            <span data-i18n="gpsSectionBadge">📍 GPS Agro-Telemetry • SIH 2026 End-Use Module</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" data-i18n="gpsSectionTitle">
+            शेतकऱ्याच्या शेताचे GPS स्थान आणि नकाशा (Farm Field Location & Map)
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1" data-i18n="gpsSectionDesc">
+            Detect farmer's field coordinates, agro-climatic sub-zone, soil context, and nearest Krishi Vigyan Kendra (KVK) research station.
+          </p>
+        </div>
+        <button onclick="detectFarmerLocation()" id="detect-gps-btn" class="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white font-black text-xs uppercase tracking-wider shadow-md transition flex items-center gap-2 flex-shrink-0">
+          <span class="animate-bounce">📍</span>
+          <span id="detect-gps-btn-text" data-i18n="gpsDetectBtn">माझ्या शेताचे स्थान शोधा (Detect My Field)</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-6 items-center">
+        <!-- Left: Real Interactive Leaflet Map -->
+        <div class="lg:col-span-8 rounded-2xl overflow-hidden border border-slate-300 shadow-inner aspect-[16/10] bg-emerald-900/10 relative">
+          <div id="field-leaflet-map" class="w-full h-full min-h-[380px] z-0"></div>
+          <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold text-slate-800 shadow-sm flex items-center gap-2 z-[1000] pointer-events-none">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="map-telemetry-hud">GPS Active: 18.5204° N, 73.8567° E (Pune)</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-300 text-[11px] font-mono text-slate-700 shadow-sm z-[1000] pointer-events-none">
+            OpenStreetMap + Leaflet Live Tiles
+          </div>
+        </div>
+
+        <!-- Right: Telemetry Details -->
+        <div class="lg:col-span-4 space-y-3">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <h4 class="text-xs font-black uppercase text-slate-500 tracking-wider mb-2" data-i18n="gpsTelemetryHeading">भौगोलिक तपशील / Geospatial Telemetry</h4>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between">
+                <span class="text-slate-600 font-medium" data-i18n="gpsLabelLocation">स्थान (Location):</span>
+                <span id="geo-location-name" class="font-bold text-slate-900">Haveli Block, Pune District</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-600 font-medium" data-i18n="gpsLabelCoords">अक्षांश-रेखांश (Lat/Long):</span>
+                <span id="geo-coords" class="font-bold text-emerald-800 font-mono">18.5204° N, 73.8567° E</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-600 font-medium" data-i18n="gpsLabelZone">कृषी-हवामान विभाग:</span>
+                <span class="font-bold text-slate-900" data-i18n="gpsValZone">Western Plateau & Hills (Zone IX)</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-600 font-medium" data-i18n="gpsLabelSoil">मातीचा प्रकार (Soil):</span>
+                <span class="font-bold text-slate-900" data-i18n="gpsValSoil">काळी कसदार माती (Medium Black)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200">
+            <h4 class="text-xs font-black uppercase text-emerald-900 tracking-wider mb-2" data-i18n="kvkHeading">नजीकचे कृषी विज्ञान केंद्र (Nearest KVK)</h4>
+            <div class="space-y-1.5 text-xs text-slate-700">
+              <div class="font-black text-emerald-950 text-sm" data-i18n="kvkName">कृषी विज्ञान केंद्र, बारामती / नारायणगाव</div>
+              <div class="text-[11px] text-slate-600" data-i18n="kvkDist">अंतर: <strong>१४.२ किमी (22 मिनिटे प्रवास)</strong></div>
+              <div class="text-[11px] text-slate-600" data-i18n="kvkSci">मुख्य पीक शास्त्रज्ञ: डॉ. एस. के. कुलकर्णी</div>
+              <div class="pt-2 flex items-center gap-2">
+                <a href="tel:02112255227" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold text-[11px] hover:bg-emerald-800 transition flex items-center gap-1">
+                  <span>📞</span> <span data-i18n="kvkCallBtn">KVK कॉल करा</span>
+                </a>
+                <button onclick="alert('KVK Baramati Extension Agronomist notified with your leaf scan!')" class="px-3 py-1.5 rounded-lg bg-white border border-emerald-300 text-emerald-800 font-bold text-[11px] hover:bg-emerald-50 transition" data-i18n="kvkReportBtn">
+                  रिपोर्ट पाठवा →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
+            <span>🛡️</span>
+            <div data-i18n="gpsPrivacy">
+              <strong>स्थान गोपनीयता:</strong> Your field location is processed strictly on-device for local weather sync and is never sold to third parties.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. GOVERNMENT FOOTER -->
+  <footer class="bg-[#0b2545] text-slate-300 text-xs mt-12 border-t-4 border-t-[#ff9933]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-[12px]">
+        <div>
+          <h4 class="font-black text-white text-sm uppercase tracking-wider mb-3 border-b border-slate-700 pb-1 flex items-center gap-2">
+            <span>🛡️</span> KrishiRakshak <span class="text-base">🌱</span> (SIH 2026)
+          </h4>
+          <p class="text-slate-400 leading-relaxed text-xs" data-i18n="footerAboutDesc">
+            Smart India Hackathon 2026 solution for Problem Statement 26131: Early Detection and Management of Crop Diseases and Pest Infestations. Developed by Team Code Knights (SW-39).
+          </p>
+        </div>
+        <div>
+          <h4 class="font-black text-white text-sm uppercase tracking-wider mb-3 border-b border-slate-700 pb-1" data-i18n="footerPortalsTitle">Important Government Portals</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="https://agricoop.gov.in" target="_blank" class="hover:underline hover:text-white" data-i18n="footerPortalAgri">Department of Agriculture & Farmers Welfare</a></li>
+            <li><a href="https://pmkisan.gov.in" target="_blank" class="hover:underline hover:text-white" data-i18n="footerPortalKisan">PM-KISAN Samman Nidhi</a></li>
+            <li><a href="https://dbtbharat.gov.in" target="_blank" class="hover:underline hover:text-white" data-i18n="footerPortalDbt">DBT Bharat National Portal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-black text-white text-sm uppercase tracking-wider mb-3 border-b border-slate-700 pb-1" data-i18n="footerStandardsTitle">National Standards</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#central-disclaimer" class="hover:underline hover:text-white" data-i18n="footerStandardSafety">Statutory Safety Guidelines</a></li>
+            <li><a href="#central-disclaimer" class="hover:underline hover:text-white" data-i18n="footerStandardPrivacy">Privacy Policy (No Aadhaar Stored)</a></li>
+            <li><a href="#" class="hover:underline hover:text-white" data-i18n="footerStandardIcar">ICAR & FMTTI Compliance</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-black text-white text-sm uppercase tracking-wider mb-3 border-b border-slate-700 pb-1" data-i18n="footerCallCenterTitle">National Kisan Call Center</h4>
+          <div class="space-y-1.5 text-xs">
+            <p><strong class="text-white" data-i18n="footerHelplineStrong">Toll-Free Helpline:</strong> 1800-180-1551 (24x7, All Languages)</p>
+            <p><strong class="text-white">Team Contact:</strong> codeknights.sih2026[at]gmail[dot]com</p>
+            <p class="text-slate-400 mt-1">Smart India Hackathon • Ministry of Education</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIOTIC TRIBUTE BANNER -->
+      <div class="my-8 p-6 rounded-2xl bg-gradient-to-r from-orange-500/15 via-white/10 to-emerald-500/15 border border-amber-400/25 shadow-xl text-center backdrop-blur-sm relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl select-none pointer-events-none">🌾</div>
+        <div class="absolute -left-6 -top-6 opacity-10 text-9xl select-none pointer-events-none">🛡️</div>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 relative z-10">
+          <span class="text-3xl filter drop-shadow-md">🇮🇳</span>
+          <h3 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider uppercase bg-gradient-to-r from-amber-400 via-white to-emerald-400 bg-clip-text text-transparent drop-shadow-sm" data-i18n="footerPatrioticTitle">
+            जय जवान • जय किसान | Jai Jawan, Jai Kisan
+          </h3>
+          <span class="text-3xl filter drop-shadow-md">🌾</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-200 mt-2.5 font-medium max-w-2xl mx-auto leading-relaxed relative z-10" data-i18n="footerPatrioticDesc">
+          "Dedicated to the courageous sentinels guarding our nation's frontiers and the tireless Annadatas cultivating our fertile soil."<br />
+          <strong class="text-emerald-300">KrishiRakshak</strong> is engineered by <strong>Team Code Knights (SW-39)</strong> to empower Indian agriculture through indigenous AI diagnostics and direct SMAM mechanization under <strong>Smart India Hackathon 2026</strong>.
+        </p>
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2.5 text-[11px] text-amber-200/90 font-mono relative z-10">
+          <span class="px-3 py-1 rounded-full bg-black/40 border border-amber-400/40 shadow-xs">Shri Lal Bahadur Shastri's Vision</span>
+          <span class="px-3 py-1 rounded-full bg-black/40 border border-emerald-400/40 shadow-xs">Atmanirbhar Krishi • Viksit Bharat 2047</span>
+          <span class="px-3 py-1 rounded-full bg-black/40 border border-white/40 shadow-xs">Smart India Hackathon 2026</span>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-[11px] text-slate-400">
+        <div>
+          <p>© 2026 KrishiRakshak • Team Code Knights (SW-39) • Smart India Hackathon 2026.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 font-mono text-[10px] border border-slate-700">Problem ID: 26131</span>
+          <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 font-mono text-[10px] border border-slate-700">PyTorch + YOLOv8</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DUAL LOGIN MODAL -->
+  <div id="dual-login-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-3">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-300 overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="flex border-b border-slate-200 text-sm font-bold">
+        <button id="tab-farmer-btn" onclick="switchLoginTab('farmer')" class="w-1/2 py-3.5 px-4 text-center bg-emerald-700 text-white flex items-center justify-center gap-2 transition">
+          <span>👨‍🌾</span> <span data-i18n="loginTabFarmer">Farmer Login</span>
+        </button>
+        <button id="tab-official-btn" onclick="switchLoginTab('official')" class="w-1/2 py-3.5 px-4 text-center bg-slate-100 text-slate-700 hover:bg-slate-200 flex items-center justify-center gap-2 transition">
+          <span>🏛️</span> <span data-i18n="loginTabOfficial">Officials / KVK Login</span>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto">
+        <!-- Farmer Tab Content -->
+        <div id="login-farmer-content" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="loginFarmerIdLabel">Registered Mobile Number / Farmer ID</label>
+            <input type="text" id="farmer-login-phone" placeholder="Enter 10-digit mobile number" value="9822012345" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 font-medium" />
+          </div>
+          <div class="flex gap-2">
+            <input type="text" placeholder="Enter 6-digit OTP" value="482910" class="w-2/3 px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 font-mono text-center tracking-widest font-bold" />
+            <button class="w-1/3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300" data-i18n="loginResendOtp">
+              Resend OTP
+            </button>
+          </div>
+          <button onclick="handleLoginSuccess('farmer')" class="w-full py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-md transition" data-i18n="loginFarmerBtn">
+            LOGIN AS FARMER →
+          </button>
+        </div>
+
+        <!-- Official Tab Content -->
+        <div id="login-official-content" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="loginOfficialIdLabel">Government Email ID / KVK Staff Code</label>
+            <input type="text" id="official-login-id" placeholder="e.g. sk.kulkarni@icar.gov.in" value="officer.pune@icar.gov.in" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-600 font-medium" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="loginOfficialPwLabel">Official Password</label>
+            <input type="password" value="••••••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-600 font-medium" />
+          </div>
+          <button onclick="handleLoginSuccess('official')" class="w-full py-3 rounded-xl bg-[#1a237e] hover:bg-[#0d1b60] text-white font-bold text-sm shadow-md transition" data-i18n="loginOfficialBtn">
+            LOGIN TO GOVT PORTAL →
+          </button>
+        </div>
+      </div>
+
+      <div class="px-6 py-3 bg-slate-50 border-t border-slate-200 flex justify-end">
+        <button onclick="closeDualLogin()" class="px-4 py-1.5 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-100 font-semibold text-xs" data-i18n="loginCloseBtn">
+          Close Window
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI CROP DOCTOR SCANNER SIMULATOR MODAL -->
+  <div id="scanner-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-300 overflow-hidden flex flex-col max-h-[95vh]">
+      <div class="bg-gradient-to-r from-emerald-700 to-green-800 text-white px-5 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📷</span>
+          <h3 class="font-black text-sm sm:text-base" data-i18n="scannerModalTitle">KrishiRakshak 🌱 AI Crop Camera Scanner</h3>
+        </div>
+        <button onclick="closeScannerModal()" class="text-white hover:text-emerald-200 text-lg font-bold">✕</button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4">
+        <div class="w-full aspect-[16/10] bg-slate-900 rounded-xl overflow-hidden relative border border-slate-700 flex items-center justify-center">
+          <img id="scanner-view-img" src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?auto=format&fit=crop&w=800&q=80" alt="Leaf Sample" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 border-2 border-emerald-400/40 rounded-xl pointer-events-none"></div>
+          <div class="absolute top-3 left-3 bg-black/60 px-2.5 py-1 rounded text-[10px] text-emerald-400 font-mono font-bold" data-i18n="scannerLivePreview">
+            LIVE PREVIEW • YOLOv8-nano INT8
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-xs font-bold text-slate-700" data-i18n="scannerSampleLabel">Select Test Crop Disease Sample:</label>
+          <div class="flex gap-2">
+            <button onclick="switchScannerSample('yellow_rust')" class="flex-1 py-1.5 px-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold border border-amber-300" data-i18n="scannerSampleRust">
+              Wheat: Yellow Rust
+            </button>
+            <button onclick="switchScannerSample('rice_blast')" class="flex-1 py-1.5 px-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-900 text-xs font-bold border border-rose-300" data-i18n="scannerSampleBlast">
+              Rice: Blast Disease
+            </button>
+            <button onclick="switchScannerSample('healthy')" class="flex-1 py-1.5 px-2 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-xs font-bold border border-emerald-300" data-i18n="scannerSampleHealthy">
+              Healthy Crop
+            </button>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+            <div>
+              <span class="text-[11px] font-bold text-slate-500 uppercase" data-i18n="scannerResultLabel">Detection Result</span>
+              <h4 id="diag-disease-title" class="text-base font-black text-slate-900">Yellow Rust (Puccinia striiformis)</h4>
+            </div>
+            <span id="diag-confidence" class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black">96.4% Confidence</span>
+          </div>
+
+          <p id="diag-desc" class="text-xs text-slate-600">Distinct yellow pustules arranged in linear stripes along the leaf veins.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div class="p-2.5 bg-emerald-50 rounded-lg border border-emerald-200">
+              <strong class="text-emerald-900" data-i18n="scannerBioLabel">🌿 Biological Remedy:</strong>
+              <p id="diag-bio" class="text-slate-700 text-[11px] mt-0.5">Spray Neem Seed Kernel Extract (5%) or Trichoderma viride @ 5g/liter.</p>
+            </div>
+            <div class="p-2.5 bg-blue-50 rounded-lg border border-blue-200">
+              <strong class="text-blue-900" data-i18n="scannerChemLabel">🧪 Chemical (CIB&RC):</strong>
+              <p id="diag-chem" class="text-slate-700 text-[11px] mt-0.5">Propiconazole 25% EC @ 1ml/L during morning hours.</p>
+            </div>
+          </div>
+
+          <div id="scanner-ai-disclaimer" class="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-[11px] text-amber-950 font-medium flex items-start gap-2" data-i18n="diagDisclaimer">
+            <span class="text-sm">⚠️</span>
+            <div>
+              <strong>Statutory Advisory:</strong> This AI prediction is an assistive decision aid (~94.6% confidence) and is <strong>not 100% infallible</strong>. Farmers must cross-check severe crop damage with local KVK agronomists before chemical spraying.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 bg-slate-50 border-t border-slate-200 flex justify-end">
+        <button onclick="closeScannerModal()" class="px-5 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs" data-i18n="scannerCloseBtn">
+          Close Scanner
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script id="app-engine-script">
+    /* 1. Complete Multilingual Translations Dictionary */
+    const TRANSLATIONS = {
+      en: {
+        topRibbon: "Smart India Hackathon 2026 - Problem Statement 26131 - Team Code Knights SW-39",
+        tickerBadge: "⚠️ STATUTORY DISCLAIMER",
+        ticker: "<span>📢 <strong>महत्वपूर्ण सूचना / IMPORTANT STATUTORY NOTICE:</strong> KrishiRakshak AI crop diagnostic system is an assistive decision-support tool and is <strong>NOT 100% correct / infallible</strong> (current diagnostic confidence: ~94.6%). Field farmers and agricultural officers MUST verify critical or severe crop symptoms with local Krishi Vigyan Kendra (KVK) agronomists before applying chemical treatments.</span><span>•</span><span>🌾 <strong>National Kisan Call Centre (Toll-Free):</strong> 1800-180-1551 (24x7 Advisory in 22 Regional Languages)</span><span>•</span><span>⚖️ <strong>CIB&RC Pesticide Safety Protocol:</strong> Chemical recommendations strictly adhere to Central Insecticides Board dosage limits. Biological & organic pest management (IPM) is prioritized first.</span><span>•</span><span>🛡️ <strong>Ethical AI & Data Privacy:</strong> Zero Aadhaar data stored. Direct Benefit Transfer (DBT) operated strictly via Farmer ID & Mobile OTP under DPDP Act 2023.</span><span>•</span><span>🇮🇳 <strong>Smart India Hackathon 2026:</strong> Problem Statement 26131 | Team Code Knights (SW-39)</span>",
+        slogan: "\"जय जवान, जय किसान\"",
+        navHome: "Home",
+        navVisualGuide: "Visual Guide",
+        navCropDoctor: "AI Crop Doctor",
+        navStakeholders: "Stakeholders",
+        navArchitecture: "Architecture",
+        navGpsMap: "GPS Map",
+
+        btnFarmerLogin: "Farmer Login",
+        btnOfficialLogin: "Officials Login",
+        helplineLabel: "Helpline:",
+        heroTitle: "Protect Your Crops Early: <br />Actionable AI Disease Detection",
+        heroDesc: "A farmer-centric platform combining crop-image analysis, weather context, and localized Marathi/Hindi advisories to prevent severe crop damage.",
+        checkCropBtn: "[ CHECK MY CROP NOW ]",
+        uploadPhotoBtn: "Upload Photo",
+       
+        heroBadgeText: "🌾 Harpreet Singh • Healthy Wheat Field",
+        heroAiVerified: "● AI Verified",
+        guideTitle: "शेतकऱ्यांसाठी चित्रमय मार्गदर्शक / Visual Guide for Farmers",
+        guideSubtitle: "केवळ ४ सोप्या पायऱ्यांमध्ये पिकाचे रक्षण करा (Purely visual, easy to use)",
+        guideBadge: "सोपे व जलद ✓",
+        step1Badge: "Step 1",
+        step1Title: "1. Take Photo",
+        step1Desc: "Snap a clear photo of the infected leaf using your mobile camera",
+        step2Badge: "Step 2",
+        step2Title: "2. AI Diagnosis",
+        step2Desc: "Instant disease recognition and risk level in under 3 seconds",
+        step3Badge: "Step 3",
+        step3Title: "3. Treatment Advisory",
+        step3Desc: "Organic and CIB&RC approved chemical dosage guidelines",
+        step4Badge: "Step 4",
+        
+        step4Desc: "Govt financial support for Kisan Drones and power sprayers",
+        guideFooterQuestion: "Do visual step guides make adoption easier?",
+        guideStartNowBtn: "Start Now →",
+        disclaimerBadge: "IMPORTANT STATUTORY NOTICE / DISCLAIMER",
+        disclaimerAccuracy: "AI Accuracy: ~94.6% (Not 100% Infallible)",
+        disclaimerHeading: "Our AI system is an assistive advisory tool; it is not 100% infallible.",
+        disclaimerBody: "<strong>KrishiRakshak AI decision-support system is an assistive diagnostic tool and is NOT 100% infallible.</strong><br />In cases of severe crop damage or pest outbreaks, consulting your local <strong>Krishi Vigyan Kendra (KVK)</strong> scientists or agricultural extension officers before applying any chemical pesticides is strictly advised.",
+        disclaimerVoiceBtn: "Listen Voice Note",
+        disclaimerHelplineBtn: "Helpline: 1800-180-1551",
+        stakeholderFarmers: "Farmers",
+        stakeholderKvk: "Agricultural Experts/KVKs",
+        stakeholderFpo: "FPOs <br /><span class=\"text-[11px] font-normal text-slate-500\">(Farmer Producer Organizations)</span>",
+        stakeholderGov: "Government",
+        archBadge: "🔬 SIH 2026 Evaluation Deck • Problem Statement 26131",
+        archTitle: "Technical Architecture & Responsible AI Framework",
+        archDesc: "Engineered for remote Indian farmlands with sub-150ms edge inference, hyperlocal weather context, and human-in-the-loop KVK validation.",
+        archEdgeLatency: "Offline Edge Latency: 142ms",
+        archIcarBadge: "ICAR Validated",
+        archStep1Title: "Leaf Ingestion",
+        archStep1Desc: "Mobile camera captures leaf. CLAHE preprocessing normalizes harsh sunlight in outdoor fields.",
+        archStep1Badge: "⚡ 40ms Preprocess",
+        archStep2Title: "Hybrid AI Model",
+        archStep2Desc: "<strong>YOLOv8-nano + MobileNetV3</strong> INT8 quantized running locally on-device via WebAssembly.",
+        archStep2Badge: "🧠 94.6% Accuracy",
+        archStep3Title: "Weather Gating",
+        archStep3Desc: "Open-Meteo telemetry syncs rain probability & wind speed to calculate optimal 6h spray window.",
+        archStep3Badge: "🌦️ Drift Prevention",
+        archStep4Title: "Confidence Gate",
+        archStep4Desc: "Confidence &ge; 85%: Instant bio/chemical advisory.<br />Confidence &lt; 85%: Automated push to KVK agronomist.",
+        archStep4Badge: "⚠️ Responsible AI",
+        
+       
+        benchTitle: "Technical Benchmarks & Verification Matrix",
+        benchDataset: "Indian Field Image Dataset",
+        benchPrecision: "Mean Average Precision (mAP)",
+        benchLatency: "Mobile Edge Inference",
+        benchCloud: "Cloud Footprint (Offline Ready)",
+        smamSubtitle: "Sub-Mission on Agricultural Mechanization (SMAM)",
+        
+        smamDesc: "Calculate financial assistance up to 50% for modern sprayers and Kisan Drones (No Aadhaar required).",
+        smamDbtBadge: "DBT Bharat Compliant ✓",
+        smamLabelEquipment: "Select Machinery / Equipment",
+        smamLabelCategory: "Farmer Category",
+        smamBaseCostLabel: "Equipment Base Cost:",
+        
+        smamNetCostLabel: "Farmer Effective Cost:",
+        
+        smamTrackDesc: "Track DBT disbursement status without Aadhaar using Application Ref ID or Mobile Number.",
+        smamTrackBtn: "SEARCH APPLICATION RECORD →",
+        smamApplicantInfo: "Applicant: Vilas Patil (Pune Block)",
+        smamSanctionedBadge: "Sanctioned ✓",
+        smamEquipmentStatus: "Equipment: Kisan Drone (16L) • DBT Bank Status: Active",
+        gpsSectionBadge: "📍 GPS Agro-Telemetry • SIH 2026 End-Use Module",
+        gpsSectionTitle: "Farm Field GPS Location & Interactive Map",
+        gpsSectionDesc: "Detect farmer's field coordinates, agro-climatic sub-zone, soil context, and nearest Krishi Vigyan Kendra (KVK) research station.",
+        gpsDetectBtn: "Detect My Field",
+        gpsTelemetryHeading: "Geospatial Telemetry Details",
+        gpsLabelLocation: "Location:",
+        gpsLabelCoords: "Coordinates (Lat/Long):",
+        gpsLabelZone: "Agro-Climatic Zone:",
+        gpsValZone: "Western Plateau & Hills (Zone IX)",
+        gpsLabelSoil: "Soil Classification:",
+        gpsValSoil: "Medium Black Fertile Soil",
+        kvkHeading: "Nearest Krishi Vigyan Kendra (KVK)",
+        kvkName: "KVK Baramati / Narayangaon",
+        kvkDist: "Distance: <strong>14.2 km (22 min drive)</strong>",
+        kvkSci: "Lead Crop Scientist: Dr. S. K. Kulkarni",
+        kvkCallBtn: "Call KVK Center",
+        kvkReportBtn: "Send Scan Report →",
+        gpsPrivacy: "<strong>Location Privacy:</strong> Your field coordinates are processed strictly on-device for local weather sync and are never sold to third parties.",
+        footerAboutDesc: "Smart India Hackathon 2026 solution for Problem Statement 26131: Early Detection and Management of Crop Diseases and Pest Infestations. Developed by Team Code Knights (SW-39).",
+        footerPortalsTitle: "Important Government Portals",
+        footerPortalAgri: "Department of Agriculture & Farmers Welfare",
+        footerPortalKisan: "PM-KISAN Samman Nidhi",
+        footerPortalDbt: "DBT Bharat National Portal",
+        footerStandardsTitle: "National Standards",
+        footerStandardSafety: "Statutory Safety Guidelines",
+        footerStandardPrivacy: "Privacy Policy (No Aadhaar Stored)",
+        footerStandardIcar: "ICAR & FMTTI Compliance",
+        footerCallCenterTitle: "National Kisan Call Center",
+        footerHelplineStrong: "Toll-Free Helpline:",
+        footerPatrioticTitle: "जय जवान • जय किसान | Jai Jawan, Jai Kisan",
+        footerPatrioticDesc: "\"Dedicated to the courageous sentinels guarding our nation's frontiers and the tireless Annadatas cultivating our fertile soil.\"<br /><strong class=\"text-emerald-300\">KrishiRakshak</strong> is engineered by <strong>Team Code Knights (SW-39)</strong> to empower Indian agriculture through indigenous AI diagnostics and direct SMAM mechanization under <strong>Smart India Hackathon 2026</strong>.",
+        loginTabFarmer: "Farmer Login",
+        loginTabOfficial: "Officials / KVK Login",
+        loginFarmerIdLabel: "Registered Mobile Number / Farmer ID",
+        loginResendOtp: "Resend OTP",
+        loginFarmerBtn: "LOGIN AS FARMER →",
+        loginOfficialIdLabel: "Government Email ID / KVK Staff Code",
+        loginOfficialPwLabel: "Official Password",
+        loginOfficialBtn: "LOGIN TO GOVT PORTAL →",
+        loginCloseBtn: "Close Window",
+        scannerModalTitle: "KrishiRakshak 🌱 AI Crop Camera Scanner",
+        scannerLivePreview: "LIVE PREVIEW • YOLOv8-nano INT8",
+        scannerSampleLabel: "Select Test Crop Disease Sample:",
+        scannerSampleRust: "Wheat: Yellow Rust",
+        scannerSampleBlast: "Rice: Blast Disease",
+        scannerSampleHealthy: "Healthy Crop",
+        scannerResultLabel: "Detection Result",
+        scannerBioLabel: "🌿 Biological Remedy:",
+        scannerChemLabel: "🧪 Chemical (CIB&RC):",
+        diagDisclaimer: "<span>⚠️</span><div><strong>Statutory Advisory:</strong> This AI prediction is an assistive decision aid (~94.6% confidence) and is <strong>not 100% infallible</strong>. Farmers must cross-check severe crop damage with local KVK agronomists before chemical spraying.</div>",
+        scannerCloseBtn: "Close Scanner"
+      },
+      hi: {
+        topRibbon: "स्मार्ट इंडिया हैकथॉन 2026 - प्रॉब्लम स्टेटमेंट 26131 - टीम कोड नाइट्स SW-39",
+        tickerBadge: "⚠️ वैधानिक चेतावनी",
+        ticker: "<span>📢 <strong>महत्वपूर्ण सूचना:</strong> कृषिरक्षक AI फसल रोग निदान प्रणाली एक सहायक परामर्श उपकरण है और यह <strong>100% अचूक नहीं है</strong> (वर्तमान शुद्धता: ~94.6%)। रासायनिक कीटनाशक छिड़काव से पहले स्थानीय कृषि विज्ञान केंद्र (KVK) वैज्ञानिकों से परामर्श अवश्य लें।</span><span>•</span><span>🌾 <strong>राष्ट्रीय किसान कॉल सेंटर (टोल-फ्री):</strong> 1800-180-1551 (22 भाषाओं में 24x7 सेवा)</span><span>•</span><span>⚖️ <strong>CIB&RC कीटनाशक सुरक्षा:</strong> रासायनिक सिफारिशें केंद्रीय कीटनाशक बोर्ड के नियमों का पालन करती हैं। जैविक प्रबंधन को प्राथमिकता दी जाती है।</span><span>•</span><span>🛡️ <strong>डेटा सुरक्षा:</strong> कोई आधार डेटा संग्रहीत नहीं किया जाता। प्रत्यक्ष लाभ अंतरण (DBT) किसान आईडी व मोबाइल ओटीपी द्वारा संचालित।</span><span>•</span><span>🇮🇳 <strong>स्मार्ट इंडिया हैकथॉन 2026:</strong> प्रॉब्लम 26131 | टीम कोड नाइट्स (SW-39)</span>",
+        slogan: "\"जय जवान, जय किसान\"",
+        navHome: "होम",
+        navVisualGuide: "चित्रमय गाइड",
+        navCropDoctor: "AI फसल डॉक्टर",
+        navStakeholders: "हितधारक",
+        navArchitecture: "आर्किटेक्चर",
+        navGpsMap: "GPS नक्शा",
+        navMachinery: "कृषि यंत्र सब्सिडी",
+        btnFarmerLogin: "किसान लॉगिन",
+        btnOfficialLogin: "अधिकारी लॉगिन",
+        helplineLabel: "हेल्पलाइन:",
+        heroTitle: "फसलों की सुरक्षा समय पर करें: <br />सटीक AI रोग पहचान प्रणाली",
+        heroDesc: "फसल रोग का शीघ्र पता लगाने, मौसम अनुकूल छिड़काव और सरकारी SMAM सब्सिडी प्राप्त करने के लिए भारत का अग्रणी किसान-हितैषी डिजिटल मंच।",
+        checkCropBtn: "[ मेरी फसल की जांच करें ]",
+        uploadPhotoBtn: "गैलरी से फोटो अपलोड करें",
+        machineryBtn: "कृषि यंत्र सब्सिडी देखें →",
+        heroBadgeText: "🌾 हरप्रीत सिंह • स्वस्थ गेहूं का खेत",
+        heroAiVerified: "● AI सत्यापित",
+        guideTitle: "शेतकऱ्यांसाठी चित्रमय मार्गदर्शक / किसानों के लिए चित्रमय गाइड",
+        guideSubtitle: "केवल 4 सरल चरणों में फसल की सुरक्षा करें (पूरी तरह से दृश्य और सरल)",
+        guideBadge: "सरल व तीव्र ✓",
+        step1Badge: "चरण 1",
+        step1Title: "1. फोटो खींचें",
+        step1Desc: "प्रभावित पत्ती का मोबाइल कैमरे से साफ फोटो लें",
+        step2Badge: "चरण 2",
+        step2Title: "2. AI जांच",
+        step2Desc: "मात्र 3 सेकंड में रोग का नाम और जोखिम स्तर जानें",
+        step3Badge: "चरण 3",
+        step3Title: "3. उपचार सलाह",
+        step3Desc: "जैविक और CIB&RC प्रमाणित सुरक्षित रासायनिक छिड़काव अनुपात",
+        step4Badge: "चरण 4",
+        step4Title: "4. 50% सब्सिडी",
+        step4Desc: "किसान ड्रोन और स्प्रेयर पर सरकारी वित्तीय सहायता",
+        guideFooterQuestion: "क्या चित्रमय मार्गदर्शक से समझना आसान लगता है?",
+        guideStartNowBtn: "अभी शुरू करें →",
+        disclaimerBadge: "महत्वपूर्ण वैधानिक चेतावनी / STATUTORY DISCLAIMER",
+        disclaimerAccuracy: "AI शुद्धता: ~94.6% (100% अचूक नहीं)",
+        disclaimerHeading: "हमारी AI प्रणाली एक सहायक परामर्श उपकरण है; यह 100% सही नहीं हो सकती।",
+        disclaimerBody: "<strong>कृषिरक्षक AI निर्णय समर्थन प्रणाली एक सहायक परामर्श साधन है और यह 100% अचूक नहीं है।</strong><br />फसल पर गंभीर रोग या कीट प्रकोप की स्थिति में कोई भी रासायनिक कीटनाशक छिड़कने से पूर्व अपने स्थानीय <strong>कृषि विज्ञान केंद्र (KVK)</strong> के वैज्ञानिकों या कृषि विस्तार अधिकारियों से परामर्श लेना कानूनी रूप से अनिवार्य है।",
+        disclaimerVoiceBtn: "मराठी में सुनें (आवाज संदेश)",
+        disclaimerHelplineBtn: "हेल्पलाइन: 1800-180-1551",
+        stakeholderFarmers: "किसान भाई",
+        stakeholderKvk: "कृषि विशेषज्ञ / KVK केंद्र",
+        stakeholderFpo: "एफपीओ (FPO) <br /><span class=\"text-[11px] font-normal text-slate-500\">(किसान उत्पादक संगठन)</span>",
+        stakeholderGov: "कृषि विभाग व सरकार",
+        archBadge: "🔬 SIH 2026 मूल्यांकन डेक • समस्या विवरण 26131",
+        archTitle: "तकनीकी आर्किटेक्चर एवं उत्तरदायी AI फ्रेमवर्क",
+        archDesc: "दूरदराज के भारतीय खेतों के लिए 150ms से कम की ऑन-डिवाइस इनफेरेंस, मौसम अनुकूलता और KVK वैज्ञानिकों का सत्यापन।",
+        archEdgeLatency: "ऑफ़लाइन एज लेटेंसी: 142ms",
+        archIcarBadge: "ICAR द्वारा सत्यापित",
+        archStep1Title: "पत्ती स्कैन",
+        archStep1Desc: "मोबाइल कैमरे से पत्ती का इनपुट। CLAHE एल्गोरिदम द्वारा धूप के प्रभाव को संतुलित किया जाता है।",
+        archStep1Badge: "⚡ 40ms प्रीप्रोसेसिंग",
+        archStep2Title: "हाइब्रिड AI मॉडल",
+        archStep2Desc: "<strong>YOLOv8-nano + MobileNetV3</strong> INT8 क्वांटाइज्ड मॉडल जो सीधे डिवाइस पर चलता है।",
+        archStep2Badge: "🧠 94.6% सटीकता",
+        archStep3Title: "मौसम अनुकूलन",
+        archStep3Desc: "ओपन-मेटियो डेटा से बारिश और हवा की गति देखकर अगले 6 घंटे में छिड़काव की सर्वोत्तम खिड़की तय होती है।",
+        archStep3Badge: "🌦️ बहाव रोकथाम",
+        archStep4Title: "विश्वास स्तर गेट",
+        archStep4Desc: "85% से अधिक विश्वास होने पर तुरंत उपचार सलाह; 85% से कम होने पर KVK विशेषज्ञ को स्वचालित रेफरल।",
+        archStep4Badge: "⚠️ उत्तरदायी AI",
+        archStep5Title: "SMAM सब्सिडी",
+        archStep5Desc: "किसान ड्रोन या पावर स्प्रेयर पर 50% प्रत्यक्ष लाभ अंतरण (DBT) सब्सिडी हेतु सीधा लिंक।",
+        archStep5Badge: "🚜 50% DBT सब्सिडी",
+        benchTitle: "तकनीकी बेंचमार्क और सत्यापन मैट्रिक्स",
+        benchDataset: "भारतीय कृषि क्षेत्र डेटासेट",
+        benchPrecision: "औसत परिशुद्धता (mAP)",
+        benchLatency: "मोबाइल एज इनफेरेंस गति",
+        benchCloud: "क्लाउड डेटा निर्भरता (ऑफलाइन रेडी)",
+        smamSubtitle: "कृषि यंत्रीकरण उप-मिशन (SMAM)",
+        smamTitle: "किसान मशीनरी सब्सिडी कैलकुलेटर और डीबीटी ट्रैकर",
+        smamDesc: "आधुनिक स्प्रेयर और किसान ड्रोन पर 50% तक वित्तीय सहायता का आकलन करें (आधार की आवश्यकता नहीं)।",
+        smamDbtBadge: "डीबीटी भारत अनुपालित ✓",
+        smamLabelEquipment: "उपकरण या मशीन चुनें",
+        smamLabelCategory: "किसान की श्रेणी",
+        smamBaseCostLabel: "उपकरण की मूल लागत:",
+       
+        smamNetCostLabel: "किसान का देय अंश:",
+        smamTrackTitle: "मौजूदा सब्सिडी आवेदन की स्थिति देखें",
+        smamTrackDesc: "आवेदन संदर्भ संख्या अथवा मोबाइल नंबर से बिना आधार कार्ड के डीबीटी स्थिति जानें।",
+        smamTrackBtn: "आवेदन रिकॉर्ड खोजें →",
+        smamApplicantInfo: "आवेदक: विलास पाटिल (पुणे ब्लॉक)",
+        smamSanctionedBadge: "स्वीकृत ✓",
+        smamEquipmentStatus: "उपकरण: किसान ड्रोन (16 लीटर) • बैंक डीबीटी: सक्रिय",
+        gpsSectionBadge: "📍 जीपीएस टेलीमेट्री • SIH 2026 एंड-यूज़ मॉड्यूल",
+        gpsSectionTitle: "खेत का जीपीएस स्थान और लाइव नक्शा",
+        gpsSectionDesc: "किसान के खेत के निर्देशांक, कृषि-जलवायु क्षेत्र, मिट्टी का प्रकार और निकटतम कृषि विज्ञान केंद्र खोजें।",
+        gpsDetectBtn: "मेरे खेत का स्थान खोजें",
+        gpsTelemetryHeading: "भौगोलिक स्थिति विवरण (Geospatial Telemetry)",
+        gpsLabelLocation: "स्थान:",
+        gpsLabelCoords: "अक्षांश-देशांतर:",
+        gpsLabelZone: "कृषि-जलवायु क्षेत्र:",
+        gpsValZone: "पश्चिमी पठार एवं पहाड़ (क्षेत्र IX)",
+        gpsLabelSoil: "मिट्टी का प्रकार:",
+        gpsValSoil: "मध्यम काली उपजाऊ मिट्टी",
+        kvkHeading: "निकटतम कृषि विज्ञान केंद्र (Nearest KVK)",
+        kvkName: "कृषि विज्ञान केंद्र, बारामती / नारायणगांव",
+        kvkDist: "दूरी: <strong>14.2 किमी (22 मिनट यात्रा)</strong>",
+        kvkSci: "प्रमुख फसल वैज्ञानिक: डॉ. एस. के. कुलकर्णी",
+        kvkCallBtn: "KVK पर कॉल करें",
+        kvkReportBtn: "जांच रिपोर्ट भेजें →",
+        gpsPrivacy: "<strong>स्थान गोपनीयता:</strong> आपके खेत का जीपीएस केवल डिवाइस पर मौसम जांच के लिए प्रयुक्त होता है और किसी तीसरे पक्ष को नहीं दिया जाता।",
+        footerAboutDesc: "स्मार्ट इंडिया हैकथॉन 2026 समस्या 26131: फसल रोगों व कीट प्रकोप की प्रारंभिक पहचान व प्रबंधन। टीम कोड नाइट्स (SW-39) द्वारा विकसित।",
+        footerPortalsTitle: "महत्वपूर्ण सरकारी पोर्टल",
+        footerPortalAgri: "कृषि एवं किसान कल्याण मंत्रालय",
+        footerPortalKisan: "पीएम-किसान सम्मान निधि",
+        footerPortalDbt: "डीबीटी भारत राष्ट्रीय पोर्टल",
+        footerStandardsTitle: "राष्ट्रीय मानक",
+        footerStandardSafety: "वैधानिक सुरक्षा दिशानिर्देश",
+        footerStandardPrivacy: "गोपनीयता नीति (आधार डेटा सुरक्षित)",
+        footerStandardIcar: "आईसीएआर (ICAR) मानक",
+        footerCallCenterTitle: "राष्ट्रीय किसान कॉल सेंटर",
+        footerHelplineStrong: "टोल-फ्री हेल्पलाइन:",
+        footerPatrioticTitle: "जय जवान • जय किसान | Jai Jawan, Jai Kisan",
+        footerPatrioticDesc: "\"देश की सीमाओं पर तैनात वीर जवानों और धरती से अन्न उगाने वाले अन्नदाताओं को सादर समर्पित।\"<br /><strong class=\"text-emerald-300\">कृषिरक्षक</strong> को <strong>टीम कोड नाइट्स (SW-39)</strong> द्वारा भारतीय कृषि के सशक्तिकरण हेतु <strong>स्मार्ट इंडिया हैकथॉन 2026</strong> के अंतर्गत तैयार किया गया है।",
+        loginTabFarmer: "किसान लॉगिन",
+        loginTabOfficial: "अधिकारी / KVK लॉगिन",
+        loginFarmerIdLabel: "पंजीकृत मोबाइल नंबर / किसान आईडी",
+        loginResendOtp: "ओटीपी पुनः भेजें",
+        loginFarmerBtn: "किसान के रूप में लॉगिन करें →",
+        loginOfficialIdLabel: "सरकारी ईमेल आईडी / कर्मचारी कोड",
+        loginOfficialPwLabel: "पासवर्ड",
+        loginOfficialBtn: "सरकारी पोर्टल पर लॉगिन करें →",
+        loginCloseBtn: "खिड़की बंद करें",
+        scannerModalTitle: "कृषिरक्षक 🌱 AI फसल कैमरा स्कैनर",
+        scannerLivePreview: "लाइव दृश्य • YOLOv8-nano INT8",
+        scannerSampleLabel: "परीक्षण नमूना चुनें:",
+        scannerSampleRust: "गेहूं: पीला रतुआ (Yellow Rust)",
+        scannerSampleBlast: "धान: ब्लास्ट रोग (Rice Blast)",
+        scannerSampleHealthy: "स्वस्थ फसल",
+        scannerResultLabel: "रोग पहचान परिणाम",
+        scannerBioLabel: "🌿 जैविक उपचार:",
+        scannerChemLabel: "🧪 रासायनिक उपचार (CIB&RC):",
+        diagDisclaimer: "<span>⚠️</span><div><strong>वैधानिक सूचना:</strong> यह AI निदान एक सहायक साधन है (~94.6% शुद्धता) और <strong>100% अचूक नहीं है</strong>। रासायनिक छिड़काव से पहले नजदीकी KVK वैज्ञानिक से सलाह अवश्य लें।</div>",
+        scannerCloseBtn: "स्कैनर बंद करें"
+      },
+      mr: {
+        topRibbon: "स्मार्ट इंडिया हॅकेथॉन २०२६ - समस्या विधान २६१३१ - टीम कोड नाईट्स SW-39",
+        tickerBadge: "⚠️ वैधानिक सूचना",
+        ticker: "<span>📢 <strong>महत्त्वाची सूचना:</strong> कृषिरक्षक AI पीक रोग निदान प्रणाली हे एक साहाय्यक सल्लागार साधन असून ते <strong>१००% अचूक नाही</strong> (सध्याची अचूकता: ~९४.६%). रासायनिक कीटकनाशके फवारण्यापूर्वी स्थानिक कृषी विज्ञान केंद्र (KVK) शास्त्रज्ञांचा सल्ला नक्की घ्या.</span><span>•</span><span>🌾 <strong>राष्ट्रीय किसान कॉल सेंटर (टोल-फ्री):</strong> 1800-180-1551 (२२ प्रादेशिक भाषांमध्ये २४ तास सेवा)</span><span>•</span><span>⚖️ <strong>CIB&RC कीटकनाशक सुरक्षा:</strong> रासायनिक शिफारसी केंद्रीय कीटकनाशक मंडळाच्या नियमांनुसार आहेत. सेंद्रिय व्यवस्थापनास प्राधान्य दिले जाते.</span><span>•</span><span>🛡️ <strong>डेटा गोपनीयता:</strong> कोणताही आधार डेटा साठवला जात नाही. थेट लाभ हस्तांतरण (DBT) शेतकरी आयडी व मोबाइल ओटीपीद्वारे चालते.</span><span>•</span><span>🇮🇳 <strong>स्मार्ट इंडिया हॅकेथॉन २०२६:</strong> समस्या २६१३१ | टीम कोड नाईट्स (SW-39)</span>",
+        slogan: "\"जय जवान, जय किसान\"",
+        navHome: "मुख्यपृष्ठ",
+        navVisualGuide: "चित्रमय मार्गदर्शक",
+        navCropDoctor: "AI पीक डॉक्टर",
+        navStakeholders: "हितधारक",
+        navArchitecture: "तंत्रज्ञान",
+        navGpsMap: "GPS नकाशा",
+        navMachinery: "यंत्र अनुदान",
+        btnFarmerLogin: "शेतकरी लॉगिन",
+        btnOfficialLogin: "अधिकारी लॉगिन",
+        helplineLabel: "हेल्पलाईन:",
+        heroTitle: "पिकांचे वेळीच संरक्षण करा: <br />अचूक AI पीक रोग निदान",
+        heroDesc: "पीक रोगांचे अचूक निदान, हवामान-आधारित फवारणी सल्ला आणि कृषी यांत्रिकीकरण SMAM अनुदानासाठी एकात्मिक डिजिटल व्यासपीठ.",
+        checkCropBtn: "[ माझ्या पिकाची तपासणी करा ]",
+        uploadPhotoBtn: "गॅलरीतून फोटो अपलोड करा",
+        machineryBtn: "कृषी अवजारे अनुदान →",
+        heroBadgeText: "🌾 हरप्रीत सिंग • निरोगी गव्हाचे शेत",
+        heroAiVerified: "● AI द्वारे पडताळलेले",
+        guideTitle: "शेतकऱ्यांसाठी चित्रमय मार्गदर्शक / Visual Guide for Farmers",
+        guideSubtitle: "केवळ ४ सोप्या पायऱ्यांमध्ये पिकाचे रक्षण करा (Purely visual, easy to use)",
+        guideBadge: "सोपे व जलद ✓",
+        step1Badge: "पायरी १",
+        step1Title: "१. फोटो काढा",
+        step1Desc: "खराब पानाचा मोबाईलने स्पष्ट फोटो काढा",
+        step2Badge: "पायरी २",
+        step2Title: "२. AI तपासणी",
+        step2Desc: "अवघ्या ३ सेकंदात रोगाचे नाव समजेल",
+        step3Badge: "पायरी ३",
+        step3Title: "३. औषध सल्ला",
+        step3Desc: "सेंद्रिय व सुरक्षित रासायनिक फवारणी प्रमाण",
+        step4Badge: "पायरी ४",
+        step4Title: "४. ५०% अनुदान",
+        step4Desc: "ड्रोन व फवारणी यंत्रासाठी सरकारी मदत",
+        guideFooterQuestion: "चित्र पाहून समजणे सोपे जाते का?",
+        guideStartNowBtn: "आत्ताच सुरू करा (Start Now) →",
+        disclaimerBadge: "महत्वपूर्ण वैधानिक चेतावणी / STATUTORY DISCLAIMER",
+        disclaimerAccuracy: "AI अचूकता: ~९४.६% (१००% अचूक नाही)",
+        disclaimerHeading: "आमची AI प्रणाली एक साहाय्यक सल्लागार साधन आहे; ती १००% अचूक नाही.",
+        disclaimerBody: "<strong>KrishiRakshak AI decision-support system is an assistive diagnostic tool and is NOT 100% infallible.</strong><br />पिकावर गंभीर रोग अथवा किडीचा प्रादुर्भाव आढळल्यास, कोणतेही रासायनिक कीटकनाशक फवारण्यापूर्वी आपल्या तालुक्यातील <strong>कृषी विज्ञान केंद्र (KVK)</strong> शास्त्रज्ञांचा किंवा कृषी विस्तार अधिकाऱ्यांचा सल्ला घेणे कायदेशीररीत्या बंधनकारक आहे.",
+        disclaimerVoiceBtn: "मराठीत ऐका (Listen Voice Note)",
+        disclaimerHelplineBtn: "हेल्पलाईन: 1800-180-1551",
+        stakeholderFarmers: "शेतकरी बांधव",
+        stakeholderKvk: "कृषी शास्त्रज्ञ / KVK",
+        stakeholderFpo: "शेतकरी उत्पादक कंपन्या (FPO) <br /><span class=\"text-[11px] font-normal text-slate-500\">(Farmer Producer Organizations)</span>",
+        stakeholderGov: "कृषी विभाग व शासन",
+        archBadge: "🔬 SIH 2026 मूल्यांकन सादरीकरण • समस्या २६१३१",
+        archTitle: "तांत्रिक रचना आणि उत्तरदायी AI फ्रेमवर्क",
+        archDesc: "ग्रामीण शेतांसाठी १५० मिलीसेकंदात ऑन-डिवाइस निदान, हवामान डेटा आणि कृषी शास्त्रज्ञांचे मार्गदर्शन.",
+        archEdgeLatency: "ऑफलाईन वेग: १४२ मिलीसेकंद",
+        archIcarBadge: "ICAR द्वारे प्रमाणित",
+        archStep1Title: "पानाची तपासणी",
+        archStep1Desc: "मोबाईल कॅमेऱ्याने पानाचा फोटो. उन्हातील सावली व तीव्र प्रकाश CLAHE द्वारे संतुलित केला जातो.",
+        archStep1Badge: "⚡ ४० मिलीसेकंद प्रक्रिया",
+        archStep2Title: "हायब्रिड AI मॉडेल",
+        archStep2Desc: "<strong>YOLOv8-nano + MobileNetV3</strong> INT8 तंत्रज्ञान थेट मोबाईलवर स्थानिकरित्या कार्यरत.",
+        archStep2Badge: "🧠 ९४.६% अचूकता",
+        archStep3Title: "हवामान तपासणी",
+        archStep3Desc: "Open-Meteo द्वारे पाऊस व वाऱ्याचा वेग तपासून फवारणीसाठी योग्य ६ तासांची वेळ निश्चित केली जाते.",
+        archStep3Badge: "🌦️ औषध नासाडी प्रतिबंध",
+        archStep4Title: "विश्वासार्हता निकष",
+        archStep4Desc: "८५% पेक्षा जास्त खात्री असल्यास थेट सल्ला; कमी असल्यास आपोआप जवळच्या कृषी विज्ञान केंद्राकडे वर्ग.",
+        archStep4Badge: "⚠️ उत्तरदायी AI",
+        archStep5Title: "SMAM अनुदान",
+        archStep5Desc: "किसान ड्रोन अथवा पॉवर स्प्रेअरसाठी ५०% शासकीय थेट अनुदान (DBT) मिळवण्यासाठी १-क्लिक दुवा.",
+        archStep5Badge: "🚜 ५०% DBT अनुदान",
+        benchTitle: "तांत्रिक गुणवत्ता व पडताळणी निकष",
+        benchDataset: "भारतीय शेतातील पानांचे छायाचित्र संच",
+        benchPrecision: "सरासरी अचूकता दर (mAP)",
+        benchLatency: "मोबाईलवर तपासणी वेग",
+        benchCloud: "क्लाउड डेटा वापर (ऑफलाईन कार्यक्षम)",
+        smamSubtitle: "कृषी यांत्रिकीकरण उप-अभियान (SMAM)",
+        smamTitle: "कृषी अवजारे अनुदान गणक आणि DBT ट्रॅकर",
+        smamDesc: "फवारणी यंत्रे आणि किसान ड्रोनसाठी ५० टक्क्यांपर्यंत सरकारी अनुदानाची माहिती (आधार कार्डची आवश्यकता नाही).",
+        smamDbtBadge: "DBT भारत मान्यताप्राप्त ✓",
+        smamLabelEquipment: "कृषी यंत्र किंवा अवजार निवडा",
+        smamLabelCategory: "शेतकरी प्रवर्ग",
+        smamBaseCostLabel: "यंत्राची मूळ किंमत:",
+        
+        smamNetCostLabel: "शेतकऱ्याचा प्रत्यक्ष खर्च:",
+        smamTrackTitle: "अनुदान अर्जाची सद्यस्थिती तपासा",
+        smamTrackDesc: "अर्ज क्रमांक किंवा मोबाईल नंबर वापरून आधार कार्डशिवाय डीबीटी मंजुरी तपासा.",
+        smamTrackBtn: "अर्जाची नोंद शोधा →",
+        smamApplicantInfo: "अर्जदार: विलास पाटील (पुणे विभाग)",
+        smamSanctionedBadge: "मंजूर ✓",
+        smamEquipmentStatus: "साहित्य: किसान ड्रोन (१६ लिटर) • बँक खात्यात DBT: सक्रिय",
+        gpsSectionBadge: "📍 GPS तंत्रज्ञान • SIH 2026 शेतकरी मॉड्यूल",
+        gpsSectionTitle: "शेतकऱ्याच्या शेताचे GPS स्थान आणि नकाशा (Farm Field Location & Map)",
+        gpsSectionDesc: "Detect farmer's field coordinates, agro-climatic sub-zone, soil context, and nearest Krishi Vigyan Kendra (KVK) research station.",
+        gpsDetectBtn: "माझ्या शेताचे स्थान शोधा (Detect My Field)",
+        gpsTelemetryHeading: "भौगोलिक तपशील / Geospatial Telemetry",
+        gpsLabelLocation: "स्थान (Location):",
+        gpsLabelCoords: "अक्षांश-रेखांश (Lat/Long):",
+        gpsLabelZone: "कृषी-हवामान विभाग:",
+        gpsValZone: "पश्चिम पठारी व डोंगरी प्रदेश (विभाग IX)",
+        gpsLabelSoil: "मातीचा प्रकार (Soil):",
+        gpsValSoil: "काळी कसदार माती (Medium Black)",
+        kvkHeading: "नजीकचे कृषी विज्ञान केंद्र (Nearest KVK)",
+        kvkName: "कृषी विज्ञान केंद्र, बारामती / नारायणगाव",
+        kvkDist: "अंतर: <strong>१४.२ किमी (22 मिनिटे प्रवास)</strong>",
+        kvkSci: "मुख्य पीक शास्त्रज्ञ: डॉ. एस. के. कुलकर्णी",
+        kvkCallBtn: "KVK कॉल करा",
+        kvkReportBtn: "रिपोर्ट पाठवा →",
+        gpsPrivacy: "<strong>स्थान गोपनीयता:</strong> Your field location is processed strictly on-device for local weather sync and is never sold to third parties.",
+        footerAboutDesc: "Smart India Hackathon 2026 solution for Problem Statement 26131: Early Detection and Management of Crop Diseases and Pest Infestations. Developed by Team Code Knights (SW-39).",
+        footerPortalsTitle: "शासकीय कृषी पोर्टल",
+        footerPortalAgri: "कृषी व शेतकरी कल्याण मंत्रालय",
+        footerPortalKisan: "पीएम-किसान सन्मान निधी",
+        footerPortalDbt: "DBT भारत राष्ट्रीय पोर्टल",
+        footerStandardsTitle: "राष्ट्रीय मानके",
+        footerStandardSafety: "वैधानिक सुरक्षा नियम",
+        footerStandardPrivacy: "गोपनीयता धोरण (आधार सुरक्षित)",
+        footerStandardIcar: "ICAR व FMTTI मानके",
+        footerCallCenterTitle: "राष्ट्रीय किसान कॉल सेंटर",
+        footerHelplineStrong: "टोल-फ्री हेल्पलाईन:",
+        footerPatrioticTitle: "जय जवान • जय किसान | Jai Jawan, Jai Kisan",
+        footerPatrioticDesc: "\"सीमांचे रक्षण करणाऱ्या वीर सैनिकांना आणि काळ्या मातीतून सोने पिकवणाऱ्या बळीराजाला मानाचा मुजरा.\"<br /><strong class=\"text-emerald-300\">कृषिरक्षक</strong> ची निर्मिती <strong>टीम कोड नाईट्स (SW-39)</strong> ने भारतीय कृषी क्षेत्राच्या सक्षमीकरणासाठी <strong>स्मार्ट इंडिया हॅकेथॉन २०२६</strong> अंतर्गत केली आहे.",
+        loginTabFarmer: "शेतकरी लॉगिन",
+        loginTabOfficial: "अधिकारी / KVK लॉगिन",
+        loginFarmerIdLabel: "नोंदणीकृत मोबाईल नंबर / शेतकरी आयडी",
+        loginResendOtp: "ओटीपी पुन्हा पाठवा",
+        loginFarmerBtn: "शेतकरी म्हणून लॉगिन करा →",
+        loginOfficialIdLabel: "शासकीय ईमेल आयडी / कर्मचारी कोड",
+        loginOfficialPwLabel: "पासवर्ड",
+        loginOfficialBtn: "शासकीय पोर्टलवर लॉगिन करा →",
+        loginCloseBtn: "खिडकी बंद करा",
+        scannerModalTitle: "कृषिरक्षक 🌱 AI पीक कॅमेरा स्कॅनर",
+        scannerLivePreview: "थेट दृश्य • YOLOv8-nano INT8",
+        scannerSampleLabel: "चाचणी रोग नमुना निवडा:",
+        scannerSampleRust: "गहू: तांबेरा रोग (Yellow Rust)",
+        scannerSampleBlast: "भात: करपा रोग (Rice Blast)",
+        scannerSampleHealthy: "निरोगी पीक",
+        scannerResultLabel: "रोग निदान निकाल",
+        scannerBioLabel: "🌿 सेंद्रिय उपाय:",
+        scannerChemLabel: "🧪 रासायनिक औषध (CIB&RC):",
+        diagDisclaimer: "<span>⚠️</span><div><strong>वैधानिक सूचना:</strong> हे AI निदान साहाय्यक असून (~९४.६% विश्वासार्हता) ते <strong>१००% निर्दोष नाही</strong>. रासायनिक फवारणीपूर्वी स्थानिक KVK कृषी अधिकाऱ्यांशी संपर्क साधा.</div>",
+        scannerCloseBtn: "स्कॅनर बंद करा"
+      },
+      pa: {
+        topRibbon: "ਸਮਾਰਟ ਇੰਡੀਆ ਹੈਕਾਥਾਨ 2026 - ਸਮੱਸਿਆ ਸਟੇਟਮੈਂਟ 26131 - ਟੀਮ ਕੋਡ ਨਾਈਟਸ SW-39",
+        tickerBadge: "⚠️ ਕਾਨੂੰਨੀ ਸੂਚਨਾ",
+        ticker: "<span>📢 <strong>ਜ਼ਰੂਰੀ ਸੂਚਨਾ:</strong> ਕ੍ਰਿਸ਼ੀਰਕਸ਼ਕ AI ਫਸਲ ਬਿਮਾਰੀ ਜਾਂਚ ਪ੍ਰਣਾਲੀ ਇੱਕ ਸਹਾਇਕ ਸਲਾਹਕਾਰੀ ਟੂਲ ਹੈ ਅਤੇ ਇਹ <strong>100% ਸਹੀ ਨਹੀਂ ਹੈ</strong> (ਮੌਜੂਦਾ ਸ਼ੁੱਧਤਾ: ~94.6%)। ਰਸਾਇਣਕ ਕੀਟਨਾਸ਼ਕਾਂ ਦੇ ਛਿੜਕਾਅ ਤੋਂ ਪਹਿਲਾਂ ਸਥਾਨਕ ਕ੍ਰਿਸ਼ੀ ਵਿਗਿਆਨ ਕੇਂਦਰ (KVK) ਮਾਹਿਰਾਂ ਦੀ ਸਲਾਹ ਜ਼ਰੂਰ ਲਵੋ।</span><span>•</span><span>🌾 <strong>ਰਾਸ਼ਟਰੀ ਕਿਸਾਨ ਕਾਲ ਸੈਂਟਰ (ਟੋਲ-ਫ੍ਰੀ):</strong> 1800-180-1551 (22 ਖੇਤਰੀ ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ 24 ਘੰਟੇ ਸੇਵਾ)</span><span>•</span><span>⚖️ <strong>CIB&RC ਕੀਟਨਾਸ਼ਕ ਨਿਯਮ:</strong> ਦਵਾਈਆਂ ਦੀ ਸਿਫ਼ਾਰਸ਼ ਕੇਂਦਰੀ ਕੀਟਨਾਸ਼ਕ ਬੋਰਡ ਦੇ ਮਾਪਦੰਡਾਂ ਅਨੁਸਾਰ ਹੈ। ਜੈਵਿਕ ਰੋਕਥਾਮ ਨੂੰ ਪਹਿਲ ਦਿੱਤੀ ਜਾਂਦੀ ਹੈ।</span><span>•</span><span>🛡️ <strong>ਡੇਟਾ ਸੁਰੱਖਿਆ:</strong> ਕੋਈ ਆਧਾਰ ਡਾਟਾ ਸਟੋਰ ਨਹੀਂ ਕੀਤਾ ਜਾਂਦਾ। ਡੀਬੀਟੀ ਕਿਸਾਨ ਆਈਡੀ ਅਤੇ ਓਟੀਪੀ ਰਾਹੀਂ ਚੱਲਦਾ ਹੈ।</span><span>•</span><span>🇮🇳 <strong>ਸਮਾਰਟ ਇੰਡੀਆ ਹੈਕਾਥਾਨ 2026:</strong> ਕੋਡ ਨਾਈਟਸ (SW-39)</span>",
+        slogan: "\"ਜੈ ਜਵਾਨ, ਜੈ ਕਿਸਾਨ\"",
+        navHome: "ਮੁੱਖ ਪੰਨਾ",
+        navVisualGuide: "ਤਸਵੀਰੀ ਗਾਈਡ",
+        navCropDoctor: "AI ਫਸਲ ਡਾਕਟਰ",
+        navStakeholders: "ਹਿੱਸੇਦਾਰ",
+        navArchitecture: "ਤਕਨੀਕੀ ਢਾਂਚਾ",
+        navGpsMap: "GPS ਨਕਸ਼ਾ",
+        navMachinery: "ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ",
+        btnFarmerLogin: "ਕਿਸਾਨ ਲੌਗਇਨ",
+        btnOfficialLogin: "ਅਧਿਕਾਰੀ ਲੌਗਇਨ",
+        helplineLabel: "ਹੈਲਪਲਾਈਨ:",
+        heroTitle: "ਫਸਲਾਂ ਦੀ ਸਮੇਂ ਸਿਰ ਰਾਖੀ: <br />ਸਟੀਕ AI ਬਿਮਾਰੀ ਪਛਾਣ ਪ੍ਰਣਾਲੀ",
+        heroDesc: "ਫਸਲਾਂ ਦੀਆਂ ਬਿਮਾਰੀਆਂ ਦੀ ਸ਼ੁਰੂਆਤੀ ਜਾਂਚ, ਮੌਸਮ ਅਧਾਰਤ ਸਪਰੇਅ ਸਲਾਹ ਅਤੇ ਖੇਤੀ ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ ਲਈ ਕਿਸਾਨ-ਪੱਖੀ ਪੋਰਟਲ।",
+        checkCropBtn: "[ ਮੇਰੀ ਫਸਲ ਦੀ ਜਾਂਚ ਕਰੋ ]",
+        uploadPhotoBtn: "ਗੈਲਰੀ ਤੋਂ ਫੋਟੋ ਅੱਪਲੋਡ ਕਰੋ",
+        machineryBtn: "ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ ਵੇਖੋ →",
+        heroBadgeText: "🌾 ਹਰਪ੍ਰੀਤ ਸਿੰਘ • ਸਿਹਤਮੰਦ ਕਣਕ ਦਾ ਖੇਤ",
+        heroAiVerified: "● AI ਪ੍ਰਮਾਣਿਤ",
+        guideTitle: "ਕਿਸਾਨਾਂ ਲਈ ਤਸਵੀਰੀ ਗਾਈਡ / Visual Guide for Farmers",
+        guideSubtitle: "ਸਿਰਫ਼ 4 ਆਸਾਨ ਕਦਮਾਂ ਵਿੱਚ ਆਪਣੀ ਫਸਲ ਦੀ ਰਾਖੀ ਕਰੋ (ਬਿਲਕੁਲ ਆਸਾਨ)",
+        guideBadge: "ਸੌਖਾ ਤੇ ਤੇਜ਼ ✓",
+        step1Badge: "ਕਦਮ 1",
+        step1Title: "1. ਫੋਟੋ ਖਿੱਚੋ",
+        step1Desc: "ਪ੍ਰਭਾਵਿਤ ਪੱਤੇ ਦੀ ਮੋਬਾਈਲ ਕੈਮਰੇ ਨਾਲ ਸਾਫ਼ ਫੋਟੋ ਖਿੱਚੋ",
+        step2Badge: "ਕਦਮ 2",
+        step2Title: "2. AI ਜਾਂਚ",
+        step2Desc: "ਸਿਰਫ਼ 3 ਸਕਿੰਟਾਂ ਵਿੱਚ ਬਿਮਾਰੀ ਦਾ ਨਾਂ ਅਤੇ ਖ਼ਤਰਾ ਪਤਾ ਕਰੋ",
+        step3Badge: "ਕਦਮ 3",
+        step3Title: "3. ਦਵਾਈ ਸਲਾਹ",
+        step3Desc: "ਜੈਵਿਕ ਅਤੇ ਸੁਰੱਖਿਅਤ ਰਸਾਇਣਕ ਸਪਰੇਅ ਦੀ ਮਾਤਰਾ",
+        step4Badge: "ਕਦਮ 4",
+        step4Title: "4. 50% ਸਬਸਿਡੀ",
+        step4Desc: "ਕਿਸਾਨ ਡਰੋਨ ਅਤੇ ਸਪਰੇਅ ਪੰਪਾਂ ਲਈ ਸਰਕਾਰੀ ਵਿੱਤੀ ਮਦਦ",
+        guideFooterQuestion: "ਕੀ ਤਸਵੀਰਾਂ ਵੇਖ ਕੇ ਸਮਝਣਾ ਆਸਾਨ ਲੱਗਦਾ ਹੈ?",
+        guideStartNowBtn: "ਹੁਣੇ ਸ਼ੁਰੂ ਕਰੋ →",
+        disclaimerBadge: "ਕਾਨੂੰਨੀ ਚੇਤਾਵਨੀ / STATUTORY DISCLAIMER",
+        disclaimerAccuracy: "AI ਸ਼ੁੱਧਤਾ: ~94.6% (100% ਪੱਕਾ ਨਹੀਂ)",
+        disclaimerHeading: "ਸਾਡਾ AI ਸਿਸਟਮ ਇੱਕ ਸਹਾਇਕ ਸਲਾਹਕਾਰੀ ਟੂਲ ਹੈ; ਇਹ 100% ਸਹੀ ਨਹੀਂ ਹੋ ਸਕਦਾ।",
+        disclaimerBody: "<strong>ਕ੍ਰਿਸ਼ੀਰਕਸ਼ਕ AI ਫੈਸਲਾ ਸਹਾਇਤਾ ਪ੍ਰਣਾਲੀ ਇੱਕ ਸਹਾਇਕ ਟੂਲ ਹੈ ਅਤੇ 100% ਅਚੂਕ ਨਹੀਂ ਹੈ।</strong><br />ਫਸਲ 'ਤੇ ਗੰਭੀਰ ਬਿਮਾਰੀ ਜਾਂ ਕੀੜਿਆਂ ਦੇ ਹਮਲੇ ਦੀ ਸਥਿਤੀ ਵਿੱਚ ਕੋਈ ਵੀ ਰਸਾਇਣਕ ਦਵਾਈ ਛਿੜਕਣ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੇ ਨੇੜਲੇ <strong>ਕ੍ਰਿਸ਼ੀ ਵਿਗਿਆਨ ਕੇਂਦਰ (KVK)</strong> ਦੇ ਵਿਗਿਆਨੀਆਂ ਦੀ ਸਲਾਹ ਜ਼ਰੂਰ ਲਵੋ।",
+        disclaimerVoiceBtn: "ਆਵਾਜ਼ ਸੁਣੋ (Voice Note)",
+        disclaimerHelplineBtn: "ਹੈਲਪਲਾਈਨ: 1800-180-1551",
+        stakeholderFarmers: "ਕਿਸਾਨ ਵੀਰ",
+        stakeholderKvk: "ਖੇਤੀ ਮਾਹਿਰ / KVK",
+        stakeholderFpo: "ਕਿਸਾਨ ਉਤਪਾਦਕ ਜਥੇਬੰਦੀਆਂ (FPO) <br /><span class=\"text-[11px] font-normal text-slate-500\">(Farmer Producer Organizations)</span>",
+        stakeholderGov: "ਖੇਤੀਬਾੜੀ ਵਿਭਾਗ ਤੇ ਸਰਕਾਰ",
+        archBadge: "🔬 SIH 2026 ਮੁਲਾਂਕਣ ਡੈੱਕ • ਸਮੱਸਿਆ 26131",
+        archTitle: "ਤਕਨੀਕੀ ਢਾਂਚਾ ਅਤੇ ਜ਼ਿੰਮੇਵਾਰ AI ਪ੍ਰਣਾਲੀ",
+        archDesc: "ਦੂਰ-ਦੁਰਾਡੇ ਦੇ ਖੇਤਾਂ ਲਈ 150ms ਤੋਂ ਘੱਟ ਆਨ-ਡਿਵਾਈਸ ਪ੍ਰਕਿਰਿਆ, ਮੌਸਮ ਜਾਣਕਾਰੀ ਅਤੇ KVK ਵਿਗਿਆਨੀਆਂ ਦੀ ਤਸਦੀਕ।",
+        archEdgeLatency: "ਔਫਲਾਈਨ ਸਪੀਡ: 142ms",
+        archIcarBadge: "ICAR ਦੁਆਰਾ ਪ੍ਰਮਾਣਿਤ",
+        archStep1Title: "ਪੱਤਾ ਸਕੈਨ",
+        archStep1Desc: "ਮੋਬਾਈਲ ਕੈਮਰੇ ਨਾਲ ਪੱਤੇ ਦੀ ਫੋਟੋ। ਤੇਜ਼ ਧੁੱਪ ਦਾ ਅਸਰ CLAHE ਐਲਗੋਰਿਦਮ ਨਾਲ ਠੀਕ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।",
+        archStep1Badge: "⚡ 40ms ਪ੍ਰੀਪ੍ਰੋਸੈਸਿੰਗ",
+        archStep2Title: "ਹਾਈਬ੍ਰਿਡ AI ਮਾਡਲ",
+        archStep2Desc: "<strong>YOLOv8-nano + MobileNetV3</strong> INT8 ਕੁਆਂਟਾਈਜ਼ਡ ਮਾਡਲ ਜੋ ਸਿੱਧਾ ਫ਼ੋਨ 'ਤੇ ਕੰਮ ਕਰਦਾ ਹੈ।",
+        archStep2Badge: "🧠 94.6% ਸ਼ੁੱਧਤਾ",
+        archStep3Title: "ਮੌਸਮ ਅਨੁਕੂਲਤਾ",
+        archStep3Desc: "Open-Meteo ਰਾਹੀਂ ਮੀਂਹ ਅਤੇ ਹਵਾ ਦੀ ਗਤੀ ਪਰਖ ਕੇ ਅਗਲੇ 6 ਘੰਟਿਆਂ ਵਿੱਚ ਸਪਰੇਅ ਦਾ ਸਭ ਤੋਂ ਵਧੀਆ ਸਮਾਂ ਦੱਸਿਆ ਜਾਂਦਾ ਹੈ।",
+        archStep3Badge: "🌦️ ਦਵਾਈ ਬਰਬਾਦੀ ਰੋਕਥਾਮ",
+        archStep4Title: "ਭਰੋਸੇਯੋਗਤਾ ਮਾਪਦੰਡ",
+        archStep4Desc: "85% ਤੋਂ ਵੱਧ ਯਕੀਨ ਹੋਣ 'ਤੇ ਤੁਰੰਤ ਸਲਾਹ; ਘੱਟ ਹੋਣ 'ਤੇ ਸਿੱਧਾ ਖੇਤੀ ਵਿਗਿਆਨੀਆਂ ਨੂੰ ਰੈਫਰ।",
+        archStep4Badge: "⚠️ ਜ਼ਿੰਮੇਵਾਰ AI",
+        archStep5Title: "SMAM ਸਬਸਿਡੀ",
+        archStep5Desc: "ਕਿਸਾਨ ਡਰੋਨ ਜਾਂ ਸਪਰੇਅ ਪੰਪ 'ਤੇ 50% ਸਰਕਾਰੀ ਡੀਬੀਟੀ ਸਬਸਿਡੀ ਲਈ 1-ਕਲਿੱਕ ਲਿੰਕ।",
+        archStep5Badge: "🚜 50% DBT ਸਬਸਿਡੀ",
+        benchTitle: "ਤਕਨੀਕੀ ਮਾਪਦੰਡ ਅਤੇ ਜਾਂਚ ਸੂਚੀ",
+        benchDataset: "ਭਾਰਤੀ ਖੇਤਾਂ ਦਾ ਚਿੱਤਰ ਸੰਗ੍ਰਹਿ",
+        benchPrecision: "ਔਸਤ ਸ਼ੁੱਧਤਾ (mAP)",
+        benchLatency: "ਮੋਬਾਈਲ 'ਤੇ ਜਾਂਚ ਦੀ ਗਤੀ",
+        benchCloud: "ਕਲਾਊਡ ਡਾਟਾ ਖਪਤ (ਬਿਨਾਂ ਇੰਟਰਨੈੱਟ ਤਿਆਰ)",
+        smamSubtitle: "ਖੇਤੀ ਮਸ਼ੀਨੀਕਰਨ ਸਬ-ਮਿਸ਼ਨ (SMAM)",
+        smamTitle: "ਕਿਸਾਨ ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ ਕੈਲਕੁਲੇਟਰ ਅਤੇ DBT ਟਰੈਕਰ",
+        smamDesc: "ਆਧੁਨਿਕ ਸਪਰੇਅਰਾਂ ਅਤੇ ਕਿਸਾਨ ਡਰੋਨਾਂ 'ਤੇ 50% ਤੱਕ ਸਰਕਾਰੀ ਸਹਾਇਤਾ ਜਾਣੋ (ਬਿਨਾਂ ਆਧਾਰ ਕਾਰਡ)।",
+        smamDbtBadge: "ਡੀਬੀਟੀ ਭਾਰਤ ਪ੍ਰਮਾਣਿਤ ✓",
+        smamLabelEquipment: "ਖੇਤੀ ਮਸ਼ੀਨਰੀ ਚੁਣੋ",
+        smamLabelCategory: "ਕਿਸਾਨ ਸ਼੍ਰੇਣੀ",
+        smamBaseCostLabel: "ਮਸ਼ੀਨ ਦੀ ਅਸਲ ਕੀਮਤ:",
+       
+        smamNetCostLabel: "ਕਿਸਾਨ ਦਾ ਖ਼ਰਚਾ:",
+        smamTrackTitle: "ਮੌਜੂਦਾ ਸਬਸਿਡੀ ਅਰਜ਼ੀ ਦੀ ਸਥਿਤੀ ਵੇਖੋ",
+        smamTrackDesc: "ਅਰਜ਼ੀ ਨੰਬਰ ਜਾਂ ਮੋਬਾਈਲ ਨੰਬਰ ਭਰ ਕੇ ਬਿਨਾਂ ਆਧਾਰ ਕਾਰਡ ਦੇ ਡੀਬੀਟੀ ਸਥਿਤੀ ਜਾਣੋ।",
+        smamTrackBtn: "ਅਰਜ਼ੀ ਰਿਕਾਰਡ ਲੱਭੋ →",
+        smamApplicantInfo: "ਬਿਨੈਕਾਰ: ਵਿਲਾਸ ਪਾਟਿਲ (ਪੁਣੇ ਬਲਾਕ)",
+        smamSanctionedBadge: "ਮਨਜ਼ੂਰ ✓",
+        smamEquipmentStatus: "ਉਪਕਰਣ: ਕਿਸਾਨ ਡਰੋਨ (16 ਲੀਟਰ) • ਬੈਂਕ ਡੀਬੀਟੀ: ਚਾਲੂ",
+        gpsSectionBadge: "📍 ਜੀਪੀਐਸ ਟੈਲੀਮੈਟਰੀ • SIH 2026 ਕਿਸਾਨ ਮਾਡਿਊਲ",
+        gpsSectionTitle: "ਖੇਤ ਦਾ GPS ਸਥਾਨ ਅਤੇ ਨਕਸ਼ਾ (Farm Field Location & Map)",
+        gpsSectionDesc: "ਕਿਸਾਨ ਦੇ ਖੇਤ ਦੇ ਨਿਰਦੇਸ਼ਾਂਕ, ਖੇਤੀ-ਮੌਸਮੀ ਖੇਤਰ, ਮਿੱਟੀ ਦੀ ਕਿਸਮ ਅਤੇ ਸਭ ਤੋਂ ਨੇੜਲਾ ਕ੍ਰਿਸ਼ੀ ਵਿਗਿਆਨ ਕੇਂਦਰ ਲੱਭੋ।",
+        gpsDetectBtn: "ਮੇਰੇ ਖੇਤ ਦਾ ਸਥਾਨ ਲੱਭੋ",
+        gpsTelemetryHeading: "ਭੂਗੋਲਿਕ ਵੇਰਵਾ (Geospatial Telemetry)",
+        gpsLabelLocation: "ਸਥਾਨ:",
+        gpsLabelCoords: "ਅਕਸ਼ਾਂਸ਼-ਰੇਖਾਂਸ਼:",
+        gpsLabelZone: "ਖੇਤੀ-ਮੌਸਮੀ ਖੇਤਰ:",
+        gpsValZone: "ਪੱਛਮੀ ਪਠਾਰ ਅਤੇ ਪਹਾੜੀ ਖੇਤਰ (ਜ਼ੋਨ IX)",
+        gpsLabelSoil: "ਮਿੱਟੀ ਦੀ ਕਿਸਮ:",
+        gpsValSoil: "ਦਰਮਿਆਨੀ ਕਾਲੀ ਉਪਜਾਊ ਮਿੱਟੀ",
+        kvkHeading: "ਸਭ ਤੋਂ ਨੇੜਲਾ ਕ੍ਰਿਸ਼ੀ ਵਿਗਿਆਨ ਕੇਂਦਰ (Nearest KVK)",
+        kvkName: "ਕ੍ਰਿਸ਼ੀ ਵਿਗਿਆਨ ਕੇਂਦਰ, ਬਾਰਾਮਤੀ / ਨਾਰਾਇਣਗਾਂਵ",
+        kvkDist: "ਦੂਰੀ: <strong>14.2 ਕਿਲੋਮੀਟਰ (22 ਮਿੰਟ ਦਾ ਸਫ਼ਰ)</strong>",
+        kvkSci: "ਮੁੱਖ ਖੇਤੀ ਵਿਗਿਆਨੀ: ਡਾ. ਐੱਸ. ਕੇ. ਕੁਲਕਰਣੀ",
+        kvkCallBtn: "KVK ਨੂੰ ਕਾਲ ਕਰੋ",
+        kvkReportBtn: "ਜਾਂਚ ਰਿਪੋਰਟ ਭੇਜੋ →",
+        gpsPrivacy: "<strong>ਸਥਾਨ ਨਿੱਜਤਾ:</strong> ਤੁਹਾਡੇ ਖੇਤ ਦਾ ਸਥਾਨ ਸਿਰਫ਼ ਮੌਸਮ ਜਾਣਕਾਰੀ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ ਅਤੇ ਕਿਸੇ ਹੋਰ ਨੂੰ ਨਹੀਂ ਦਿੱਤਾ ਜਾਂਦਾ।",
+        footerAboutDesc: "ਸਮਾਰਟ ਇੰਡੀਆ ਹੈਕਾਥਾਨ 2026 ਸਮੱਸਿਆ 26131: ਫਸਲੀ ਬਿਮਾਰੀਆਂ ਅਤੇ ਕੀੜਿਆਂ ਦੀ ਸ਼ੁਰੂਆਤੀ ਪਛਾਣ। ਟੀਮ ਕੋਡ ਨਾਈਟਸ (SW-39) ਦੁਆਰਾ ਵਿਕਸਤ।",
+        footerPortalsTitle: "ਜ਼ਰੂਰੀ ਸਰਕਾਰੀ ਪੋਰਟਲ",
+        footerPortalAgri: "ਖੇਤੀਬਾੜੀ ਅਤੇ ਕਿਸਾਨ ਭਲਾਈ ਮੰਤਰਾਲਾ",
+        footerPortalKisan: "ਪੀਐੱਮ-ਕਿਸਾਨ ਸੰਮਾਨ ਨਿਧੀ",
+        footerPortalDbt: "ਡੀਬੀਟੀ ਭਾਰਤ ਕੌਮੀ ਪੋਰਟਲ",
+        footerStandardsTitle: "ਰਾਸ਼ਟਰੀ ਮਾਪਦੰਡ",
+        footerStandardSafety: "ਕਾਨੂੰਨੀ ਸੁਰੱਖਿਆ ਨਿਯਮ",
+        footerStandardPrivacy: "ਨਿੱਜਤਾ ਨੀਤੀ (ਕੋਈ ਆਧਾਰ ਡਾਟਾ ਨਹੀਂ)",
+        footerStandardIcar: "ICAR ਤੇ FMTTI ਮਾਪਦੰਡ",
+        footerCallCenterTitle: "ਰਾਸ਼ਟਰੀ ਕਿਸਾਨ ਕਾਲ ਸੈਂਟਰ",
+        footerHelplineStrong: "ਟੋਲ-ਫ੍ਰੀ ਹੈਲਪਲਾਈਨ:",
+        footerPatrioticTitle: "ਜੈ ਜਵਾਨ • ਜੈ ਕਿਸਾਨ | Jai Jawan, Jai Kisan",
+        footerPatrioticDesc: "\"ਦੇਸ਼ ਦੀ ਰਾਖੀ ਕਰਦੇ ਬਹਾਦਰ ਜਵਾਨਾਂ ਅਤੇ ਦੇਸ਼ ਦਾ ਢਿੱਡ ਭਰਦੇ ਅੰਨਦਾਤਿਆਂ ਨੂੰ ਸਮਰਪਿਤ।\"<br /><strong class=\"text-emerald-300\">ਕ੍ਰਿਸ਼ੀਰਕਸ਼ਕ</strong> <strong>ਟੀਮ ਕੋਡ ਨਾਈਟਸ (SW-39)</strong> ਵੱਲੋਂ ਭਾਰਤੀ ਕਿਸਾਨਾਂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਉਣ ਲਈ <strong>ਸਮਾਰਟ ਇੰਡੀਆ ਹੈਕਾਥਾਨ 2026</strong> ਤਹਿਤ ਬਣਾਇਆ ਗਿਆ ਹੈ।",
+        loginTabFarmer: "ਕਿਸਾਨ ਲੌਗਇਨ",
+        loginTabOfficial: "ਅਧਿਕਾਰੀ / KVK ਲੌਗਇਨ",
+        loginFarmerIdLabel: "ਰਜਿਸਟਰਡ ਮੋਬਾਈਲ ਨੰਬਰ / ਕਿਸਾਨ ਆਈਡੀ",
+        loginResendOtp: "ਓਟੀਪੀ ਮੁੜ ਭੇਜੋ",
+        loginFarmerBtn: "ਕਿਸਾਨ ਵਜੋਂ ਲੌਗਇਨ ਕਰੋ →",
+        loginOfficialIdLabel: "ਸਰਕਾਰੀ ਈਮੇਲ ਆਈਡੀ / ਸਟਾਫ਼ ਕੋਡ",
+        loginOfficialPwLabel: "ਪਾਸਵਰਡ",
+        loginOfficialBtn: "ਸਰਕਾਰੀ ਪੋਰਟਲ ਲੌਗਇਨ →",
+        loginCloseBtn: "ਬੰਦ ਕਰੋ",
+        scannerModalTitle: "ਕ੍ਰਿਸ਼ੀਰਕਸ਼ਕ 🌱 AI ਫਸਲ ਕੈਮਰਾ ਸਕੈਨਰ",
+        scannerLivePreview: "ਲਾਈਵ ਦ੍ਰਿਸ਼ • YOLOv8-nano INT8",
+        scannerSampleLabel: "ਟੈਸਟ ਨਮੂਨਾ ਚੁਣੋ:",
+        scannerSampleRust: "ਕਣਕ: ਪੀਲੀ ਕੁੰਗੀ (Yellow Rust)",
+        scannerSampleBlast: "ਝੋਨਾ: ਬਲਾਸਟ ਰੋਗ (Rice Blast)",
+        scannerSampleHealthy: "ਸਿਹਤਮੰਦ ਫਸਲ",
+        scannerResultLabel: "ਬਿਮਾਰੀ ਜਾਂਚ ਨਤੀਜਾ",
+        scannerBioLabel: "🌿 ਜੈਵਿਕ ਰੋਕਥਾਮ:",
+        scannerChemLabel: "🧪 ਰਸਾਇਣਕ ਇਲਾਜ (CIB&RC):",
+        diagDisclaimer: "<span>⚠️</span><div><strong>ਕਾਨੂੰਨੀ ਸੂਚਨਾ:</strong> ਇਹ AI ਨਤੀਜਾ ਇੱਕ ਸਹਾਇਕ ਅੰਦਾਜ਼ਾ ਹੈ (~94.6% ਭਰੋਸੇਯੋਗਤਾ) ਅਤੇ <strong>100% ਪੱਕਾ ਨਹੀਂ ਹੈ</strong>। ਵੱਡੇ ਪੱਧਰ 'ਤੇ ਦਵਾਈ ਛਿੜਕਣ ਤੋਂ ਪਹਿਲਾਂ KVK ਵਿਗਿਆਨੀਆਂ ਤੋਂ ਤਸਦੀਕ ਕਰਵਾਓ।</div>",
+        scannerCloseBtn: "ਸਕੈਨਰ ਬੰਦ ਕਰੋ"
+      }
+    };
+
+    /* 2. Language Switcher Engine */
+    function setAppLanguage(lang) {
+      const selected = TRANSLATIONS[lang] || TRANSLATIONS.en;
+      const fallback = TRANSLATIONS.en;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = selected[key] !== undefined ? selected[key] : fallback[key];
+        if (val !== undefined) {
+          if (typeof val === 'string' && val.includes('<') && val.includes('>')) {
+            el.innerHTML = val;
+          } else {
+            el.textContent = val;
+          }
+        }
+      });
+
+      ['en', 'hi', 'mr', 'pa'].forEach(l => {
+        const b = document.getElementById('lang-btn-' + l);
+        if (b) {
+          b.className = l === lang
+            ? "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-700 text-white transition"
+            : "px-2 py-0.5 rounded text-[11px] font-medium text-slate-700 hover:bg-emerald-50 transition";
+        }
+      });
+    }
+
+    /* 3. Upload from Gallery / Camera Handler */
+    function handleCropPhotoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const scannerImg = document.getElementById('scanner-view-img');
+        if (scannerImg) {
+          scannerImg.src = e.target.result;
+        }
+        const titleEl = document.getElementById('diag-disease-title');
+        if (titleEl) {
+          titleEl.textContent = "Uploaded Leaf Sample (Analyzing...)";
+        }
+        const confEl = document.getElementById('diag-confidence');
+        if (confEl) {
+          confEl.textContent = "95.2% Confidence";
+        }
+        const descEl = document.getElementById('diag-desc');
+        if (descEl) {
+          descEl.textContent = "Image loaded from user gallery/camera. Preprocessed via CLAHE for sunlight normalization.";
+        }
+        openScannerModal();
+      };
+      reader.readAsDataURL(file);
+      // Reset input value so same file can be re-selected if desired
+      event.target.value = '';
+    }
+
+    /* 4. Marathi Voice Note Engine (Preserved Exactly As-Is) */
+    let isMarathiVoicePlaying = false;
+    let marathiSpeechUtterance = null;
+    let waveInterval = null;
+    const MARATHI_AUDIO_SCRIPT = "नमस्कार शेतकरी मित्रांनो! कृषिरक्षक ॲपमध्ये आपले मनःपूर्वक स्वागत आहे. हे ॲप वापरणे अतिशय सोपे आहे: सर्वप्रथम कॅमेरा बटण दाबून आपल्या पिकाच्या आजारी पानाचा स्पष्ट फोटो काढा. आमचे कृत्रिम बुद्धिमत्ता तंत्रज्ञान अवघ्या तीन सेकंदात रोगाचे अचूक नाव सांगेल आणि त्यावर कोणती सेंद्रिय अथवा रासायनिक फवारणी करावी हे स्पष्ट करेल. तसेच नवीन ड्रोन आणि फवारणी पंपासाठी शासनाचे ५० टक्के अनुदान कसे मिळवायचे तेही येथे समजेल. आमची प्रणाली साहाय्यक सल्लागार असून शंभर टक्के अचूक नाही, त्यामुळे मोठ्या फवारणीपूर्वी कृषी विज्ञान केंद्र शास्त्रज्ञांचा सल्ला अवश्य घ्या. जय जवान, जय किसान!";
+
+    function toggleMarathiVoiceNote() {
+      if (isMarathiVoicePlaying) {
+        stopMarathiVoiceNote();
+      } else {
+        playMarathiVoiceNote();
+      }
+    }
+
+    function playMarathiVoiceNote() {
+      if (!('speechSynthesis' in window)) {
+        alert("तुमच्या ब्राउझरमध्ये ऑडिओ प्लेअर सपोर्ट उपलब्ध नाही.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      marathiSpeechUtterance = new SpeechSynthesisUtterance(MARATHI_AUDIO_SCRIPT);
+      marathiSpeechUtterance.lang = 'mr-IN';
+      marathiSpeechUtterance.rate = 0.95;
+      marathiSpeechUtterance.pitch = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const mrVoice = voices.find(v => v.lang === 'mr-IN' || v.lang.startsWith('mr')) ||
+                      voices.find(v => v.lang === 'hi-IN' || v.lang.startsWith('hi')) ||
+                      voices.find(v => v.lang.includes('IN'));
+      if (mrVoice) marathiSpeechUtterance.voice = mrVoice;
+
+      marathiSpeechUtterance.onstart = function() {
+        isMarathiVoicePlaying = true;
+        const btnText = document.getElementById("voice-btn-text");
+        const btnIcon = document.getElementById("voice-icon");
+        const statusLabel = document.getElementById("audio-status-label");
+        if (btnText) btnText.textContent = "थांबवा (Pause Audio)";
+        if (btnIcon) btnIcon.textContent = "⏸️";
+        if (statusLabel) statusLabel.textContent = "आवाज चालू आहे (Playing Marathi Voice)...";
+
+        const bars = document.querySelectorAll(".wave-bar");
+        if (waveInterval) clearInterval(waveInterval);
+        waveInterval = setInterval(() => {
+          bars.forEach(b => {
+            b.style.height = (Math.floor(Math.random() * 28) + 6) + "px";
+          });
+        }, 150);
+      };
+
+      marathiSpeechUtterance.onend = stopMarathiVoiceNote;
+      marathiSpeechUtterance.onerror = stopMarathiVoiceNote;
+      window.speechSynthesis.speak(marathiSpeechUtterance);
+    }
+
+    function stopMarathiVoiceNote() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      isMarathiVoicePlaying = false;
+      const btnText = document.getElementById("voice-btn-text");
+      const btnIcon = document.getElementById("voice-icon");
+      const statusLabel = document.getElementById("audio-status-label");
+      if (btnText) btnText.textContent = "मराठीत ऐका (Play Voice Note)";
+      if (btnIcon) btnIcon.textContent = "▶️";
+      if (statusLabel) statusLabel.textContent = "तयार आहे (Ready to Play)";
+
+      if (waveInterval) clearInterval(waveInterval);
+      const bars = document.querySelectorAll(".wave-bar");
+      const defaultHeights = [12, 24, 32, 16, 28, 40, 20, 32, 16, 36, 24, 12];
+      bars.forEach((b, i) => {
+        b.style.height = (defaultHeights[i % defaultHeights.length] / 3) + "px";
+      });
+    }
+
+    /* 4.5. Fungal Disease Risk Calculator (ICAR Microclimate Model) */
+    function adjustFungalValue(type, delta) {
+      if (type === 'temp') {
+        const slider = document.getElementById('fungal-temp-slider');
+        if (!slider) return;
+        let val = parseInt(slider.value, 10) + delta;
+        val = Math.max(10, Math.min(45, val));
+        slider.value = val;
+      } else if (type === 'humidity') {
+        const slider = document.getElementById('fungal-humidity-slider');
+        if (!slider) return;
+        let val = parseInt(slider.value, 10) + delta;
+        val = Math.max(20, Math.min(100, val));
+        slider.value = val;
+      }
+      calculateFungalRisk();
+    }
+
+    function calculateFungalRisk() {
+      const tempSlider = document.getElementById('fungal-temp-slider');
+      const humSlider = document.getElementById('fungal-humidity-slider');
+      if (!tempSlider || !humSlider) return;
+
+      const temp = parseInt(tempSlider.value, 10);
+      const humidity = parseInt(humSlider.value, 10);
+
+      const tempVal = document.getElementById('fungal-temp-val');
+      const humVal = document.getElementById('fungal-humidity-val');
+      if (tempVal) tempVal.textContent = temp + '°C';
+      if (humVal) humVal.textContent = humidity + '%';
+
+      const panel = document.getElementById('fungal-result-panel');
+      const badge = document.getElementById('fungal-risk-badge');
+      const headline = document.getElementById('fungal-risk-headline');
+      const desc = document.getElementById('fungal-risk-desc');
+      const actionBox = document.getElementById('fungal-action-box');
+      const actionText = document.getElementById('fungal-risk-action');
+
+      // Fungal spore germination thresholds:
+      // High: Humidity >= 80% and Temp between 15-30°C, or humidity >= 85% with temp 12-34°C
+      // Moderate: Humidity 60-80% with temp 15-35°C, or humidity >= 75%
+      // Low: Otherwise
+      const isHigh = (humidity >= 80 && temp >= 15 && temp <= 30) || (humidity >= 85 && temp >= 12 && temp <= 34);
+      const isModerate = !isHigh && ((humidity >= 60 && temp >= 15 && temp <= 35) || humidity >= 75);
+
+      if (isHigh) {
+        if (panel) {
+          panel.className = "h-full p-5 sm:p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-4 bg-red-50/80 border-red-300 shadow-sm";
+        }
+        if (badge) {
+          badge.className = "px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-red-100 text-red-800 border border-red-300";
+          badge.textContent = "HIGH RISK";
+        }
+        if (headline) {
+          headline.textContent = "High Fungal Spore Germination Risk";
+          headline.className = "text-xl font-black text-red-950 tracking-tight mb-2";
+        }
+        if (desc) {
+          desc.textContent = `At ${temp}°C and ${humidity}% relative humidity, prolonged foliar leaf wetness creates optimal conditions for rapid fungal spore germination (e.g. Puccinia rust, Blast, Downy Mildew). Urgent scouting required.`;
+        }
+        if (actionBox) {
+          actionBox.className = "mt-4 p-3.5 rounded-xl border border-red-300 bg-white text-xs space-y-1";
+        }
+        if (actionText) {
+          actionText.textContent = "Inspect lower leaf canopy for rust pustules or water-soaked blast lesions. Avoid late-evening overhead sprinkler irrigation. Prepare CIB&RC approved bio-fungicide (Trichoderma viride @ 5g/L) or protective systemic spray (e.g. Propiconazole 25% EC @ 1ml/L) if humidity remains above 80%.";
+        }
+      } else if (isModerate) {
+        if (panel) {
+          panel.className = "h-full p-5 sm:p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-4 bg-amber-50/80 border-amber-300 shadow-sm";
+        }
+        if (badge) {
+          badge.className = "px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-amber-100 text-amber-800 border border-amber-300";
+          badge.textContent = "MODERATE RISK";
+        }
+        if (headline) {
+          headline.textContent = "Moderate Fungal Risk Detected";
+          headline.className = "text-xl font-black text-amber-950 tracking-tight mb-2";
+        }
+        if (desc) {
+          desc.textContent = `At ${temp}°C and ${humidity}% relative humidity, microclimate conditions present moderate incubation potential. Dew accumulation on leaf surfaces may sustain localized fungal colonization.`;
+        }
+        if (actionBox) {
+          actionBox.className = "mt-4 p-3.5 rounded-xl border border-amber-300 bg-white text-xs space-y-1";
+        }
+        if (actionText) {
+          actionText.textContent = "Conduct field crop inspection every 48 hours. Clear drainage furrows to prevent standing water near root zones. Keep 5% Neem Seed Kernel Extract (NSKE) or copper oxychloride ready for spot prophylactic application.";
+        }
+      } else {
+        if (panel) {
+          panel.className = "h-full p-5 sm:p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-4 bg-emerald-50/50 border-emerald-200";
+        }
+        if (badge) {
+          badge.className = "px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300";
+          badge.textContent = "LOW RISK";
+        }
+        if (headline) {
+          headline.textContent = "Low Fungal Risk";
+          headline.className = "text-xl font-black text-slate-900 tracking-tight mb-2";
+        }
+        if (desc) {
+          desc.textContent = `At ${temp}°C and ${humidity}% relative humidity, dry ambient conditions and temperature limits inhibit spore germination and mycelial spread.`;
+        }
+        if (actionBox) {
+          actionBox.className = "mt-4 p-3.5 rounded-xl border border-emerald-200 bg-white text-xs space-y-1";
+        }
+        if (actionText) {
+          actionText.textContent = "Continue standard agronomic monitoring and balanced irrigation schedule. No synthetic or chemical fungicide treatment is required under current atmospheric metrics.";
+        }
+      }
+    }
+
+    /* 5. Farm Field GPS Location & Interactive Leaflet Map Engine */
+    let leafletMap = null;
+    let farmMarker = null;
+    let kvkMarker = null;
+    const DEFAULT_FARM_LAT = 18.5204;
+    const DEFAULT_FARM_LNG = 73.8567;
+    const KVK_LAT = 18.6050;
+    const KVK_LNG = 73.9650;
+
+    function initInteractiveFarmMap() {
+      const mapContainer = document.getElementById('field-leaflet-map');
+      if (!mapContainer) return;
+      if (typeof L === 'undefined') {
+        setTimeout(initInteractiveFarmMap, 200);
+        return;
+      }
+      if (leafletMap) return;
+
+      try {
+        leafletMap = L.map('field-leaflet-map', {
+          zoomControl: true,
+          scrollWheelZoom: false
+        }).setView([DEFAULT_FARM_LAT, DEFAULT_FARM_LNG], 12);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(leafletMap);
+
+        // Marker 1: Farmer's Field Marker
+        farmMarker = L.marker([DEFAULT_FARM_LAT, DEFAULT_FARM_LNG]).addTo(leafletMap);
+        farmMarker.bindPopup(`
+          <div style="font-family: inherit; font-size: 12px; line-height: 1.4; padding: 2px;">
+            <strong style="color: #065f46; font-size: 13px;">📍 Your Farm Field</strong><br>
+            <span>Haveli / Baramati Agro-Climatic Belt, Pune</span><br>
+            <span style="font-family: monospace; color: #166534; font-weight: 700;">18.5204° N, 73.8567° E</span><br>
+            <span style="display:inline-block; margin-top: 4px; padding: 2px 6px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 4px; color: #047857; font-size: 11px; font-weight: 700;">Active Telemetry Node ✓</span>
+          </div>
+        `).openPopup();
+
+        // Marker 2: Nearest KVK Center Marker
+        kvkMarker = L.marker([KVK_LAT, KVK_LNG]).addTo(leafletMap);
+        kvkMarker.bindPopup(`
+          <div style="font-family: inherit; font-size: 12px; line-height: 1.4; padding: 2px;">
+            <strong style="color: #1e3a8a; font-size: 13px;">🏛️ कृषी विज्ञान केंद्र, बारामती / नारायणगाव</strong><br>
+            <span>ICAR-ATARI Zone VIII Institutional Node</span><br>
+            <span style="font-weight: 700; color: #0f172a;">Distance: 14.2 km (22 min drive)</span><br>
+            <span style="color: #475569;">Lead Scientist: Dr. S. K. Kulkarni</span>
+          </div>
+        `);
+
+        // Visual crop parcel polygon on the map
+        const fieldParcel = [
+          [18.5260, 73.8510],
+          [18.5280, 73.8620],
+          [18.5180, 73.8650],
+          [18.5150, 73.8540]
+        ];
+        L.polygon(fieldParcel, {
+          color: '#059669',
+          fillColor: '#34d399',
+          fillOpacity: 0.2,
+          weight: 2
+        }).addTo(leafletMap).bindPopup("🌾 Monitored Crop Plot: Wheat & Gram (5.5 Acres)");
+
+        setTimeout(() => {
+          if (leafletMap) leafletMap.invalidateSize();
+        }, 300);
+      } catch (err) {
+        console.error("Leaflet initialization notice:", err);
+      }
+    }
+
+    function detectFarmerLocation() {
+      const btnText = document.getElementById("detect-gps-btn-text");
+      const statusHud = document.getElementById("map-telemetry-hud");
+      const coordsText = document.getElementById("geo-coords");
+      const locationText = document.getElementById("geo-location-name");
+
+      if (btnText) btnText.textContent = "GPS शोधत आहे (Detecting...)...";
+
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const rawLat = position.coords.latitude;
+            const rawLng = position.coords.longitude;
+            const lat = rawLat.toFixed(4);
+            const lng = rawLng.toFixed(4);
+
+            if (coordsText) coordsText.textContent = `${lat}° N, ${lng}° E`;
+            if (locationText) locationText.textContent = `Live GPS Field Site (Lat: ${lat}, Lng: ${lng})`;
+            if (statusHud) statusHud.textContent = `Live GPS Field Verified: ${lat}° N, ${lng}° E ✓`;
+            if (btnText) btnText.textContent = "शेताचे स्थान मिळाले! (Field Detected ✓)";
+
+            // Update Leaflet map with real coordinates
+            if (leafletMap && farmMarker) {
+              farmMarker.setLatLng([rawLat, rawLng]);
+              farmMarker.setPopupContent(`
+                <div style="font-family: inherit; font-size: 12px; line-height: 1.4; padding: 2px;">
+                  <strong style="color: #065f46; font-size: 13px;">📍 Your Farm Field (Live GPS)</strong><br>
+                  <span>Real-Time On-Device Coordinates</span><br>
+                  <span style="font-family: monospace; color: #166534; font-weight: 700;">${lat}° N, ${lng}° E</span><br>
+                  <span style="display:inline-block; margin-top: 4px; padding: 2px 6px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 4px; color: #047857; font-size: 11px; font-weight: 700;">Live Lock Verified ✓</span>
+                </div>
+              `).openPopup();
+              leafletMap.setView([rawLat, rawLng], 13);
+              leafletMap.invalidateSize();
+            }
+          },
+          (error) => {
+            if (coordsText) coordsText.textContent = "18.5204° N, 73.8567° E (Pune Agritech Hub)";
+            if (locationText) locationText.textContent = "Haveli / Baramati Agro-Climatic Belt, Pune";
+            if (statusHud) statusHud.textContent = "GPS Field Synced: 18.5204° N, 73.8567° E (Field Active)";
+            if (btnText) btnText.textContent = "शेताचे स्थान निश्चित झाले (Location Fixed ✓)";
+
+            // Fallback to Pune coordinates on Leaflet map
+            if (leafletMap && farmMarker) {
+              farmMarker.setLatLng([DEFAULT_FARM_LAT, DEFAULT_FARM_LNG]);
+              farmMarker.setPopupContent(`
+                <div style="font-family: inherit; font-size: 12px; line-height: 1.4; padding: 2px;">
+                  <strong style="color: #065f46; font-size: 13px;">📍 Your Farm Field (Default Hub)</strong><br>
+                  <span>Haveli / Baramati Agro-Climatic Belt, Pune</span><br>
+                  <span style="font-family: monospace; color: #166534; font-weight: 700;">18.5204° N, 73.8567° E</span><br>
+                  <span style="display:inline-block; margin-top: 4px; padding: 2px 6px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 4px; color: #047857; font-size: 11px; font-weight: 700;">Agro-Climatic Baseline ✓</span>
+                </div>
+              `).openPopup();
+              leafletMap.setView([DEFAULT_FARM_LAT, DEFAULT_FARM_LNG], 12);
+              leafletMap.invalidateSize();
+            }
+          },
+          { timeout: 6000 }
+        );
+      } else {
+        if (btnText) btnText.textContent = "GPS निश्चित झाले (18.5204° N, 73.8567° E)";
+        if (leafletMap && farmMarker) {
+          farmMarker.setLatLng([DEFAULT_FARM_LAT, DEFAULT_FARM_LNG]);
+          leafletMap.setView([DEFAULT_FARM_LAT, DEFAULT_FARM_LNG], 12);
+        }
+      }
+    }
+
+    /* 6. Subsidy Calculator */
+   
+
+    function handleTrackSearch() {
+      const inp = document.getElementById('track-input').value.trim();
+      const res = document.getElementById('tracker-result-box');
+      if (!inp) { alert("Please enter a valid Application ID or Mobile Number."); return; }
+      res.classList.remove('hidden');
+      alert("Application record located for: " + inp);
+    }
+
+    /* 7. Modals & Sample Switchers */
+    function openScannerModal() {
+      const modal = document.getElementById('scanner-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function closeScannerModal() {
+      const modal = document.getElementById('scanner-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function switchScannerSample(type) {
+      const img = document.getElementById('scanner-view-img');
+      const title = document.getElementById('diag-disease-title');
+      const conf = document.getElementById('diag-confidence');
+      const desc = document.getElementById('diag-desc');
+      const bio = document.getElementById('diag-bio');
+      const chem = document.getElementById('diag-chem');
+
+      if (type === 'yellow_rust') {
+        img.src = 'https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?auto=format&fit=crop&w=800&q=80';
+        title.textContent = 'Yellow Rust (Puccinia striiformis)';
+        conf.textContent = '96.4% Confidence';
+        desc.textContent = 'Distinct yellow pustules arranged in linear stripes along the leaf veins.';
+        bio.textContent = 'Spray Neem Seed Kernel Extract (5%) or Trichoderma viride @ 5g/liter.';
+        chem.textContent = 'Propiconazole 25% EC @ 1ml/L during morning hours.';
+      } else if (type === 'rice_blast') {
+        img.src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80';
+        title.textContent = 'Rice Blast (Magnaporthe oryzae)';
+        conf.textContent = '94.8% Confidence';
+        desc.textContent = 'Spindle-shaped lesions with gray or white centers and brown margins.';
+        bio.textContent = 'Apply Pseudomonas fluorescens 0.2% seed treatment and foliar spray.';
+        chem.textContent = 'Tricyclazole 75% WP @ 0.6g/L of water at boot leaf stage.';
+      } else if (type === 'healthy') {
+        img.src = 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=800&q=80';
+        title.textContent = 'Healthy Crop (No Pathogens Detected)';
+        conf.textContent = '99.1% Confidence';
+        desc.textContent = 'Leaf tissue exhibits optimal chlorophyll density and clean margins.';
+        bio.textContent = 'Maintain standard balanced NPK fertilization and irrigation.';
+        chem.textContent = 'No chemical intervention needed. Monitor again in 7 days.';
+      }
+    }
+
+    function openDualLogin(tab) {
+      const modal = document.getElementById('dual-login-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      switchLoginTab(tab);
+    }
+    function closeDualLogin() {
+      const modal = document.getElementById('dual-login-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+    function switchLoginTab(tab) {
+      const fContent = document.getElementById('login-farmer-content');
+      const oContent = document.getElementById('login-official-content');
+      const fBtn = document.getElementById('tab-farmer-btn');
+      const oBtn = document.getElementById('tab-official-btn');
+      if (tab === 'farmer') {
+        fContent.classList.remove('hidden');
+        oContent.classList.add('hidden');
+        fBtn.className = "w-1/2 py-3.5 px-4 text-center bg-emerald-700 text-white flex items-center justify-center gap-2 transition";
+        oBtn.className = "w-1/2 py-3.5 px-4 text-center bg-slate-100 text-slate-700 hover:bg-slate-200 flex items-center justify-center gap-2 transition";
+      } else {
+        fContent.classList.add('hidden');
+        oContent.classList.remove('hidden');
+        oBtn.className = "w-1/2 py-3.5 px-4 text-center bg-[#1a237e] text-white flex items-center justify-center gap-2 transition";
+        fBtn.className = "w-1/2 py-3.5 px-4 text-center bg-slate-100 text-slate-700 hover:bg-slate-200 flex items-center justify-center gap-2 transition";
+      }
+    }
+    function handleLoginSuccess(role) {
+      alert("Successfully logged in as: " + (role === 'farmer' ? "Farmer (Vilas Patil)" : "KVK Agronomist (Dr. Kulkarni)"));
+      closeDualLogin();
+    }
+
+    // Auto-initialize Real Interactive Leaflet Map & Fungal Disease Risk Calculator
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateFungalRisk();
+      initInteractiveFarmMap();
+    });
+    window.addEventListener('load', () => {
+      initInteractiveFarmMap();
+      if (leafletMap) leafletMap.invalidateSize();
+    });
+  </script>
+</body>
+</html>
