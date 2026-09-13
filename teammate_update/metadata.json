@@ -1,6 +1,0 @@
-{
-  "name": "Crop Disease Risk Advisory System",
-  "description": "SIH 2026 Crop Disease Risk Advisory backend and interactive demo combining live weather risk, CV confidence, database advisories, and farmer-friendly LLM enrichment.",
-  "requestFramePermissions": ["geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

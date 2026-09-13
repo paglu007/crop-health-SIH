@@ -1,6 +1,0 @@
-{
-  "name": "KrishiRakshak",
-  "description": "Smart India Hackathon 2026 AI Crop Health & SMAM Mechanization platform for early crop disease detection and farmer assistance.",
-  "requestFramePermissions": ["camera", "geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
