@@ -1,6 +1,6 @@
 from backend.routes.weather import weather_bp
 from flask import Flask, render_template, request
-
+from backend.teammate_ai.routes import bp as teammate_ai_bp
 from backend.config import Config
 from backend.database import db, init_db
 from backend.routes.fields import fields_bp
@@ -20,7 +20,7 @@ app.register_blueprint(risk_bp)
 app.register_blueprint(analyze_bp, url_prefix="/api/analyze")
 app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 app.register_blueprint(weather_bp)
-
+app.register_blueprint(teammate_ai_bp)
 
 @app.route("/")
 def home():
