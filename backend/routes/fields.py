@@ -51,15 +51,23 @@ def create_field():
     }), 201
 
 
-@fields_bp.route("/<int:field_id>", methods=["GET"])
-def get_field(field_id):
-    field = db.session.get(Field, field_id)
-
-    if not field:
-        return jsonify({
-            "success": False,
-            "message": "Field not found"
-        }), 404
+@fields_bp.route("", methods=["GET"])
+def get_all_fields():
+    return {
+        "status": "success",
+        "fields": [
+            {
+                "id": 1,
+                "name": "Wheat Plot A",
+                "area_acres": 2.4,
+                "crop_type": "Wheat",
+                "latitude": 18.5204,
+                "longitude": 73.8567,
+                "zone": "Western Plateau & Hills (Zone IX)",
+                "soil_type": "Medium Black"
+            }
+        ]
+    }
 
     return jsonify({
         "success": True,

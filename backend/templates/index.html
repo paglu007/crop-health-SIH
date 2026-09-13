@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KrishiRakshak 🌱 - AI Crop Health | SIH 2026</title>
+  <title>KrishiRakshak 🌱 - AI Crop Health & SMAM Mechanization | SIH 2026</title>
   <!-- Tailwind CSS via allowlisted CDN -->
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
@@ -174,7 +174,7 @@
         <a href="#stakeholders" class="hover:text-emerald-700 transition">Stakeholders</a>
         <a href="#architecture" class="hover:text-emerald-700 transition">Architecture</a>
         <a href="#field-map-section" class="hover:text-emerald-700 transition">GPS Map</a>
-        
+        <a href="#smam-tools" class="hover:text-emerald-700 transition">Machinery Subsidy</a>
       </nav>
 
       <!-- Right Login Buttons -->
@@ -228,7 +228,9 @@
             <span>📷</span>
             <span>[ CHECK MY CROP NOW ]</span>
           </button>
-         
+          <a href="#smam-tools" class="px-5 py-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-bold text-xs shadow-sm transition">
+            Machinery Subsidy →
+          </a>
         </div>
       </div>
 
@@ -297,7 +299,7 @@
             <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 hover:shadow-sm transition flex flex-col items-center">
               <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-xs mb-2">🚜</div>
               <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 mb-1">पायरी ४</span>
-             
+              <h4 class="text-xs font-black text-slate-900">४. ५०% अनुदान</h4>
               <p class="text-[10px] text-slate-600 mt-1">ड्रोन व फवारणी यंत्रासाठी सरकारी मदत</p>
             </div>
 
@@ -548,7 +550,14 @@
           <span class="text-[11px] font-semibold text-amber-700 mt-3">⚠️ Responsible AI</span>
         </div>
 
-       
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs font-black mb-3">05</div>
+            <h4 class="text-sm font-black text-slate-900">SMAM Subsidy</h4>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">1-click direct link to 50% Kisan Drone or Power Sprayer capital subsidy under DBT.</p>
+          </div>
+          <span class="text-[11px] font-semibold text-emerald-700 mt-3">🚜 50% DBT Subsidy</span>
+        </div>
 
       </div>
 
@@ -578,7 +587,88 @@
     </div>
   </section>
 
-  
+  <!-- ================================================== -->
+  <!-- 6. SMAM MACHINERY & SUBSIDY CALCULATOR             -->
+  <!-- ================================================== -->
+  <section id="smam-tools" class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-6 sm:p-8 space-y-6">
+      
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-black uppercase text-emerald-700 tracking-wider">Sub-Mission on Agricultural Mechanization (SMAM)</span>
+          <h3 class="text-2xl font-black text-slate-900 tracking-tight">Kisan Machinery Subsidy Calculator & DBT Tracker</h3>
+          <p class="text-xs sm:text-sm text-slate-600">Calculate financial assistance up to 50% for modern sprayers and Kisan Drones (No Aadhaar required).</p>
+        </div>
+        <div class="px-3.5 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black">
+          DBT Bharat Compliant ✓
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        
+        <div class="md:col-span-6 space-y-4">
+          <div>
+            <label class="block text-xs font-black text-slate-700 mb-1.5 uppercase">Select Machinery / Equipment</label>
+            <select id="calc-equipment" onchange="calculateSubsidy()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="drone" data-cost="600000">Kisan Agro Drone 16L (₹6,00,000)</option>
+              <option value="boom" data-cost="250000">Tractor Mounted Boom Sprayer (₹2,50,000)</option>
+              <option value="knapsack" data-cost="8000">Battery Knapsack Sprayer 16L (₹8,000)</option>
+              <option value="rotavator" data-cost="120000">Rotavator 6 Feet Heavy Duty (₹1,20,000)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-black text-slate-700 mb-1.5 uppercase">Farmer Category</label>
+            <select id="calc-category" onchange="calculateSubsidy()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="sc_st_women_small">Small/Marginal / SC / ST / Women Farmer (50% Subsidy)</option>
+              <option value="general">Other / General Farmer (40% Subsidy)</option>
+              <option value="fpo">FPO / Cooperative Group (Up to 75% Custom Hiring Center)</option>
+            </select>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+            <div class="flex justify-between">
+              <span class="text-slate-600">Equipment Base Cost:</span>
+              <span id="res-base-cost" class="font-bold text-slate-900">₹6,00,000</span>
+            </div>
+            <div class="flex justify-between text-emerald-700 font-bold">
+              <span>Govt DBT Subsidy Share:</span>
+              <span id="res-subsidy-amount">₹3,00,000 (50%)</span>
+            </div>
+            <div class="flex justify-between pt-2 border-t border-slate-200 text-sm font-black text-slate-900">
+              <span>Farmer Effective Cost:</span>
+              <span id="res-net-cost">₹3,00,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Status Form -->
+        <div class="md:col-span-6 bg-slate-50/70 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h4 class="font-black text-slate-900 text-sm mb-1">Track Existing Subsidy Application</h4>
+            <p class="text-xs text-slate-500 mb-4">Track DBT disbursement status without Aadhaar using Application Ref ID or Mobile Number.</p>
+            
+            <div class="space-y-3">
+              <input type="text" id="track-input" placeholder="e.g. MH-SMAM-2026-8841 or 9822012345" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500 bg-white" />
+              <button onclick="handleTrackSearch()" class="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-xs transition">
+                SEARCH APPLICATION RECORD →
+              </button>
+            </div>
+
+            <div id="tracker-result-box" class="mt-4 p-3 bg-white rounded-xl border border-slate-200 space-y-1.5 text-xs">
+              <div class="font-bold text-slate-900 flex justify-between">
+                <span>Applicant: Vilas Patil (Pune Block)</span>
+                <span class="text-emerald-700 font-extrabold">Sanctioned ✓</span>
+              </div>
+              <div class="text-[11px] text-slate-600">Equipment: Kisan Drone (16L) • DBT Bank Status: Active</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
 
   <!-- ================================================== -->
   <!-- 7. FARM FIELD GPS LOCATION & INTERACTIVE MAP       -->
@@ -778,7 +868,7 @@
 
         <p class="text-xs sm:text-sm text-slate-200 mt-2.5 font-medium max-w-2xl mx-auto leading-relaxed relative z-10">
           "Dedicated to the courageous sentinels guarding our nation's frontiers and the tireless Annadatas cultivating our fertile soil."<br />
-          <strong class="text-emerald-300">KrishiRakshak</strong> is engineered by <strong>Team Code Knights (SW-39)</strong> to empower Indian agriculture through indigenous AI diagnostics under <strong>Smart India Hackathon 2026</strong>.
+          <strong class="text-emerald-300">KrishiRakshak</strong> is engineered by <strong>Team Code Knights (SW-39)</strong> to empower Indian agriculture through indigenous AI diagnostics and direct SMAM mechanization under <strong>Smart India Hackathon 2026</strong>.
         </p>
 
         <div class="mt-4 flex flex-wrap items-center justify-center gap-2.5 text-[11px] text-amber-200/90 font-mono relative z-10">
@@ -825,9 +915,9 @@
           </div>
 
           <div class="flex gap-2">
-            <input type="text" placeholder="Enter 6-digit OTP" value="482910" class="w-2/3 px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 font-mono text-center tracking-widest font-bold" />
-            <button class="w-1/3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300">
-              Resend OTP
+            <input type="text" id="farmer-otp" placeholder="Enter 6-digit OTP" class="w-2/3 px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 font-mono text-center tracking-widest font-bold" />
+            <button type="button" onclick="sendFarmerOTP()" class="w-1/3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300">
+              Send OTP
             </button>
           </div>
 
@@ -887,23 +977,19 @@
           </div>
         </div>
 
-       <div class="space-y-2">
-  <label class="block text-xs font-bold text-slate-700">
-    Upload Your Crop Photo:
-  </label>
-
-  <input
-    type="file"
-    id="crop-image-input"
-    accept="image/*"
-    onchange="handleCropUpload(event)"
-    class="w-full text-xs border border-slate-300 rounded-lg p-2 bg-white"
-  />
-
-  <p class="text-[10px] text-slate-500">
-    📷 Upload a clear photo of the affected crop leaf.
-  </p>
-</div>
+        <div class="space-y-1">
+          <label class="block text-xs font-bold text-slate-700">Select Test Crop Disease Sample:</label>
+          <div class="flex gap-2">
+            <button onclick="switchScannerSample('yellow_rust')" class="flex-1 py-1.5 px-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold border border-amber-300">
+              Wheat: Yellow Rust
+            </button>
+            <button onclick="switchScannerSample('rice_blast')" class="flex-1 py-1.5 px-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-900 text-xs font-bold border border-rose-300">
+              Rice: Blast Disease
+            </button>
+            <button onclick="switchScannerSample('healthy')" class="flex-1 py-1.5 px-2 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-xs font-bold border border-emerald-300">
+              Healthy Crop
+            </button>
+          </div>
         </div>
 
         <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
@@ -958,23 +1044,23 @@
         heroTitle: "Protect Your Crops Early: <br />Actionable AI Disease Detection",
         heroDesc: "A farmer-centric platform combining crop-image analysis, weather context, and localized advisories to prevent severe crop damage.",
         checkCropBtn: "📷 [ CHECK MY CROP NOW ]",
-        
+        machineryBtn: "Machinery Subsidy →",
         ticker: "📢 <strong>महत्वपूर्ण सूचना / IMPORTANT STATUTORY NOTICE:</strong> KrishiRakshak AI crop diagnostic system is an assistive decision-support tool and is <strong>NOT 100% correct / infallible</strong> (current diagnostic confidence: ~94.6%). Field farmers and agricultural officers MUST verify critical or severe crop symptoms with local Krishi Vigyan Kendra (KVK) agronomists before applying chemical treatments. • 🌾 Toll-Free Helpline: 1800-180-1551 • 🛡️ Zero Aadhaar storage guaranteed • Smart India Hackathon 2026 (Code Knights SW-39)",
         diagDisclaimer: "⚠️ <strong>Statutory Advisory:</strong> This AI prediction is an assistive decision aid with ~94.6% confidence and is <strong>not 100% infallible</strong>. Please cross-check severe crop damage with local KVK agronomists before applying chemical pesticides."
       },
       hi: {
         heroTitle: "फसलों की सुरक्षा समय पर करें: <br />सटीक AI रोग पहचान प्रणाली",
-       heroDesc: "फसल रोग का शीघ्र पता लगाने और मौसम अनुकूल छिड़काव सलाह के लिए भारत का अग्रणी डिजिटल मंच।",
+        heroDesc: "फसल रोग का शीघ्र पता लगाने, मौसम अनुकूल छिड़काव और सरकारी SMAM सब्सिडी प्राप्त करने के लिए भारत का अग्रणी डिजिटल मंच।",
         checkCropBtn: "📷 [ मेरी फसल की जांच करें ]",
-      
+        machineryBtn: "कृषि यंत्र सब्सिडी देखें →",
         ticker: "📢 <strong>महत्वपूर्ण सूचना:</strong> कृषिरक्षक AI प्रणाली एक सहायक परामर्श उपकरण है और यह <strong>100% अचूक नहीं है</strong> (वर्तमान शुद्धता ~94.6%)। रासायनिक कीटनाशकों के उपयोग से पूर्व स्थानीय कृषि विज्ञान केंद्र (KVK) के वैज्ञानिकों से परामर्श अवश्य लें। • 🌾 किसान कॉल सेंटर: 1800-180-1551 • 🛡️ आधार डेटा पूर्णतः सुरक्षित • स्मार्ट इंडिया हैकथॉन 2026",
         diagDisclaimer: "⚠️ <strong>वैधानिक सूचना:</strong> यह AI निदान एक सहायक परामर्श साधन है (~94.6% विश्वसनीयता) और <strong>100% सही नहीं हो सकता</strong>। रासायनिक छिड़काव से पहले नजदीकी KVK वैज्ञानिक से पुष्टि अवश्य करें।"
       },
       mr: {
         heroTitle: "पिकांचे वेळीच संरक्षण करा: <br />अचूक AI पीक रोग निदान",
-        heroDesc: "पीक रोगांचे अचूक निदान आणि हवामान-आधारित फवारणी सल्ल्यासाठी एकात्मिक डिजिटल व्यासपीठ.",
+        heroDesc: "पीक रोगांचे अचूक निदान, हवामान-आधारित फवारणी सल्ला आणि कृषी यांत्रिकीकरण SMAM अनुदानासाठी एकात्मिक डिजिटल व्यासपीठ.",
         checkCropBtn: "📷 [ माझ्या पिकाची तपासणी करा ]",
-       
+        machineryBtn: "कृषी अवजारे अनुदान →",
         ticker: "📢 <strong>महत्त्वाची सूचना:</strong> कृषिरक्षक AI प्रणाली हे एक साहाय्यक सल्लागार साधन असून ते <strong>१००% अचूक नाही</strong> (अचूकता ~९४.६%). रासायनिक कीटकनाशके फवारण्यापूर्वी स्थानिक कृषी विज्ञान केंद्र (KVK) शास्त्रज्ञांचा सल्ला नक्की घ्या. • 🌾 किसान हेल्पलाईन: 1800-180-1551 • 🛡️ शून्य आधार संचयन • स्मार्ट इंडिया हॅकेथॉन २०२६",
         diagDisclaimer: "⚠️ <strong>वैधानिक सूचना:</strong> हे AI निदान सहाय्यक असून (~९४.६% विश्वासार्हता) ते <strong>१००% निर्दोष नाही</strong>. रासायनिक फवारणीपूर्वी स्थानिक KVK कृषी अधिकाऱ्यांशी संपर्क साधा."
       },
@@ -982,7 +1068,7 @@
         heroTitle: "ਫਸਲਾਂ ਦੀ ਸਮੇਂ ਸਿਰ ਰਾਖੀ: <br />ਸਟੀਕ AI ਬਿਮਾਰੀ ਪਛਾਣ ਪ੍ਰਣਾਲੀ",
         heroDesc: "ਫਸਲਾਂ ਦੀਆਂ ਬਿਮਾਰੀਆਂ ਦੀ ਸ਼ੁਰੂਆਤੀ ਜਾਂਚ, ਮੌਸਮ ਅਧਾਰਤ ਸਪਰੇਅ ਸਲਾਹ ਅਤੇ ਖੇਤੀ ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ ਲਈ ਕਿਸਾਨ-ਪੱਖੀ ਪੋਰਟਲ।",
         checkCropBtn: "📷 [ ਮੇਰੀ ਫਸਲ ਦੀ ਜਾਂਚ ਕਰੋ ]",
-       
+        machineryBtn: "ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ ਵੇਖੋ →",
         ticker: "📢 <strong>ਜ਼ਰੂਰੀ ਸੂਚਨਾ:</strong> ਕ੍ਰਿਸ਼ੀਰਕਸ਼ਕ AI ਪ੍ਰਣਾਲੀ ਇੱਕ ਸਹਾਇਕ ਸਲਾਹਕਾਰੀ ਟੂਲ ਹੈ ਅਤੇ ਇਹ <strong>100% ਸਹੀ ਨਹੀਂ ਹੈ</strong> (ਮੌਜੂਦਾ ਸ਼ੁੱਧਤਾ ~94.6%)। ਰਸਾਇਣਕ ਦਵਾਈਆਂ ਵਰਤਣ ਤੋਂ ਪਹਿਲਾਂ ਕੇ.ਵੀ.ਕੇ (KVK) ਮਾਹਿਰਾਂ ਦੀ ਸਲਾਹ ਜ਼ਰੂਰ ਲਵੋ। • 🌾 ਕਿਸਾਨ ਹੈਲਪਲਾਈਨ: 1800-180-1551 • 🛡️ ਕੋਈ ਆਧਾਰ ਡਾਟਾ ਇਕੱਠਾ ਨਹੀਂ ਕੀਤਾ ਜਾਂਦਾ • ਸਮਾਰਟ ਇੰਡੀਆ ਹੈਕਾਥਾਨ 2026",
         diagDisclaimer: "⚠️ <strong>ਕਾਨੂੰਨੀ ਸੂਚਨਾ:</strong> ਇਹ AI ਨਤੀਜਾ ਇੱਕ ਸਹਾਇਕ ਅੰਦਾਜ਼ਾ ਹੈ (~94.6% ਭਰੋਸੇਯੋਗਤਾ) ਅਤੇ <strong>100% ਪੱਕਾ ਨਹੀਂ ਹੈ</strong>। ਵੱਡੇ ਪੱਧਰ 'ਤੇ ਦਵਾਈ ਛਿੜਕਣ ਤੋਂ ਪਹਿਲਾਂ KVK ਵਿਗਿਆਨੀਆਂ ਤੋਂ ਤਸਦੀਕ ਕਰਵਾਓ।"
       }
@@ -996,7 +1082,8 @@
       if (heroP) heroP.innerHTML = data.heroDesc;
       const checkBtn = document.querySelector("#home button span:last-child");
       if (checkBtn) checkBtn.textContent = data.checkCropBtn;
-     
+      const machBtn = document.querySelector("#home a[href='#smam-tools']");
+      if (machBtn) machBtn.textContent = data.machineryBtn;
       const tickerDiv = document.getElementById("running-ticker-text");
       if (tickerDiv) tickerDiv.innerHTML = data.ticker;
       const scannerDisclaimer = document.getElementById("scanner-ai-disclaimer");
@@ -1083,41 +1170,60 @@
     }
 
     /* 3. Farm Field GPS Location Engine */
-    function detectFarmerLocation() {
+    /* 3. Farm Field GPS Location Engine (Connected to Backend) */
+    /* 3. Real GPS Location Engine */
+    async function detectFarmerLocation() {
       const btnText = document.getElementById("detect-gps-btn-text");
       const statusHud = document.getElementById("map-telemetry-hud");
       const coordsText = document.getElementById("geo-coords");
       const locationText = document.getElementById("geo-location-name");
       const pin = document.getElementById("farm-location-pin");
 
-      if (btnText) btnText.textContent = "GPS शोधत आहे (Detecting...)...";
+      if (btnText) btnText.textContent = "Requesting GPS Access...";
 
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const lat = position.coords.latitude.toFixed(4);
-            const lng = position.coords.longitude.toFixed(4);
-            if (coordsText) coordsText.textContent = `${lat}° N, ${lng}° E`;
-            if (locationText) locationText.textContent = `Live GPS Field Site (Lat: ${lat}, Lng: ${lng})`;
-            if (statusHud) statusHud.textContent = `Live GPS Field Verified: ${lat}° N, ${lng}° E ✓`;
-            if (btnText) btnText.textContent = "शेताचे स्थान मिळाले! (Field Detected ✓)";
-            if (pin) pin.setAttribute("transform", "translate(280, 160)");
-          },
-          (error) => {
-            if (coordsText) coordsText.textContent = "18.5204° N, 73.8567° E (Pune Agritech Hub)";
-            if (locationText) locationText.textContent = "Haveli / Baramati Agro-Climatic Belt, Pune";
-            if (statusHud) statusHud.textContent = "GPS Field Synced: 18.5204° N, 73.8567° E (Field Active)";
-            if (btnText) btnText.textContent = "शेताचे स्थान निश्चित झाले (Location Fixed ✓)";
-          },
-          { timeout: 6000 }
-        );
-      } else {
-        if (btnText) btnText.textContent = "GPS निश्चित झाले (18.5204° N, 73.8567° E)";
+      if (!("geolocation" in navigator)) {
+        alert("Geolocation is not supported by your browser.");
+        return;
       }
-    }
 
-   
- 
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Get exact real-world coordinates
+          const lat = position.coords.latitude.toFixed(4);
+          const lng = position.coords.longitude.toFixed(4);
+          
+          if (coordsText) coordsText.textContent = `${lat}° N, ${lng}° E`;
+          if (locationText) locationText.textContent = `Live Field Site (Your Location)`;
+          if (statusHud) statusHud.textContent = `Live GPS Verified: ${lat}° N, ${lng}° E ✓`;
+          if (btnText) btnText.textContent = "स्थान निश्चित झाले (Location Fixed ✓)";
+          
+          // Animate the map pin to indicate live tracking
+          if (pin) pin.setAttribute("transform", "translate(280, 160)");
+        },
+        (error) => {
+          console.error("GPS Error:", error);
+          alert("GPS access denied or unavailable. Please allow location tracking in your browser settings.");
+          if (btnText) btnText.textContent = "GPS Access Failed";
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    }
+    /* 4. Subsidy Calculator */
+    function calculateSubsidy() {
+      const eqSelect = document.getElementById('calc-equipment');
+      const catSelect = document.getElementById('calc-category');
+      const baseCost = parseFloat(eqSelect.options[eqSelect.selectedIndex].dataset.cost);
+      let pct = 0.40;
+      if (catSelect.value === 'sc_st_women_small') pct = 0.50;
+      else if (catSelect.value === 'fpo') pct = 0.75;
+
+      const subAmt = baseCost * pct;
+      const net = baseCost - subAmt;
+
+      document.getElementById('res-base-cost').textContent = '₹' + baseCost.toLocaleString('en-IN');
+      document.getElementById('res-subsidy-amount').textContent = '₹' + subAmt.toLocaleString('en-IN') + ' (' + (pct * 100) + '%)';
+      document.getElementById('res-net-cost').textContent = '₹' + net.toLocaleString('en-IN');
+    }
 
     function handleTrackSearch() {
       const inp = document.getElementById('track-input').value.trim();
@@ -1127,7 +1233,42 @@
       alert("Application record located for: " + inp);
     }
 
-   
+    /* 5. Modals & Sample Switchers */
+    function openScannerModal() { document.getElementById('scanner-modal').classList.remove('hidden'); document.getElementById('scanner-modal').classList.add('flex'); }
+    function closeScannerModal() { document.getElementById('scanner-modal').classList.add('hidden'); document.getElementById('scanner-modal').classList.remove('flex'); }
+
+    function switchScannerSample(type) {
+      const img = document.getElementById('scanner-view-img');
+      const title = document.getElementById('diag-disease-title');
+      const conf = document.getElementById('diag-confidence');
+      const desc = document.getElementById('diag-desc');
+      const bio = document.getElementById('diag-bio');
+      const chem = document.getElementById('diag-chem');
+
+      if (type === 'yellow_rust') {
+        img.src = 'https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?auto=format&fit=crop&w=800&q=80';
+        title.textContent = 'Yellow Rust (Puccinia striiformis)';
+        conf.textContent = '96.4% Confidence';
+        desc.textContent = 'Distinct yellow pustules arranged in linear stripes along the leaf veins.';
+        bio.textContent = 'Spray Neem Seed Kernel Extract (5%) or Trichoderma viride @ 5g/liter.';
+        chem.textContent = 'Propiconazole 25% EC @ 1ml/L during morning hours.';
+      } else if (type === 'rice_blast') {
+        img.src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80';
+        title.textContent = 'Rice Blast (Magnaporthe oryzae)';
+        conf.textContent = '94.8% Confidence';
+        desc.textContent = 'Spindle-shaped lesions with gray or white centers and brown margins.';
+        bio.textContent = 'Apply Pseudomonas fluorescens 0.2% seed treatment and foliar spray.';
+        chem.textContent = 'Tricyclazole 75% WP @ 0.6g/L of water at boot leaf stage.';
+      } else if (type === 'healthy') {
+        img.src = 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=800&q=80';
+        title.textContent = 'Healthy Crop (No Pathogens Detected)';
+        conf.textContent = '99.1% Confidence';
+        desc.textContent = 'Leaf tissue exhibits optimal chlorophyll density and clean margins.';
+        bio.textContent = 'Maintain standard balanced NPK fertilization and irrigation.';
+        chem.textContent = 'No chemical intervention needed. Monitor again in 7 days.';
+      }
+    }
+
     function openDualLogin(tab) {
       document.getElementById('dual-login-modal').classList.remove('hidden');
       document.getElementById('dual-login-modal').classList.add('flex');
@@ -1152,34 +1293,39 @@
         fBtn.className = "w-1/2 py-3.5 px-4 text-center bg-slate-100 text-slate-700 hover:bg-slate-200 flex items-center justify-center gap-2 transition";
       }
     }
-    function handleLoginSuccess(role) {
-      alert("Successfully logged in as: " + (role === 'farmer' ? "Farmer (Vilas Patil)" : "KVK Agronomist (Dr. Kulkarni)"));
-      closeDualLogin();
+  async function sendFarmerOTP() {
+      const phone = document.getElementById('farmer-login-phone').value;
+      if (!phone) return alert("Please enter a mobile number.");
+      
+      const response = await fetch('/api/login/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone })
+      });
+      const data = await response.json();
+      alert(data.message + " (Check terminal for code)");
     }
-    async function testBackendConnection() {
-  try {
-    const response = await fetch("/api/risk/calculate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        observation_id: 1,
-        pathogen_type: "Early Blight",
-        severity_pct: 30
-      })
-    });
 
-    const data = await response.json();
-    console.log("Backend connection:", data);
-  } catch (error) {
-    console.error("Backend connection failed:", error);
-  }
-}
-
-testBackendConnection();
+    async function handleLoginSuccess(role) {
+      if (role === 'farmer') {
+        const phone = document.getElementById('farmer-login-phone').value;
+        const otp = document.getElementById('farmer-otp').value;
+        
+        const response = await fetch('/api/login/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: phone, otp: otp })
+        });
+        const data = await response.json();
+        
+        alert(data.message);
+        if (data.status === 'success') closeDualLogin();
+      } else {
+        alert("Logged in as Official");
+        closeDualLogin();
+      }
+    }
   </script>
-  
-<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+
 </body>
 </html>
