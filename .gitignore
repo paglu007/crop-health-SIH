@@ -6,3 +6,31 @@ coverage/
 *.log
 .env*
 !.env.example
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+
+# Databases
+*.db
+
+# Uploaded images
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Dataset
+dataset/
+
+# ZIP files
+*.zip
+
+# Temporary/test files
+backend/test_leaf.jpg

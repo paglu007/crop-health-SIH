@@ -1336,21 +1336,23 @@
   id="crop-photo-thumbnails"
   class="grid grid-cols-3 gap-2 mt-3"
 ></div>
+
+<button
+  id="ai-analyze-button"
+  type="button"
+  onclick="analyzeCropWithAI()"
+  class="w-full mt-3 px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-black text-sm uppercase tracking-wider shadow-md transition">
+  🤖 ANALYZE CROP WITH AI
+</button>
+
+<div id="ai-loading" class="hidden text-center p-3 rounded-xl bg-blue-50 border border-blue-200 mt-3">
+  <div class="font-bold text-blue-800">🤖 AI is analyzing your crop...</div>
+  <div class="text-xs text-blue-600 mt-1">Please wait while EfficientNet-B0 processes the image.</div>
+</div>
 </div>
 
-        <div class="space-y-1">
-          <label class="block text-xs font-bold text-slate-700">Select Test Crop Disease Sample:</label>
-          <div class="flex gap-2">
-            <button onclick="switchScannerSample('yellow_rust')" class="flex-1 py-1.5 px-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold border border-amber-300">
-              Wheat: Yellow Rust
-            </button>
-            <button onclick="switchScannerSample('rice_blast')" class="flex-1 py-1.5 px-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-900 text-xs font-bold border border-rose-300">
-              Rice: Blast Disease
-            </button>
-            <button onclick="switchScannerSample('healthy')" class="flex-1 py-1.5 px-2 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-xs font-bold border border-emerald-300">
-              Healthy Crop
-            </button>
-          </div>
+        <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900">
+          <strong>🤖 Real AI Mode:</strong> Upload or capture a rice leaf image, then click <strong>ANALYZE CROP WITH AI</strong>. The image is sent to your Flask backend and analyzed by your trained EfficientNet-B0 model.
         </div>
 
         <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
@@ -3270,22 +3272,18 @@
     /* =================================================== */
    let cameraStream = null;
    window.selectedCropPhotos = [];
- 
+   window.selectedCropFiles = [];
+
 async function openCamera() {
   try {
     cameraStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: "environment"
-      },
+      video: { facingMode: "environment" },
       audio: false
     });
-
     const video = document.getElementById("camera-video");
     const container = document.getElementById("camera-container");
-
     video.srcObject = cameraStream;
     container.classList.remove("hidden");
-
   } catch (error) {
     console.error("Camera error:", error);
     alert("Camera access was blocked or is not available.");
@@ -3298,152 +3296,215 @@ function capturePhoto() {
   const preview = document.getElementById("scanner-view-img");
   const thumbnails = document.getElementById("crop-photo-thumbnails");
 
+  if (!video.videoWidth || !video.videoHeight) {
+    alert("Camera is not ready yet.");
+    return;
+  }
+
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
-
   const context = canvas.getContext("2d");
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  const photoData = canvas.toDataURL("image/jpeg", 0.9);
+  canvas.toBlob((blob) => {
+    if (!blob) {
+      alert("Could not capture image.");
+      return;
+    }
 
-  // Add captured photo to the collection
-  window.selectedCropPhotos.push(photoData);
+    const file = new File([blob], "camera-crop.jpg", { type: "image/jpeg" });
+    window.selectedCropFiles = [file];
+    window.selectedCropPhotos = [];
 
-  // Show latest photo in main preview
-  if (preview) {
-    preview.src = photoData;
-  }
+    const photoURL = URL.createObjectURL(file);
+    if (preview) preview.src = photoURL;
 
-  // Add thumbnail
-  if (thumbnails) {
-    const img = document.createElement("img");
+    if (thumbnails) {
+      thumbnails.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = photoURL;
+      img.className = "w-full h-24 object-cover rounded-lg border-2 border-emerald-300";
+      thumbnails.appendChild(img);
+    }
 
-    img.src = photoData;
-    img.className =
-      "w-full h-24 object-cover rounded-lg border-2 border-emerald-300";
-
-    thumbnails.appendChild(img);
-  }
-
-  console.log(
-    "Camera photos:",
-    window.selectedCropPhotos.length
-  );
+    console.log("Camera image ready:", file.name, file.size, "bytes");
+  }, "image/jpeg", 0.9);
 }
-
 
 function closeCamera() {
   if (cameraStream) {
     cameraStream.getTracks().forEach(track => track.stop());
     cameraStream = null;
   }
-
   const video = document.getElementById("camera-video");
   const container = document.getElementById("camera-container");
-
-  video.srcObject = null;
-  container.classList.add("hidden");
+  if (video) video.srcObject = null;
+  if (container) container.classList.add("hidden");
 }
-    function previewCropPhotos(event) {
-  const files = Array.from(event.target.files);
 
-  if (files.length === 0) {
-    return;
-  }
+function previewCropPhotos(event) {
+  const files = Array.from(event.target.files || []);
+  if (files.length === 0) return;
 
-  const imageFiles = files.filter(file =>
-    file.type.startsWith("image/")
-  );
+  const imageFiles = files.filter(file => file.type.startsWith("image/"));
+  if (imageFiles.length !== files.length) alert("Only image files are allowed.");
+  if (imageFiles.length === 0) return;
 
-  if (imageFiles.length !== files.length) {
-    alert("Only image files are allowed.");
-  }
-
+  window.selectedCropFiles = imageFiles;
   window.selectedCropPhotos = [];
 
-  const thumbnails =
-    document.getElementById("crop-photo-thumbnails");
-
-  thumbnails.innerHTML = "";
+  const thumbnails = document.getElementById("crop-photo-thumbnails");
+  if (thumbnails) thumbnails.innerHTML = "";
 
   imageFiles.forEach((file) => {
     const reader = new FileReader();
-
     reader.onload = function(e) {
       window.selectedCropPhotos.push(e.target.result);
-
       const img = document.createElement("img");
-
       img.src = e.target.result;
-      img.className =
-        "w-full h-24 object-cover rounded-lg border-2 border-emerald-300";
-
-      thumbnails.appendChild(img);
+      img.className = "w-full h-24 object-cover rounded-lg border-2 border-emerald-300";
+      if (thumbnails) thumbnails.appendChild(img);
     };
-
     reader.readAsDataURL(file);
   });
 
-  // Use the first image as the main scanner preview
   const preview = document.getElementById("scanner-view-img");
-
   if (preview && imageFiles[0]) {
-    const firstReader = new FileReader();
-
-    firstReader.onload = function(e) {
-      preview.src = e.target.result;
-    };
-
-    firstReader.readAsDataURL(imageFiles[0]);
+    preview.src = URL.createObjectURL(imageFiles[0]);
   }
 
-  console.log(
-    "Crop photos selected:",
-    imageFiles.length
-  );
+  console.log("Crop photos selected:", imageFiles.length);
 }
-    function openScannerModal() {
-      const m = document.getElementById('scanner-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
-    }
-    function closeScannerModal() {
-      const m = document.getElementById('scanner-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
+
+async function analyzeCropWithAI() {
+  const file = window.selectedCropFiles && window.selectedCropFiles.length
+    ? window.selectedCropFiles[0]
+    : null;
+
+  if (!file) {
+    alert("Please upload or capture a crop image first.");
+    return;
+  }
+
+  const button = document.getElementById("ai-analyze-button");
+  const loading = document.getElementById("ai-loading");
+  const title = document.getElementById("diag-disease-title");
+  const confidence = document.getElementById("diag-confidence");
+  const description = document.getElementById("diag-desc");
+  const biological = document.getElementById("diag-bio");
+  const chemical = document.getElementById("diag-chem");
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "🤖 ANALYZING...";
+    button.classList.add("opacity-70", "cursor-not-allowed");
+  }
+  if (loading) loading.classList.remove("hidden");
+
+  try {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await fetch("http://127.0.0.1:5000/api/analyze/predict", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+    console.log("AI Backend Response:", data);
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "AI prediction failed.");
     }
 
-    function switchScannerSample(type) {
-      const img = document.getElementById('scanner-view-img');
-      const title = document.getElementById('diag-disease-title');
-      const conf = document.getElementById('diag-confidence');
-      const desc = document.getElementById('diag-desc');
-      const bio = document.getElementById('diag-bio');
-      const chem = document.getElementById('diag-chem');
+    const prediction = data.prediction || {};
+    const disease = prediction.disease || "Unknown";
+    const confidenceValue = Number(prediction.confidence || 0);
+    const info = getDiseaseInformation(disease);
 
-      if (type === 'yellow_rust') {
-        img.src = 'https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?auto=format&fit=crop&w=800&q=80';
-        title.textContent = 'Yellow Rust (Puccinia striiformis)';
-        conf.textContent = '96.4% Confidence';
-        desc.textContent = 'Distinct yellow pustules arranged in linear stripes along the leaf veins.';
-        bio.textContent = 'Spray Neem Seed Kernel Extract (5%) or Trichoderma viride @ 5g/liter.';
-        chem.textContent = 'Propiconazole 25% EC @ 1ml/L during morning hours.';
-      } else if (type === 'rice_blast') {
-        img.src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80';
-        title.textContent = 'Rice Blast (Magnaporthe oryzae)';
-        conf.textContent = '94.8% Confidence';
-        desc.textContent = 'Spindle-shaped lesions with gray or white centers and brown margins.';
-        bio.textContent = 'Apply Pseudomonas fluorescens 0.2% seed treatment and foliar spray.';
-        chem.textContent = 'Tricyclazole 75% WP @ 0.6g/L of water at boot leaf stage.';
-      } else if (type === 'healthy') {
-        img.src = 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=800&q=80';
-        title.textContent = 'Healthy Crop (No Pathogens Detected)';
-        conf.textContent = '99.1% Confidence';
-        desc.textContent = 'Leaf tissue exhibits optimal chlorophyll density and clean margins.';
-        bio.textContent = 'Maintain standard balanced NPK fertilization and irrigation.';
-        chem.textContent = 'No chemical intervention needed. Monitor again in 7 days.';
-      }
+    if (title) title.textContent = disease;
+    if (confidence) {
+      confidence.textContent = confidenceValue.toFixed(2) + "% Confidence";
+      confidence.className = "px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black";
     }
+    if (description) description.textContent = info.description;
+    if (biological) biological.textContent = info.biological;
+    if (chemical) chemical.textContent = info.chemical;
+
+    console.log("Disease:", disease);
+    console.log("Confidence:", confidenceValue + "%");
+  } catch (error) {
+    console.error("AI connection error:", error);
+    if (title) title.textContent = "AI Analysis Failed";
+    if (confidence) {
+      confidence.textContent = "--% Confidence";
+      confidence.className = "px-2.5 py-1 rounded-full bg-red-100 text-red-800 text-xs font-black";
+    }
+    if (description) description.textContent = error.message;
+    alert("Could not connect to AI backend.\n\n" + error.message + "\n\nMake sure Flask is running with: python -m backend.app");
+  } finally {
+    if (loading) loading.classList.add("hidden");
+    if (button) {
+      button.disabled = false;
+      button.textContent = "🤖 ANALYZE CROP WITH AI";
+      button.classList.remove("opacity-70", "cursor-not-allowed");
+    }
+  }
+}
+
+function getDiseaseInformation(disease) {
+  const information = {
+    "Bacterial Leaf Blight": {
+      description: "Bacterial Leaf Blight is a bacterial disease that can cause water-soaked lesions and drying of rice leaves.",
+      biological: "Maintain field sanitation and avoid excessive nitrogen. Follow recommended biological management practices.",
+      chemical: "Use only locally approved agricultural treatments according to official agricultural recommendations."
+    },
+    "Brown Spot": {
+      description: "Brown Spot causes brown lesions on rice leaves and can reduce plant health when infection becomes severe.",
+      biological: "Maintain balanced nutrition and good field sanitation. Avoid nutrient stress.",
+      chemical: "Use locally approved fungicides according to agricultural officer recommendations."
+    },
+    "Healthy Rice Leaf": {
+      description: "The AI model detected a healthy rice leaf with no recognized disease symptoms.",
+      biological: "Continue balanced irrigation, nutrition and regular field monitoring.",
+      chemical: "No chemical intervention is indicated based on this prediction."
+    },
+    "Leaf Blast": {
+      description: "Leaf Blast is a fungal disease of rice that commonly produces spindle-shaped lesions on leaves.",
+      biological: "Maintain balanced nitrogen nutrition and good field sanitation. Biological control can be considered according to local agricultural guidance.",
+      chemical: "Use only officially recommended fungicides and application rates after verification with an agricultural expert."
+    },
+    "Leaf scald": {
+      description: "Leaf scald is a rice disease that can produce characteristic lesions and reduce leaf health.",
+      biological: "Maintain proper field sanitation and balanced crop nutrition.",
+      chemical: "Use locally approved disease-management products according to agricultural recommendations."
+    },
+    "Sheath Blight": {
+      description: "Sheath Blight is a fungal disease affecting the rice sheath and can spread under favorable humid conditions.",
+      biological: "Maintain proper plant spacing, balanced nitrogen application and good field sanitation.",
+      chemical: "Use officially recommended fungicides according to local agricultural guidance."
+    }
+  };
+
+  return information[disease] || {
+    description: "The AI model detected " + disease + ". Verify the result with an agricultural expert if symptoms are severe.",
+    biological: "Follow good field sanitation and crop-management practices.",
+    chemical: "Consult a local agricultural officer before applying chemical treatment."
+  };
+}
+
+function openScannerModal() {
+  const m = document.getElementById("scanner-modal");
+  m.classList.remove("hidden");
+  m.classList.add("flex");
+}
+
+function closeScannerModal() {
+  const m = document.getElementById("scanner-modal");
+  m.classList.add("hidden");
+  m.classList.remove("flex");
+  closeCamera();
+}
 
     function openDualLogin(tab) {
       const m = document.getElementById('dual-login-modal');
