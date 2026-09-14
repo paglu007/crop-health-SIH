@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request
 from backend.routes.weather import weather_bp
-from backend.teammate_ai.routes import bp as teammate_ai_bp
+
 from backend.config import Config
 from backend.database import db, init_db
 from backend.routes.fields import fields_bp
 from backend.routes.observations import observations_bp
 from backend.routes.risk import risk_bp
 from backend.routes.dashboard import dashboard_bp
-from backend.routes.analyze import analyze_bp
-
+from backend.routes.analyze import analyze_bp, predict_disease
 import random
 
 
@@ -34,6 +33,12 @@ app.register_blueprint(
     analyze_bp,
     url_prefix="/api/analyze"
 )
+@app.route(
+    "/api/diagnosis/analyze",
+    methods=["POST"]
+)
+def diagnosis_analyze():
+    return predict_disease()
 
 app.register_blueprint(
     dashboard_bp,
@@ -42,7 +47,7 @@ app.register_blueprint(
 
 app.register_blueprint(weather_bp)
 
-app.register_blueprint(teammate_ai_bp)
+
 
 
 # ============================================================

@@ -3,7 +3,6 @@
 from werkzeug.utils import secure_filename
 
 from pathlib import Path
-from backend.services.weather import get_current_weather
 
 import uuid
 
@@ -60,32 +59,7 @@ def _get_pathogen_type(disease: str) -> str:
 
     return "Fungal"
 
-# ============================================================
-# LIVE WEATHER
-# ============================================================
 
-def _get_live_weather(lat=None, lon=None):
-    """
-    Fetch real-time weather from Open-Meteo when valid
-    latitude and longitude are supplied.
-
-    Returns None if coordinates are unavailable or the
-    weather service cannot be reached.
-    """
-    if lat is None or lon is None:
-        return None
-
-    try:
-        lat = float(lat)
-        lon = float(lon)
-
-        if not (-90 <= lat <= 90 and -180 <= lon <= 180):
-            return None
-
-        return get_current_weather(lat, lon)
-
-    except (TypeError, ValueError):
-        return None
 # ============================================================
 # WEATHER NORMALIZATION
 # ============================================================
@@ -246,25 +220,16 @@ def predict_disease():
     )
 
     try:
-        weather = request.form.get("weather")
+
+        weather = request.form.get(
+            "weather"
+        )
 
         if weather:
             import json
             weather = json.loads(weather)
         else:
             weather = {}
-
-        # ------------------------------------------------------------
-        # Fetch live weather when frontend provides coordinates
-        # ------------------------------------------------------------
-
-        latitude = request.form.get("latitude")
-        longitude = request.form.get("longitude")
-
-        live_weather = _get_live_weather(latitude, longitude)
-
-        if live_weather:
-            weather = live_weather
 
         pipeline = _run_diagnosis_pipeline(
             str(image_path),
@@ -273,16 +238,22 @@ def predict_disease():
 
         return {
             "success": True,
+
             "prediction": pipeline["diagnosis"],
+
             "risk": pipeline["risk"],
+
             "advisory": pipeline["advisory"]
         }
 
     except Exception as e:
+
         return {
             "success": False,
             "error": str(e)
         }, 500
+
+
 # ============================================================
 # ADVISORY
 # ============================================================

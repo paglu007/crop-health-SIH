@@ -1356,224 +1356,36 @@
         </div>
 
         <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+            <div>
+              <span class="text-[11px] font-bold text-slate-500 uppercase">Detection Result</span>
+              <h4 id="diag-disease-title" class="text-base font-black text-slate-900">Yellow Rust (Puccinia striiformis)</h4>
+            </div>
+            <span id="diag-confidence" class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black">96.4% Confidence</span>
+          </div>
 
-  <!-- AI DIAGNOSIS HEADER -->
-  <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-    <div>
-      <span class="text-[11px] font-bold text-slate-500 uppercase">
-        AI Detection Result
-      </span>
+          <p id="diag-desc" class="text-xs text-slate-600">Distinct yellow pustules arranged in linear stripes along the leaf veins.</p>
 
-      <h4
-        id="diag-disease-title"
-        class="text-base font-black text-slate-900"
-      >
-        Waiting for analysis...
-      </h4>
-    </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div class="p-2.5 bg-emerald-50 rounded-lg border border-emerald-200">
+              <strong class="text-emerald-900">🌿 Biological Remedy:</strong>
+              <p id="diag-bio" class="text-slate-700 text-[11px] mt-0.5">Spray Neem Seed Kernel Extract (5%) or Trichoderma viride @ 5g/liter.</p>
+            </div>
+            <div class="p-2.5 bg-blue-50 rounded-lg border border-blue-200">
+              <strong class="text-blue-900">🧪 Chemical (CIB&RC):</strong>
+              <p id="diag-chem" class="text-slate-700 text-[11px] mt-0.5">Propiconazole 25% EC @ 1ml/L during morning hours.</p>
+            </div>
+          </div>
 
-    <span
-      id="diag-confidence"
-      class="px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 text-xs font-black"
-    >
-      No result
-    </span>
-  </div>
+          <div id="scanner-ai-disclaimer" class="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-[11px] text-amber-950 font-medium flex items-start gap-2">
+            <span class="text-sm">⚠️</span>
+            <div>
+              <strong>Statutory Advisory:</strong> This AI prediction is an assistive decision aid (~94.6% confidence) and is <strong>not 100% infallible</strong>. Farmers must cross-check severe crop damage with local KVK agronomists before chemical spraying.
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <!-- CONDITION STATUS -->
-  <p
-    id="diag-desc"
-    class="text-xs text-slate-600"
-  >
-    Upload a crop image and select ANALYZE CROP WITH AI.
-  </p>
-
-  <!-- SEVERITY + CAUSE -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-
-    <div class="p-2.5 bg-white rounded-lg border border-slate-200">
-      <strong class="text-slate-900">
-        Severity / Condition
-      </strong>
-
-      <p
-        id="diag-severity"
-        class="text-slate-700 text-[11px] mt-0.5"
-      >
-        —
-      </p>
-    </div>
-
-    <div class="p-2.5 bg-white rounded-lg border border-slate-200">
-      <strong class="text-slate-900">
-        Likely Cause
-      </strong>
-
-      <p
-        id="diag-cause"
-        class="text-slate-700 text-[11px] mt-0.5"
-      >
-        —
-      </p>
-    </div>
-
-  </div>
-
-  <!-- RISK -->
-  <div class="p-2.5 bg-amber-50 rounded-lg border border-amber-200 text-xs">
-
-    <strong class="text-amber-900">
-      Risk Assessment
-    </strong>
-
-    <p
-      id="diag-risk"
-      class="text-slate-700 text-[11px] mt-0.5"
-    >
-      —
-    </p>
-
-  </div>
-
-  <!-- SYMPTOMS -->
-  <div class="p-2.5 bg-white rounded-lg border border-slate-200 text-xs">
-
-    <strong class="text-slate-900">
-      Symptoms
-    </strong>
-
-    <p
-      id="diag-symptoms"
-      class="text-slate-700 text-[11px] mt-0.5"
-    >
-      —
-    </p>
-
-  </div>
-
-  <!-- RECOMMENDATIONS -->
-  <div class="p-2.5 bg-emerald-50 rounded-lg border border-emerald-200 text-xs">
-
-    <strong class="text-emerald-900">
-      Recommended Actions
-    </strong>
-
-    <ul
-      id="diag-recommendations"
-      class="text-slate-700 text-[11px] mt-1 space-y-1 list-disc pl-4"
-    >
-      <li>—</li>
-    </ul>
-
-  </div>
-
-  <!-- ORGANIC OPTIONS -->
-  <div class="p-2.5 bg-green-50 rounded-lg border border-green-200 text-xs">
-
-    <strong class="text-green-900">
-      Organic / Lower-Risk Options
-    </strong>
-
-    <ul
-      id="diag-bio"
-      class="text-slate-700 text-[11px] mt-1 space-y-1 list-disc pl-4"
-    >
-      <li>—</li>
-    </ul>
-
-  </div>
-
-  <!-- PREVENTION -->
-  <div class="p-2.5 bg-blue-50 rounded-lg border border-blue-200 text-xs">
-
-    <strong class="text-blue-900">
-      Prevention
-    </strong>
-
-    <ul
-      id="diag-prevention"
-      class="text-slate-700 text-[11px] mt-1 space-y-1 list-disc pl-4"
-    >
-      <li>—</li>
-    </ul>
-
-  </div>
-
-  <!-- MONITORING -->
-  <div class="p-2.5 bg-purple-50 rounded-lg border border-purple-200 text-xs">
-
-    <strong class="text-purple-900">
-      Monitoring
-    </strong>
-
-    <ul
-      id="diag-monitoring"
-      class="text-slate-700 text-[11px] mt-1 space-y-1 list-disc pl-4"
-    >
-      <li>—</li>
-    </ul>
-
-  </div>
-
-  <!-- WEATHER -->
-  <div class="p-2.5 bg-sky-50 rounded-lg border border-sky-200 text-xs">
-
-    <strong class="text-sky-900">
-      Current Weather Context
-    </strong>
-
-    <ul
-      id="diag-weather"
-      class="text-slate-700 text-[11px] mt-1 space-y-1 list-disc pl-4"
-    >
-      <li>—</li>
-    </ul>
-
-  </div>
-
-  <!-- EXPERT GUIDANCE -->
-  <div class="p-2.5 bg-orange-50 rounded-lg border border-orange-200 text-xs">
-
-    <strong class="text-orange-900">
-      Agricultural Expert Guidance
-    </strong>
-
-    <p
-      id="diag-expert"
-      class="text-slate-700 text-[11px] mt-0.5"
-    >
-      —
-    </p>
-
-  </div>
-
-  <!-- SAFETY / AI DISCLAIMER -->
-  <div
-    id="scanner-ai-disclaimer"
-    class="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-[11px] text-amber-950 font-medium flex items-start gap-2"
-  >
-
-    <span class="text-sm">⚠️</span>
-
-    <div>
-
-      <strong>AI Advisory Notice:</strong>
-
-      This result is an assistive decision aid, not a guaranteed diagnosis.
-      Low-confidence predictions should be checked using a clearer image
-      and field inspection.
-
-      For chemical treatment decisions, follow current guidance from the
-      local agricultural extension department or KVK.
-
-    </div>
-
-  </div>
-
-  <!-- Kept for compatibility with existing JavaScript -->
-  <p id="diag-chem" class="hidden"></p>
-
-</div>
       <div class="px-5 py-3 bg-slate-50 border-t border-slate-200 flex justify-end">
         <button onclick="closeScannerModal()" class="px-5 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs">
           Close Scanner
@@ -3565,508 +3377,81 @@ function previewCropPhotos(event) {
 }
 
 async function analyzeCropWithAI() {
-  const files =
-    window.selectedCropFiles &&
-    window.selectedCropFiles.length
-      ? window.selectedCropFiles
-      : [];
+  const file = window.selectedCropFiles && window.selectedCropFiles.length
+    ? window.selectedCropFiles[0]
+    : null;
 
-  if (!files.length) {
-    alert("Please upload or capture at least one crop image.");
+  if (!file) {
+    alert("Please upload or capture a crop image first.");
     return;
   }
 
   const button = document.getElementById("ai-analyze-button");
   const loading = document.getElementById("ai-loading");
+  const title = document.getElementById("diag-disease-title");
+  const confidence = document.getElementById("diag-confidence");
+  const description = document.getElementById("diag-desc");
+  const biological = document.getElementById("diag-bio");
+  const chemical = document.getElementById("diag-chem");
 
   if (button) {
     button.disabled = true;
     button.textContent = "🤖 ANALYZING...";
+    button.classList.add("opacity-70", "cursor-not-allowed");
   }
-
-  if (loading) {
-    loading.classList.remove("hidden");
-    loading.textContent =
-      `🤖 AI is analyzing ${files.length} crop image${files.length > 1 ? "s" : ""}...`;
-  }
+  if (loading) loading.classList.remove("hidden");
 
   try {
-    // ------------------------------------------------------------
-    // Get farmer's location ONCE
-    // ------------------------------------------------------------
+    const formData = new FormData();
+    formData.append("image", file);
 
-    let latitude = null;
-    let longitude = null;
+    const response = await fetch("http://127.0.0.1:5000/api/analyze/predict", {
+      method: "POST",
+      body: formData
+    });
 
-    if (navigator.geolocation) {
-      try {
-        const position = await new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(
-            resolve,
-            reject,
-            {
-              enableHighAccuracy: false,
-              timeout: 5000,
-              maximumAge: 300000
-            }
-          );
-        });
+    const data = await response.json();
+    console.log("AI Backend Response:", data);
 
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
-
-        console.log(
-          "📍 Farmer location:",
-          latitude,
-          longitude
-        );
-      } catch (locationError) {
-        console.warn(
-          "📍 Location unavailable. Using fallback weather.",
-          locationError
-        );
-      }
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "AI prediction failed.");
     }
 
-    // ------------------------------------------------------------
-    // Analyze each image independently
-    // ------------------------------------------------------------
+    const prediction = data.prediction || {};
+    const disease = prediction.disease || "Unknown";
+    const confidenceValue = Number(prediction.confidence || 0);
+    const info = getDiseaseInformation(disease);
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      const formData = new FormData();
-      formData.append("image", file);
-
-      // Send coordinates to backend for live weather
-      if (
-        latitude !== null &&
-        longitude !== null
-      ) {
-        formData.append(
-          "latitude",
-          latitude
-        );
-
-        formData.append(
-          "longitude",
-          longitude
-        );
-      }
-
-      console.log(
-        `🌱 Analyzing image ${i + 1}/${files.length}`
-      );
-
-      const response = await fetch(
-        "http://127.0.0.1:5000/api/analyze/predict",
-        {
-          method: "POST",
-          body: formData
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(
-          data.error ||
-          data.message ||
-          `Analysis failed for image ${i + 1}.`
-        );
-      }
-
-      // ------------------------------------------------------------
-      // Real backend outputs
-      // ------------------------------------------------------------
-
-      const prediction =
-        data.prediction || {};
-
-      const risk =
-        data.risk || {};
-
-      const advisory =
-        data.advisory || {};
-
-      console.log(
-        "🤖 Prediction:",
-        prediction
-      );
-
-      console.log(
-        "⚠️ Risk:",
-        risk
-      );
-
-      console.log(
-        "🌦️ Weather:",
-        advisory.weather_context
-      );
-
-      renderAIAnalysisResult(
-        prediction,
-        risk,
-        advisory,
-        i + 1,
-        files.length
-      );
+    if (title) title.textContent = disease;
+    if (confidence) {
+      confidence.textContent = confidenceValue.toFixed(2) + "% Confidence";
+      confidence.className = "px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black";
     }
+    if (description) description.textContent = info.description;
+    if (biological) biological.textContent = info.biological;
+    if (chemical) chemical.textContent = info.chemical;
 
+    console.log("Disease:", disease);
+    console.log("Confidence:", confidenceValue + "%");
   } catch (error) {
-
-    console.error(
-      "AI analysis error:",
-      error
-    );
-
-    const title =
-      document.getElementById(
-        "diag-disease-title"
-      );
-
-    const description =
-      document.getElementById(
-        "diag-desc"
-      );
-
-    if (title) {
-      title.textContent =
-        "Analysis failed";
+    console.error("AI connection error:", error);
+    if (title) title.textContent = "AI Analysis Failed";
+    if (confidence) {
+      confidence.textContent = "--% Confidence";
+      confidence.className = "px-2.5 py-1 rounded-full bg-red-100 text-red-800 text-xs font-black";
     }
-
-    if (description) {
-      description.textContent =
-        error.message ||
-        "Unable to connect to the crop analysis service.";
-    }
-
-    alert(
-      "AI analysis failed. Make sure the Flask backend is running and try again."
-    );
-
+    if (description) description.textContent = error.message;
+    alert("Could not connect to AI backend.\n\n" + error.message + "\n\nMake sure Flask is running with: python -m backend.app");
   } finally {
-
+    if (loading) loading.classList.add("hidden");
     if (button) {
       button.disabled = false;
-      button.textContent =
-        "🤖 ANALYZE CROP WITH AI";
-    }
-
-    if (loading) {
-      loading.classList.add("hidden");
+      button.textContent = "🤖 ANALYZE CROP WITH AI";
+      button.classList.remove("opacity-70", "cursor-not-allowed");
     }
   }
 }
-function renderAIAnalysisResult(
-  prediction,
-  risk,
-  advisory,
-  imageNumber = 1,
-  totalImages = 1
-) {
-  const title = document.getElementById("diag-disease-title");
-  const confidence = document.getElementById("diag-confidence");
-  const description = document.getElementById("diag-desc");
 
-  const severity = document.getElementById("diag-severity");
-  const cause = document.getElementById("diag-cause");
-  const riskElement = document.getElementById("diag-risk");
-  const symptoms = document.getElementById("diag-symptoms");
-
-  const recommendations =
-    document.getElementById("diag-recommendations");
-
-  const biological =
-    document.getElementById("diag-bio");
-
-  const prevention =
-    document.getElementById("diag-prevention");
-
-  const monitoring =
-    document.getElementById("diag-monitoring");
-
-  const weather =
-    document.getElementById("diag-weather");
-
-  const expert =
-    document.getElementById("diag-expert");
-
-  /*
-   * -------------------------
-   * DIAGNOSIS
-   * -------------------------
-   */
-
-  const disease =
-    prediction.disease || advisory.issue || "Unknown condition";
-
-  const confidenceValue =
-    Number(prediction.confidence ?? advisory.confidence ?? 0);
-
-  if (title) {
-    title.textContent =
-      totalImages > 1
-        ? `Image ${imageNumber}/${totalImages}: ${disease}`
-        : disease;
-  }
-
-  if (confidence) {
-    confidence.textContent =
-      `${confidenceValue.toFixed(2)}% Confidence`;
-
-    if (confidenceValue >= 80) {
-      confidence.className =
-        "px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black";
-    } else if (confidenceValue >= 60) {
-      confidence.className =
-        "px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-black";
-    } else {
-      confidence.className =
-        "px-2.5 py-1 rounded-full bg-red-100 text-red-800 text-xs font-black";
-    }
-  }
-
-  if (description) {
-    description.textContent =
-      advisory.condition_status ||
-      "Condition identified by the image model.";
-  }
-
-  /*
-   * -------------------------
-   * SEVERITY
-   * -------------------------
-   */
-
-  if (severity) {
-    severity.textContent =
-      advisory.severity_interpretation ||
-      "Severity interpretation is not available.";
-  }
-
-  /*
-   * -------------------------
-   * LIKELY CAUSE
-   * -------------------------
-   */
-
-  if (cause) {
-    cause.textContent =
-      advisory.likely_cause ||
-      "Cause information is not available.";
-  }
-
-  /*
-   * -------------------------
-   * RISK ENGINE
-   * -------------------------
-   */
-
-  if (riskElement) {
-    const riskLevel =
-      risk.risk_level ||
-      advisory.risk_level ||
-      "UNKNOWN";
-
-    const riskScore =
-      Number(
-        risk.risk_score ??
-        advisory.risk_score ??
-        0
-      );
-
-    const category =
-      risk.risk_category ||
-      "Risk category unavailable";
-
-    const spread =
-      risk.spread_rate_estimate ||
-      "Spread estimate unavailable";
-
-    const factors =
-      Array.isArray(risk.favorable_factors)
-        ? risk.favorable_factors
-        : [];
-
-    riskElement.innerHTML = "";
-
-    const mainRisk = document.createElement("div");
-
-    mainRisk.innerHTML =
-      `<strong>${escapeHTML(riskLevel)}</strong> risk — ` +
-      `${riskScore.toFixed(1)}/100 — ` +
-      `${escapeHTML(category)}.`;
-
-    riskElement.appendChild(mainRisk);
-
-    const spreadElement =
-      document.createElement("div");
-
-    spreadElement.className = "mt-1";
-
-    spreadElement.textContent =
-      `Spread estimate: ${spread}`;
-
-    riskElement.appendChild(spreadElement);
-
-    if (factors.length) {
-      const factorList =
-        document.createElement("ul");
-
-      factorList.className =
-        "list-disc pl-4 mt-1 space-y-0.5";
-
-      factors.forEach((factor) => {
-        const li =
-          document.createElement("li");
-
-        li.textContent = factor;
-
-        factorList.appendChild(li);
-      });
-
-      riskElement.appendChild(factorList);
-    }
-  }
-
-  /*
-   * -------------------------
-   * SYMPTOMS
-   * -------------------------
-   */
-
-  if (symptoms) {
-    symptoms.textContent =
-      advisory.symptoms ||
-      "No symptom information available.";
-  }
-
-  /*
-   * -------------------------
-   * RECOMMENDATIONS
-   * -------------------------
-   */
-
-  renderList(
-    recommendations,
-    advisory.recommendations
-  );
-
-  /*
-   * -------------------------
-   * ORGANIC OPTIONS
-   * -------------------------
-   */
-
-  renderList(
-    biological,
-    advisory.organic_options
-  );
-
-  /*
-   * -------------------------
-   * PREVENTION
-   * -------------------------
-   */
-
-  renderList(
-    prevention,
-    advisory.prevention
-  );
-
-  /*
-   * -------------------------
-   * MONITORING
-   * -------------------------
-   */
-
-  renderList(
-    monitoring,
-    advisory.monitoring
-  );
-
-  /*
-   * -------------------------
-   * WEATHER
-   * -------------------------
-   */
-
-  renderList(
-    weather,
-    advisory.weather_context
-  );
-
-  /*
-   * -------------------------
-   * EXPERT GUIDANCE
-   * -------------------------
-   */
-
-  if (expert) {
-    expert.textContent =
-      advisory.expert_advisory ||
-      "Consult your local agricultural extension officer or KVK for field confirmation.";
-  }
-
-  /*
-   * -------------------------
-   * OLD CHEMICAL FIELD
-   * -------------------------
-   *
-   * We intentionally do not display
-   * specific chemical dosage/application
-   * instructions from the old hardcoded UI.
-   */
-
-  const chemical =
-    document.getElementById("diag-chem");
-
-  if (chemical) {
-    chemical.textContent =
-      advisory.chemical_treatment_note ||
-      "For chemical treatment decisions, consult the local agricultural extension department or KVK.";
-
-    chemical.classList.add("hidden");
-  }
-}
-function renderList(element, items) {
-  if (!element) {
-    return;
-  }
-
-  element.innerHTML = "";
-
-  const values =
-    Array.isArray(items)
-      ? items
-      : [];
-
-  if (!values.length) {
-    const li = document.createElement("li");
-    li.textContent = "No information available.";
-    element.appendChild(li);
-    return;
-  }
-
-  values.forEach((item) => {
-    const li = document.createElement("li");
-
-    li.textContent =
-      typeof item === "string"
-        ? item
-        : JSON.stringify(item);
-
-    element.appendChild(li);
-  });
-}
-
-
-function escapeHTML(value) {
-  const div = document.createElement("div");
-  div.textContent = value ?? "";
-  return div.innerHTML;
-}
 function getDiseaseInformation(disease) {
   const information = {
     "Bacterial Leaf Blight": {
